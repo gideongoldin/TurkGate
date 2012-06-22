@@ -1,0 +1,103 @@
+<!--
+   Copyright 2012 Adam Darlow and Gideon Goldin
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+<!--
+This is a template for creating a HIT with a link to SurveyAccess.php
+All you need to change are the two variables at the top:
+survey - replace "test 1" with your survey identifier, consisting of a site identifier (obtained from the survey access admin) and a survey id
+group - the name identifying your group of studies. This string must be identical in all of the HITs that you want included in the same group.
+-->
+<script type="text/javascript">
+
+var survey = "test 1";
+var group = "testing js";
+
+// dynamically creates the text that warns workers about the policy of access restriction
+function createGroupText() {
+	return "<p>This study is part of a group of studies called " + group + ". If you have accepted any other studies in the group, you will not be able to complete this study. In this case, please don't accept the HIT, because you'll have to return it.</p>";
+}
+
+// helper function for extracting and decoding url variables
+function getUrlVars() 
+{
+	var urlVars = {};
+	var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+		urlVars[key] = value;
+	});
+	return urlVars;
+}
+
+// helper function for encoding url variables
+function myEncode(str) {
+	return encodeURIComponent(str);
+}
+
+// tests whether cookies are enabled
+function test_cookies() {
+	var cookieEnabled = (navigator.cookieEnabled) ? true : false;
+
+	if (typeof navigator.cookieEnabled == "undefined" && !cookieEnabled)
+	{ 
+		document.cookie="testcookie";
+		cookieEnabled = (document.cookie.indexOf("testcookie") != -1) ? true : false;
+	}
+	return (cookieEnabled);
+}
+
+// create a link to the survey access php page
+function createSurveyAccessLink() {
+	
+	// require cookies to be enabled
+	if (!test_cookies())
+	{
+		return "<p>Please enable cookies in order to continue with this HIT.</p>"
+	}
+	
+	var urlVars = getUrlVars();
+	
+	if (urlVars["assignmentId"] == undefined || urlVars["assignmentId"] == "ASSIGNMENT_ID_NOT_AVAILABLE") { 
+		return "<p>A link to the study will appear here after you accept the HIT.</p>";
+	}
+
+	var phpArgs = "source=js&";
+	phpArgs += "survey=" + myEncode(survey);
+	phpArgs += "&group=" + myEncode(group);
+	phpArgs += "&workerId=" + urlVars["workerId"];
+	phpArgs += "&assignmentId=" + urlVars["assignmentId"];
+	
+	return '<a target="_blank" href="http://YOUR.INSTALLATION.EDU/surveyAccess.php?' + phpArgs + '">Click here to open the study.</a>';
+}
+
+// runs automatically when the page loads and fills in the dynamically generated HTML
+window.onload = function() { 
+	
+	document.getElementById("showGroup").innerHTML = createGroupText();
+
+	document.getElementById("phpLink").innerHTML = createSurveyAccessLink();
+}
+</script>
+
+<noscript>Accessing the survey requires Javascript and cookies. Please enable Javascript and cookies or don't accept the HIT. Thank you.</noscript>
+<div name="showGroup" id="showGroup"></div><p>The link below will open the study in a new window. For technical reasons, you cannot preview the study and can only access it once you have accepted the HIT.</p>
+<p>At the end of the survey you will receive a confirmation code. Submit that confirmation code in the text entry box below in order to recieve credit for this HIT.</p>
+<p>Thank you.</p>
+<div name="phpLink" id="phpLink"></div>
+<p>&nbsp;</p>
+<p>Enter the completion code here:</p>
+<p><input type="text" name="Q2" id="Q2" size="80" /></p>
+<p>&nbsp;</p>
+<p>We appreciate any comments and feedback:</p>
+<p><textarea cols="60" rows="4" id="comments" name="comments"></textarea></p>
