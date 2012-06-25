@@ -1,8 +1,8 @@
 TurkGate
 =========
 
-Grouping and Access Tools for External surveys
-----------------------------------------------
+Grouping and Access Tools for External surveys (for use with Amazon Mechanical Turk)
+------------------------------------------------------------------------------------
 
 ### Introduction
 
