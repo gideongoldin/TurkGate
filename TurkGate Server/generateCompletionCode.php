@@ -5,7 +5,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,12 +13,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-
 <?php session_start(); ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>  
 	<head>	
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>TurkGate</title>
 		<script>
 			//<![CDATA[
@@ -28,10 +25,15 @@
 			window.onbeforeunload = exit;
 			//]]>
 		</script>
+		<style type="text/css">
+			body { margin: 50px auto; text-align: center; }
+			#code { color: yellow; background: black; font-family: monospace; padding: 10px 0; }
+			footer, a { color: gray; }
+		</style>
 	</head>
 	<body>
 		<?php	
-			// Add the Worker ID and the Group name to the to-be-hashed input string
+			// Add the Worker ID and the Group name to the input string
 			$inputString = 'w[' . $_COOKIE['Worker_ID'] . ']g[' . $_COOKIE['Group_Name'] . ']';
 		
 			// Add any key-value pairs from the GET array to the input string.
@@ -39,20 +41,18 @@
 				$inputString .= $key[0] . '[' . $value . ']';
 			}
 			
-			// Create/Modify salt. see http://php.net/manual/en/function.crypt.php
-			$salt = '$2a$07$usesomesillystringforsalt$';
+			// Prepare salt (replace 'shaker' with your own key)
+			// NOTE: This value must match that defined in verifyCompletionCode.php!
+			$salt = 'shaker';
 			
-			// Construct the final completion code
-			$completionCode = $inputString . ':' . crypt($inputString, $salt);
+			// Construct the completion code
+			$completionCode = $inputString . ':' . sha1($inputString . $salt);
 			
-			// Display the completion code to the user
-			echo '<div style="width:50%; margin:200px auto;">';
-			echo '<p style="text-align:center; font-weight:bold;">Thank you!</p>';
-			echo '<p style="text-align:center;">Please enter the code below into the Mechanical Turk HIT page to receive credit for your participation.</p><hr />';
-			echo '<p style="text-align:center; margin-top:26px;"><span style="color:yellow; background:black; font-family:Courier, monospace; padding:10px;">';
-			echo $completionCode;
-			echo '</span></p>';
-			echo '</div>';
+			// Display code to the user
+			echo '<header><h1>Thank you!</h1></header>';
+			echo '<p>Please enter the code below into Mechanical Turk:</p>';
+			echo '<p id="code">' . $completionCode . '</p>';
+			echo '<footer><h6>Powered by <a href="https://github.com/gideongoldin/TurkGate" title="TurkGate" target="_blank">TurkGate</a></h6></footer>';
 		?>
 	</body>
 </html>
