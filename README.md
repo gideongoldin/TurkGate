@@ -22,6 +22,3 @@ Finally, TurkGate provides a method for assigning completion codes to workers af
 
 ## How does TurkGate Work?
 Generally speaking, TurkGate functions via a set of files you store in Amazon Mechanical Turk and your external survey-hosting server. This external server may use SurveyMonkey, LimeSurvey, Qualtrics, or other custom survey software. In particular, TurkGate comprises a simple database, a few server-side PHP scripts, and a couple of HIT templates.
-
-## Getting Started
-To get started, please visit the main [Table of Contents](Home) for this wiki.
