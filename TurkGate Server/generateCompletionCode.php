@@ -29,7 +29,7 @@
 
 	Any number of key-value pairs may be specified. Within these pairs, v is extracted as the first character in the GET array's variable (e.g., version), while value will comprise the contents of this variable (e.g., safariForiOS).
 
-	The second half of the code (i.e., that proceeding the colon), is a hashing of the first half with a salt. Be sure to substitute your own salt value in the PHP file in order to ensure proper security.
+	The second half of the code (i.e., that following the colon), is a hashing of the first half with a salt. Be sure to substitute your own salt value in the PHP file in order to ensure proper security.
 -->
 <?php session_start(); ?>
 <!doctype html>  
