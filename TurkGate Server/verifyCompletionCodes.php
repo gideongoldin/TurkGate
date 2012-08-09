@@ -41,7 +41,7 @@
 	
 	When you are ready to verify survey completion, download the Batch results file for your HIT from within Mechanical Turk. This comma-separated-value file will contain previously generated completion codes.
 
-	Copy and paste the entire contents of this file into the text area at http://yourexternalserver.com/youroptionalsurveypath/verifyCompletionCodes.php, and press Verify codes. Be sure to include the blank new-line character at the end of the file. Note that the `parsecsv-0.3.2` folder must reside in this same directory.
+	Copy and paste the entire contents of this file into the text area at http://yourexternalserver.com/youroptionalsurveypath/verifyCompletionCodes.php, and press Verify codes. Be sure to include the blank new-line character at the end of the file. Note that the `parsecsv-0.3.2` (http://code.google.com/p/parsecsv-for-php/) folder must reside in this same directory.
 
 	The script will then automatically verify all codes. First, it checks whether the information in the first half of a code (e.g., Worker ID, Group Name, and any custom key-value pairs)--when combined with a private salt and hashed--matches the second half of the code. This step helps prevent users from fabricating their own codes, since users do not know your private salt. The script then checks if any codes are duplicated.
 
