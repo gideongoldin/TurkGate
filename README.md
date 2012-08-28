@@ -25,7 +25,7 @@ TurkGate functions via a set of files you store in Amazon Mechanical Turk and yo
 
 ## Requirements
 ### Server installation
-1. HTTP- and PHP-enabled web server (Apache, ...)
+1. HTTP- and PHP-enabled web server (e.g., Apache HTTP Server)
 2. SQL database
 
 ### HIT creation
