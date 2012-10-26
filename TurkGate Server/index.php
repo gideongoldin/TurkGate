@@ -1,10 +1,8 @@
 <?php
   // Get TurkGate's database configuration
-  include 'turkgateConfig.php';
-
-  // Run the install script if no TurkGate database is found
-  if(!defined('DATABASE_NAME')) {
-    header('Location: install.php');
+  if(!include('turkGateConfig.php')) 
+  {
+	header('Location: install.php');
     exit();
   }
 ?>

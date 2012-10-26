@@ -30,10 +30,8 @@
 
 session_start();
 
-// include the constants from the config file
-if (!include('turkGateConfig.php'))
-{
-	die("A configuration error occurred. Please report this error to the HIT requester.");
+if(!include('turkGateConfig.php')) {
+  die("A configuration error occurred. Please report this error to the HIT requester.");
 }
 
 $groupName=urldecode($_GET["group"]);
@@ -58,7 +56,6 @@ if ($_GET["assignmentId"] == "ASSIGNMENT_ID_NOT_AVAILABLE" || empty($_GET["assig
 }
 else
 {
-	
 	// This worker has accepted the HIT, so we can continue
 	
 	$workerId=htmlspecialchars($_GET["workerId"]);
@@ -78,16 +75,12 @@ else
 	$db_host=constant("DATABASE_HOST");
 
 	// connect to the database
-	$con = mysql_connect($db_host,$db_username,$db_password);
-	if (!$con)
-  	{
-  		die("There was an error connecting to the database. Please contact the requester to notify them of the error.");
-  	}
+	$con = mysql_connect($db_host,$db_username,$db_password) or die("There was an error connecting to the database. Please contact the requester to notify them of the error.");
+
 	mysql_select_db($db_name) or die("There was an error selecting the database. Please contact the requester to notify them of the error.");
 
 	// Look for entries with the same workerId and groupName. 
 	$query = "SELECT * FROM SurveyRequest WHERE SurveyRequest.workerID='$workerId' AND SurveyRequest.groupName='$groupName';";
-	//$query = "SELECT * FROM SurveyRequest WHERE SurveyRequest.workerID='$workerId' AND SurveyRequest.groupName='$groupName';";
 	$result = mysql_query($query) or die("There was an error retreiving access info. Please contact the requester to notify them of the error.");
 
 	//If one exists, this worker has already done a survey in the group and will be blocked from reaching the survey.
