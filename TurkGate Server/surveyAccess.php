@@ -39,11 +39,17 @@ if (!include('turkGateConfig.php'))
 $groupName=urldecode($_GET["group"]);
 
 // parse survey identifier, first word is a code for finding the base URL, second word is a survey-specific id
-$surveyUrl=urldecode($_GET["survey"]);
+$surveyURL=urldecode($_GET["survey"]);
+if(strlen($surveyURL) == 0 || $surveyURL == 'test') 
+{
+	// If no survey URL was submitted, or if 'test' was entered, insert the testDestination.php page.
+	$surveyURL = 'testDestination.php';
+}
 
 // We use assignmentId to identify whether the worker is merely previewing the HIT or has accepted it. 
 if ($_GET["assignmentId"] == "ASSIGNMENT_ID_NOT_AVAILABLE" || empty($_GET["assignmentId"])) 
 {
+
 	// Block previews of the HIT, but warn about possible exclusion based on group name
 	
 	echo "<p>Sorry, this study cannot be previewed. Please accept the HIT in order to view it.</p>";
@@ -52,6 +58,7 @@ if ($_GET["assignmentId"] == "ASSIGNMENT_ID_NOT_AVAILABLE" || empty($_GET["assig
 }
 else
 {
+	
 	// This worker has accepted the HIT, so we can continue
 	
 	$workerId=htmlspecialchars($_GET["workerId"]);
@@ -61,14 +68,14 @@ else
 	// Not needed if this page was reached through a link from a regular HIT.
 	$htmlForm = "<form id='mturk_form' method='POST' action='http://www.mturk.com/mturk/externalSubmit'>" . "<input type='hidden' id='assignmentId' name='assignmentId' value='$assignId'>";
 	$htmlCompletionCode = '<p>Completion code: <input type="text" name="completion_code" id="completion_code" size="60"></p>';
-	$htmlSubmitButton = '<input id="submit_button" type="submit" name="submit_button" value="Submit">';
+	$htmlSubmitButton = '<input id="submit_button" type="submit" name="submit_button" value="Submit" onclick="allowExit()">';
 	$htmlComments = '<p>Comments (optional): <br><textarea cols="60" rows="4" id="comments" name="comments"></textarea></p>';
 
 	// parameters for accessing the database
-	$db_username=Constants::DATABASE_USERNAME;
-	$db_password=Constants::DATABASE_PASSWORD;
-	$db_name=Constants::DATABASE_NAME;
-	$db_host=Constants::DATABASE_HOST;
+	$db_username=constant("DATABASE_USERNAME");
+	$db_password=constant("DATABASE_PASSWORD");
+	$db_name=constant("DATABASE_NAME");
+	$db_host=constant("DATABASE_HOST");
 
 	// connect to the database
 	$con = mysql_connect($db_host,$db_username,$db_password);
@@ -79,7 +86,8 @@ else
 	mysql_select_db($db_name) or die("There was an error selecting the database. Please contact the requester to notify them of the error.");
 
 	// Look for entries with the same workerId and groupName. 
-	$query = "SELECT * FROM SurveyRequest WHERE SurveyRequest.workerId='$workerId' AND SurveyRequest.groupName='$groupName';";
+	$query = "SELECT * FROM SurveyRequest WHERE SurveyRequest.workerID='$workerId' AND SurveyRequest.groupName='$groupName';";
+	//$query = "SELECT * FROM SurveyRequest WHERE SurveyRequest.workerID='$workerId' AND SurveyRequest.groupName='$groupName';";
 	$result = mysql_query($query) or die("There was an error retreiving access info. Please contact the requester to notify them of the error.");
 
 	//If one exists, this worker has already done a survey in the group and will be blocked from reaching the survey.
@@ -117,22 +125,36 @@ else
 		setcookie('Group_Name', $groupName, time() + (24 * 60 * 60), '/');
 	
 		// Add the access to the database to block future access
-		$query = "INSERT INTO SurveyRequest (SurveyRequest.workerId, SurveyRequest.groupName, SurveyRequest.URL, SurveyRequest.time) VALUES ('$workerId', '$groupName', '$surveyId', now());";
+		$query = "INSERT INTO SurveyRequest (SurveyRequest.workerID, SurveyRequest.groupName, SurveyRequest.URL, SurveyRequest.time) VALUES ('$workerId', '$groupName', '$surveyURL', now());";
 		$result=mysql_query($query) or die("There was an error saving to the database. Please contact the requester to notify them of the error.");
 		
 		if ($_GET["source"] == "js")
 		{
 			// if coming from javascript, simply redirect because the HIT response fields are on another page
-			header( 'Location: ' . $surveyUrl );
+			header( 'Location: ' . $surveyURL );
 		}
 		else
 		{
 			// if an external HIT, present a link and the form for submitting the completion code and comments
-			echo '<html><body>';
+			echo '<html>';
+			echo '<head>';
+			echo '<script>
+					function exit() {
+						return "WARNING: You will not be able to access the survey after leaving or refreshing this page!";
+					}
+					
+					window.onbeforeunload = exit;
+					
+					function allowExit() {
+						window.onbeforeunload = null;
+					}									
+				</script>';
+			echo '</head>';
+			echo '<body>';
 			
 			echo '<p>The link below will open the study in a new window.</p>';
 			echo '<p>At the end of the survey you will receive a confirmation code. Submit that confirmation code in the text entry box below in order to recieve credit for this HIT.</p><p>Thank you.</p>';
-			echo '<p><a name="surveyLink" id="surveyLink" target="_blank" href="' . $surveyUrl . '">Click here to open the study.</a></p>&nbsp;';
+			echo '<p><a name="surveyLink" id="surveyLink" target="_blank" href="' . $surveyURL . '">Click here to open the study.</a></p>&nbsp;';
 			
 			echo $htmlForm;
 			echo $htmlCompletionCode;

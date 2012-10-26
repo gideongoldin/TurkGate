@@ -52,6 +52,7 @@
 			    (
 				  requestID INT NOT NULL AUTO_INCREMENT,
 			      PRIMARY KEY(requestID),
+			      workerID VARCHAR(256),
 			      URL VARCHAR(256),
 			      groupName VARCHAR(256),
 			      time DATETIME

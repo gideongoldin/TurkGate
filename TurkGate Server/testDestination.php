@@ -1,6 +1,21 @@
-<?php session_start(); ?>
+<?php session_start();
 
-<html><body>
+	if(isset($_POST['submit']))
+	{
+		if(strlen($_POST['varName']) > 0) {
+			$varName = urlencode($_POST['varName']);
+		    $varValue = urlencode($_POST['varValue']);
+		
+			header("Location: generateCompletionCode.php?$varName=$varValue");
+		} else {
+			header("Location: generateCompletionCode.php");
+		}
+	}
+?>
+
+<html>
+
+<body>
 <!--
    Copyright 2012 Adam Darlow and Gideon Goldin
 
@@ -20,20 +35,7 @@
 <!-- This page can be used to test whether SurveyAccess.php sends you where you intend and what variables are set. In order to reach this page through SurveyForm.php, add it to the SurveySites database along with an identifier (e.g. "test"). If you then go to SurveyForm.php with the parameter "survey=test 1", it will send you to this page. The "1" is arbitrary but required. SurveyForm expects a specific survey identifier but this page doesn't care what it is. -->
 	<p>TurkGate let you through to this page. If you try again with the same worker ID and group it should stop you.</p>
 	
-	<p>To test completion code generation, click the link below. In order to include a variable in the completion code, first enter its name and value and click Submit.</p>
- 	<?php
-		
-		if(isset($_POST['submit']))
-		{
-		    $varName = urlencode($_POST['varName']);
-		    $varValue = urlencode($_POST['varValue']);
-		    echo "<p><a href = 'generateCompletionCode.php?$varName=$varValue'>Completion code</a></p>";
-		}
-		else 
-		{
-			echo "<p><a href = 'generateCompletionCode.php'>Completion code</a></p>";
-		}
-	?>
+	<p>To test completion code generation, click the button below. If you want to include a variable in the completion code, first enter its name and value.</p>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<table>
 			<tr>
@@ -53,7 +55,7 @@
 	   			</td>
 		   </tr>
 	   </table>
-	   <input type="submit" name="submit" value="Submit"><br>
+	   <input type="submit" name="submit" value="Go to completion code page"><br>
 	</form> 	 	
 	<br><br>
 	<p>Below is a log of the system state (for debugging purposes).</p>
