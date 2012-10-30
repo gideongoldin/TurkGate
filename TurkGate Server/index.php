@@ -1,20 +1,18 @@
 <?php 
 session_start();
 
+
 // Get TurkGate's database configuration
-if (!include ('turkGateConfig.php')) {
-    header('Location: install.php');
-    exit();
-}
+$installed = @include('turkGateConfig.php');
 
 // If the form was submitted, test survey access
 if (isset($_POST['submit'])) {
     $workerID = urlencode($_POST['workerID']);
     $groupName = urlencode($_POST['groupName']);
-	$surveyUrl = urlencode($_POST['surveyURL']);
+	$surveyURL = urlencode($_POST['surveyURL']);
 	$source = urlencode($_POST['source']);
 
-    header("Location: surveyAccess.php?assignmentId=test&workerId=$workerID&group=$groupName&survey=$surveyUrl&source=$source");
+    header("Location: surveyAccess.php?assignmentId=test&workerId=$workerID&group=$groupName&survey=$surveyURL&source=$source");
 	exit();
 }
 ?>
@@ -26,9 +24,22 @@ if (isset($_POST['submit'])) {
   <body>
   	<h1>TurkGate</h1>
   	<h2>Installation</h2>
-    <p>TurkGate has already been installed!</p>
+  	<?php
+  	    if ($installed) {
+  	        echo '<p>TurkGate has already been installed!</p>';
+  	    } else {
+  	        echo '<p>TurkGate is not yet installed. Go ' 
+  	            . '<a href="install.php">here</a> to install it.</p>';
+  	    }
+    ?>
     <br>
     <h2>Testing</h2>
+    <?php
+        if (!$installed) {
+        	echo '<h3>***** Testing is unlikely to work without installing ' 
+        	    . 'TurkGate first. *****</h3>';
+        }
+	?>
     <p>To test the installation, enter a workerId and group name below and click Test.</p>
       <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
       <table>
