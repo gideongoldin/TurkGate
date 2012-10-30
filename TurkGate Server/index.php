@@ -1,4 +1,5 @@
-<?php session_start();
+<?php 
+session_start();
 
 // Get TurkGate's database configuration
 if (!include ('turkGateConfig.php')) {
@@ -59,9 +60,15 @@ if (isset($_POST['submit'])) {
       	Also specify whether you plan to create an external HIT or use the 
       	Javascript template.
       </p>
-      <input type="radio" name="source" value="ext">External HIT<input/>
-      <input type="radio" name="source" value="js">Javascript<input/>
-      <input type="submit" name="submit" value="Test">
+      <p>
+        <input type="radio" name="source" value="ext">External HIT</input>
+      </p>
+      <p>
+      	<input type="radio" name="source" value="js">Javascript</input>
+      </p>
+      <p>
+      	<input type="submit" name="submit" value="Test">
+      </p>
     </form>
 
     <h5>

@@ -1,4 +1,6 @@
-<?php session_start();
+<?php 
+
+session_start();
 
 if (isset($_POST['submit'])) {
     if (strlen($_POST['varName']) > 0) {
