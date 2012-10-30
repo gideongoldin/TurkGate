@@ -1,6 +1,20 @@
-<?php 
-session_start();
+<?php session_start();
 
+/*
+Copyright 2012 Adam Darlow and Gideon Goldin
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 
 // Get TurkGate's database configuration
 $installed = @include('turkGateConfig.php');
@@ -60,7 +74,7 @@ if (isset($_POST['submit'])) {
           <td>
             <input type="text" name="surveyURL" value="test">
           </td>
-          <td><i>The default sends you to a TurkGate test page.</i></td>
+          <td><i>(The default sends you to a TurkGate test page.)</i></td>
         </tr>
       </table>
       <p>
