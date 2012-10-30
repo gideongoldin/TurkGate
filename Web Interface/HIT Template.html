@@ -15,8 +15,9 @@ limitations under the License.
 
 -->
 <script type="text/javascript">
-  var survey = "test 1";
+  var surveyURL = "test";
   var group = "testing js";
+  var turkGateURL = "http://YOUR.INSTALLATION.EDU"
 
   // dynamically creates the text that warns workers about the policy of access
   // restriction
@@ -69,12 +70,12 @@ limitations under the License.
     }
 
     var phpArgs = "source=js&";
-    phpArgs += "survey=" + myEncode(survey);
+    phpArgs += "survey=" + myEncode(surveyURL);
     phpArgs += "&group=" + myEncode(group);
     phpArgs += "&workerId=" + urlVars["workerId"];
     phpArgs += "&assignmentId=" + urlVars["assignmentId"];
 
-    return '<a target="_blank" href="http://YOUR.INSTALLATION.EDU/surveyAccess.php?' 
+    return '<a target="_blank" href="' + turkGateURL + '/surveyAccess.php?' 
            + phpArgs + '">Click here to open the study.</a>';
   }
 
@@ -100,7 +101,7 @@ limitations under the License.
 </p>
 <p>
   At the end of the survey you will receive a confirmation code. Submit that 
-  confirmation code in the text entry box below in order to recieve credit for 
+  confirmation code in the text entry box below in order to receive credit for 
   this HIT.
 </p>
 <p>
