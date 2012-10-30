@@ -11,10 +11,10 @@ if (!include ('turkGateConfig.php')) {
 if (isset($_POST['submit'])) {
     $workerID = urlencode($_POST['workerID']);
     $groupName = urlencode($_POST['groupName']);
-	$surveyUrl = urlencode($_POST['surveyUrl']);
+	$surveyUrl = urlencode($_POST['surveyURL']);
 	$source = urlencode($_POST['source']);
 
-    header("Location: surveyAccess.php?assignmentId=test&workerId=$workerID&group=$groupName&survey=$surveyUrl");
+    header("Location: surveyAccess.php?assignmentId=test&workerId=$workerID&group=$groupName&survey=$surveyUrl&source=$source");
 	exit();
 }
 ?>
@@ -44,24 +44,20 @@ if (isset($_POST['submit'])) {
           <input type="text" name="groupName" value="test group">
           </td>
         </tr>
-      </table>
-      <input type="submit" name="submit" value="Test">
-      <br>
-      <p>If you have a specific survey to test, you can enter its URL below.</p>
-      <table>
         <tr>
           <td> Survey URL: </td>
           <td>
-          <input type="text" name="surveyURL" value="test">
+            <input type="text" name="surveyURL" value="test">
           </td>
+          <td><i>The default sends you to a TurkGate test page.</i></td>
         </tr>
       </table>
       <p>
-      	Also specify whether you plan to create an external HIT or use the 
-      	Javascript template.
+      	You can also specify what kind of HIT you want to test. This changes 
+      	whether TurkGate displays a link to the survey or redirects to it.
       </p>
       <p>
-        <input type="radio" name="source" value="ext">External HIT</input>
+        <input type="radio" name="source" value="ext" checked>External HIT</input>
       </p>
       <p>
       	<input type="radio" name="source" value="js">Javascript</input>
