@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!--
 Copyright 2012 Adam Darlow and Gideon Goldin
 
@@ -14,19 +16,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<?php session_start(); ?>
 <!doctype html>
 <head>
   <title>TurkGate</title>
   <script>
-    //<![CDATA[
     function exit() {
       return "Please verify that you have saved the code on this page before leaving!";
     }
 
-
     window.onbeforeunload = exit;
-    //]]>
   </script>
   <style type="text/css">
 	body {

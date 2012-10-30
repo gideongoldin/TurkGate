@@ -89,8 +89,8 @@
 				mysql_close($connection);
 
 				// Installation complete
-				echo "<h1>TurkGate</h1><h2>Installation</h2><p>TurkGate Installation successful!</p>";
-				echo "<p>You may now close this window.</p>" . $footer;
+				echo '<h1>TurkGate</h1><h2>Installation</h2><p>TurkGate Installation successful!</p>';
+				echo '<p>Click <a href="index.php">here</a> to go to the main TurkGate page.</p>' . $footer;
 				exit();
 			}
 		}
@@ -106,7 +106,7 @@
 			Please enter your database (e.g., MySQL) login information below.
 		</p>
 		<p>
-			Installing TurKGate will automatically add a table ('SurveyRequest') to the database specified below.
+			Installing TurkGate will automatically add a table ('SurveyRequest') to the database specified below.
 		</p>
 
 		<form method="post" action="install.php">
