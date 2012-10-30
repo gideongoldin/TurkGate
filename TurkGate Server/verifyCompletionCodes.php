@@ -36,36 +36,8 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
-=============================================================================
-
-When you are ready to verify survey completion, download the Batch results file
-for your HIT from within Mechanical Turk. This comma-separated-value file will
-contain previously generated completion codes.
-
-Copy and paste the entire contents of this file into the text area at
-http://yourexternalserver.com/youroptionalsurveypath/verifyCompletionCodes.php,
-and press Verify codes. Be sure to include the blank new-line character at the
-end of the file. Note that the `parsecsv-0.3.2`
-(http://code.google.com/p/parsecsv-for-php/) folder must reside in this same
-directory.
-
-The script will then automatically verify all codes. First, it checks whether
-the information in the first half of a code (e.g., Worker ID, Group Name, and
-any custom key-value pairs)--when combined with a private salt and
-hashed--matches the second half of the code. This step helps prevent users from
-fabricating their own codes, since users do not know your private salt. The
-script then checks if any codes are duplicated.
-
-Upon pressing Verify codes, you will see a table of completion codes (including
-the aforementioned values), elapsed time for the HIT, and submit time for the
-HIT. This can be helpful in quickly detecting suspiciously fast entries, or in
-comparing submit times for duplicate rows.
-
-Like in generateCompletionCode.php, be sure to sure to substitute your own salt
-value in the PHP file in order to ensure proper security. These two salts must
-be identical.
 -->
+
 <!doctype html>
 <head>
   <title>TurkGate</title>

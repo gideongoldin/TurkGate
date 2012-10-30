@@ -13,40 +13,6 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-
- */
-/*
- This page, together with the necessary databases, enables an Amazon Mechanical
- Turk (AMT) requester to exclude workers that have already performed another
- similar HIT. This is useful for behavioral and social scientists who need to
- ensure that their subjects have no prior experience with their task and have
- no knowledge of the hypotheses being tested. If you have other complex
- requirements regarding who participates in your studies, we recommend either the
-built-in qualification system in AMT or Turkit
-(http://groups.csail.mit.edu/uid/turkit/).
-
- The page is intended to block access in three situations:
- 1. Previews - No previewing of the survey is allowed, so that workers have no
-reason to start the survey, leave it and start over again.
- 2. Multiple HITs in a group - Often an experiment belongs to a set of similar
-experiments and you don't want participants in one experiment to also participate
-in others. By giving them the same group name, this page will prevent that. It
-also has the added benefit of enabling the researcher to run a single study
-across multiple HITs without worrying about repeat participants.
- 3. Re-entry - If a worker leaves a survey in the middle, this page doesn't allow
-them to return to the survey through the HIT. The reasoning here is the same as
-for previewing. Note that they probably have the survey URL in their history and
-could bypass this page.
-
- This page can be used in conjunction with AMT in two different ways, by
-embedding it as an external HIT or by creating a regular HIT with javascript code
-that links to this page and sends the right parameters. The code bundle with this
-page should include a template for the javascript that does this. It should also
-include a template for all that is needed to create an external HIT using the
-command line tools (http://aws.amazon.com/developertools/694).
-
- Finally, this page also prepares cookies used by the completion code page (also
-included) when generating completion codes.
  */
 
 session_start();
