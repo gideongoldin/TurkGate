@@ -45,7 +45,7 @@ limitations under the License.
 			// Select the database
 			mysql_select_db($databaseName, $connection) or die("<h1>TurkGate</h1><h2>Installation</h2><p>Error selecting database: " . mysql_error() . "</p><p><a href='javascript:history.back()'>Go back</a></p>" . $footer);
 			
-			// Check if the uninstall box was checked
+			// Check if the uninstall form was submitted
 			if(isset($_POST['uninstallSubmit'])) {
 				
 					echo '<h1>TurkGate</h1><h2>Uninstallation</h2>';
@@ -74,7 +74,7 @@ limitations under the License.
 					echo $footer;
 				
 			} else {
-				// The uninstall checkbox was not checked, so continue install
+				// The installation form was submitted
 				
 				// Create the TurkGate configuration file
 				$configFileName = "turkGateConfig.php";
