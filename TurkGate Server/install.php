@@ -66,9 +66,9 @@ limitations under the License.
 					$configFileName = "turkGateConfig.php";
 					$result = unlink($configFileName);
 					if(!$result) {
-						echo '<p>TurkGate did not remove the file turkGateConfig.php. Might it have already been removed?</p>';
+						echo '<p>TurkGate did not remove the file turkGateConfig.php. Might it have already been removed?</p><p>Click <a href="index.php">here</a> to go to the main TurkGate page.</p>';
 					} else {
-						echo '<p>TurkGate removed the file turkGateConfig.php.</p>';
+						echo '<p>TurkGate removed the file turkGateConfig.php.</p><p>Click <a href="index.php">here</a> to go to the main TurkGate page.</p>';
 					}
 					
 					echo $footer;
