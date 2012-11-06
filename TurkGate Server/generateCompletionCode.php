@@ -64,9 +64,8 @@ limitations under the License.
       echo '<header><h1>Thank you!</h1></header>';
       echo '<p>Please enter the code below into Mechanical Turk:</p>';
       echo '<p id="code">' . $completionCode . '</p>';
-      echo '<footer><h6>Powered by <a ' 
-        . 'href="https://github.com/gideongoldin/TurkGate" title="TurkGate" ' 
-        . 'target="_blank">TurkGate</a></h6></footer>';
+      echo "<footer><h5>&copy; 2012 <a href='https://github.com/gideongoldin/TurkGate' target='blank'>TurkGate</a></h5></footer>";
+
   ?>
 </body>
 </html>

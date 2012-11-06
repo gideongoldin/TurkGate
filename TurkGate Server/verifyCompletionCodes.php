@@ -83,11 +83,22 @@ THE SOFTWARE.
 
   // Parse user-submitted results
   if (isset($_POST['submit'])) {
-  $results = stripslashes($_POST["results"]);
-  require_once('parsecsv-0.3.2/parsecsv.lib.php');
-  $csv = new parseCSV();
-  $csv->delimiter = ",";
-  $csv->parse($results);
+  	$results = stripslashes($_POST["results"]);
+
+	// Add a blank new line in case one was not included
+	// Necessary for CSV parsing
+	$results .= "\n"; 
+	
+	if (!include('lib/parsecsv.lib.php')) {
+        echo '<p>TurkGate has encountered a configuration error. Please ' 
+            . 'verify that the following file is present: lib/parsecsv.lib.php</p>'
+			. "<p>Please <a href='javascript:history.back()'>go back</a> and re-submit.</p>"
+			. "<h5>&copy; 2012 <a href='https://github.com/gideongoldin/TurkGate' target='blank'>TurkGate</a></h5>";
+    }
+	
+	$csv = new parseCSV();
+	$csv->delimiter = ",";
+	$csv->parse($results);
   ?>
 
   <table>
@@ -98,42 +109,52 @@ THE SOFTWARE.
       <th>Status</th>
     </tr>
 
-    <?php // Extract values from results file
+    <?php 
+    // Extract values from results file
     // For each element in the parsed CSV row, note its key/value(row) pair
     foreach ($csv->data as $key => $row) :
-        echo '<tr>';
-        // Display basic information
-        // NOTE: Mechanical Turk HIT template's completion code input box must
-        // be named 'completionCode'
-        echo '<td>' . $row['Answer.completionCode'] . '</td>';
-        echo '</td><td>' . floor($row['WorkTimeInSeconds'] / 60) . 'min ' 
-          . ($row['WorkTimeInSeconds'] % 60) . 's' . '</td>';
-        echo '<td>' . $row['SubmitTime'] . '</td>';
+        // Include if row is non-blank
+		if(strlen($row['Answer.completionCode']) > 0) {
+		
+			// Display basic information
+	        // NOTE: Mechanical Turk HIT template's completion code input box must
+	        // be named 'completionCode'
+ 			echo '<tr>';
+	        echo '<td>' . $row['Answer.completionCode'] . '</td>';
+	        echo '</td><td>' . floor($row['WorkTimeInSeconds'] / 60) . 'min ' 
+	          . ($row['WorkTimeInSeconds'] % 60) . 's' . '</td>';
+	        echo '<td>' . $row['SubmitTime'] . '</td>';
 
-        // Check if latter half of code is hashing of first half and salt
-        echo '<td>';
-        $codeIsValid = true;
-        $completionCodeArray = explode(':', $row['Answer.completionCode']);
-        if (sha1($completionCodeArray[0] . $salt) != $completionCodeArray[1]) {
-            echo '<span class="invalid">INVALID</span>';
-            $codeIsValid = false;
-        }
+	        // Check if latter half of code is hashing of first half and salt
+	        echo '<td>';
+	        $codeIsValid = true;
+	        $completionCodeArray = explode(':', $row['Answer.completionCode']);
+	        if (sha1($completionCodeArray[0] . $salt) != $completionCodeArray[1]) {
+	            echo '<span class="invalid">INVALID HASHING</span>';
+	            $codeIsValid = false;
+	        }
 
-        // Search for duplicate codes
-        $codeIsUnique = true;
-        foreach ($csv->data as $keyInner => $rowInner) {
-            if ($rowInner['Answer.completionCode'] == $row['Answer.completionCode'] 
-                && $key != $keyInner) {
-                echo '<span class="invalid">DUPLICATE</span>';
-                $codeIsUnique = false;
-            }
-        }
+	        // Search for duplicate codes
+	        $codeIsUnique = true;
+	        foreach ($csv->data as $keyInner => $rowInner) {
+	            if ($rowInner['Answer.completionCode'] == $row['Answer.completionCode'] 
+	                && $key != $keyInner) {
+		
+					// Only include duplicate tag if not already present
+					if($codeIsUnique) {
+		                echo '<span class="invalid">DUPLICATE(S) FOUND</span>';
+		                $codeIsUnique = false;
+					}
+	            }
+	        }
 
-        if ($codeIsValid && $codeIsUnique) {
-            echo '<span class="valid">VALID</span>';
-        }
-        echo '</td>';
-        echo '</tr>';
+	        if ($codeIsValid && $codeIsUnique) {
+	            echo '<span class="valid">VALID</span>';
+	        }
+	        echo '</td>';
+	        echo '</tr>';
+	
+		}
     endforeach;
     ?>
   </table>
@@ -156,14 +177,9 @@ THE SOFTWARE.
   ?>
 
   <footer>
-    <h6>
-      Powered by 
-      <a href="https://github.com/gideongoldin/TurkGate" title="TurkGate" 
-      target="_blank">
-      	TurkGate
-      </a>
-    </h6>
+    <h5>&copy; 2012 <a href='https://github.com/gideongoldin/TurkGate' target='blank'>TurkGate</a></h5>
   </footer>
+
 </body>
 </html>
 
