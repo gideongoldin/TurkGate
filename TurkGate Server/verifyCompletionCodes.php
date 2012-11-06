@@ -77,22 +77,22 @@ THE SOFTWARE.
   </header>
 
   <?php
-  // Prepare salt (replace 'shaker' with your own key)
+  // Prepare the salt (replace 'shaker' with your own key)
   // NOTE: This value must match that defined in verifyCompletionCode.php!
   $salt = 'shaker';
 
-  // Parse user-submitted results
+  // Parse the user-submitted results
   if (isset($_POST['submit'])) {
   	$results = stripslashes($_POST["results"]);
 
 	// Add a blank new line in case one was not included
-	// Necessary for CSV parsing
+	// This is required for proper CSV parsing
 	$results .= "\n"; 
 	
 	if (!include('lib/parsecsv.lib.php')) {
         echo '<p>TurkGate has encountered a configuration error. Please ' 
             . 'verify that the following file is present: lib/parsecsv.lib.php</p>'
-			. "<p>Please <a href='javascript:history.back()'>go back</a> and re-submit.</p>"
+			. "<p>=<a href='javascript:history.back()'>Go back</a>.</p>"
 			. "<h5>&copy; 2012 <a href='https://github.com/gideongoldin/TurkGate' target='blank'>TurkGate</a></h5>";
     }
 	
@@ -110,13 +110,13 @@ THE SOFTWARE.
     </tr>
 
     <?php 
-    // Extract values from results file
-    // For each element in the parsed CSV row, note its key/value(row) pair
+    // Extract values from user-submitted results
+    // For each row of the parsed CSV data, note key/value(row) pairs
     foreach ($csv->data as $key => $row) :
-        // Include if row is non-blank
+        // If there exists a completion code...
 		if(strlen($row['Answer.completionCode']) > 0) {
 		
-			// Display basic information
+			// Display some basic information
 	        // NOTE: Mechanical Turk HIT template's completion code input box must
 	        // be named 'completionCode'
  			echo '<tr>';
@@ -140,7 +140,7 @@ THE SOFTWARE.
 	            if ($rowInner['Answer.completionCode'] == $row['Answer.completionCode'] 
 	                && $key != $keyInner) {
 		
-					// Only include duplicate tag if not already present
+					// Only show one duplicate tag per record
 					if($codeIsUnique) {
 		                echo '<span class="invalid">DUPLICATE(S) FOUND</span>';
 		                $codeIsUnique = false;
@@ -153,7 +153,6 @@ THE SOFTWARE.
 	        }
 	        echo '</td>';
 	        echo '</tr>';
-	
 		}
     endforeach;
     ?>

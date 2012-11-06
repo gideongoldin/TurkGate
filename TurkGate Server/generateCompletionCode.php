@@ -48,24 +48,23 @@ limitations under the License.
       $inputString = 'w[' . $_COOKIE['Worker_ID'] . ']g[' 
                      . $_COOKIE['Group_Name'] . ']';
 
-      // Add any key-value pairs from the GET array to the input string.
+      // Add any key-value pairs from the GET array to the input string
       foreach ($_GET as $key => $value) {
           $inputString .= $key[0] . '[' . $value . ']';
       }
 
-      // Prepare salt (replace 'shaker' with your own key)
+      // Prepare the salt (replace 'shaker' with your own key)
       // NOTE: This value must match that defined in verifyCompletionCode.php!
       $salt = 'shaker';
 
       // Construct the completion code
       $completionCode = $inputString . ':' . sha1($inputString . $salt);
 
-      // Display code to the user
+      // Display the code to the user
       echo '<header><h1>Thank you!</h1></header>';
       echo '<p>Please enter the code below into Mechanical Turk:</p>';
       echo '<p id="code">' . $completionCode . '</p>';
       echo "<footer><h5>&copy; 2012 <a href='https://github.com/gideongoldin/TurkGate' target='blank'>TurkGate</a></h5></footer>";
-
   ?>
 </body>
 </html>

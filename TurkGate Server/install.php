@@ -35,7 +35,7 @@ limitations under the License.
 		
 		// Validate entries
 		if (empty($databaseHost) || empty($databaseName) || empty($databaseUsername) || empty($databasePassword)) {
-			// For HTMLn where n < 5
+			// Simple form validation for HTMLn where n < 5
 			echo "<h1>TurkGate</h1><h2>Installation</h2><p>Error: All fields are required. Please <a href='javascript:history.back()'>go back</a> and re-submit.</p>" . $footer;
 		} else {
 			
@@ -45,7 +45,7 @@ limitations under the License.
 			// Select the database
 			mysql_select_db($databaseName, $connection) or die("<h1>TurkGate</h1><h2>Installation</h2><p>Error selecting database: " . mysql_error() . "</p><p><a href='javascript:history.back()'>Go back</a></p>" . $footer);
 			
-			// Check if the uninstall form was submitted
+			// Check if the uninstall (vs. install) form was submitted
 			if(isset($_POST['uninstallSubmit'])) {
 				
 					echo '<h1>TurkGate</h1><h2>Uninstallation</h2>';
@@ -74,7 +74,7 @@ limitations under the License.
 					echo $footer;
 				
 			} else {
-				// The installation form was submitted
+				// The install (vs. uninstall) form was submitted
 				
 				// Create the TurkGate configuration file
 				$configFileName = "turkGateConfig.php";
@@ -104,7 +104,7 @@ limitations under the License.
 				mysql_query($sql, $connection) or die("<p>Error creating table: " . mysql_error() . "</p><p><a href='javascript:history.back()'>Go back</a></p>" . $footer);
 				mysql_close($connection);
 
-				// Installation complete
+				// Installation is now complete
 				echo '<h1>TurkGate</h1><h2>Installation</h2><p>TurkGate Installation successful!</p>';
 				echo '<p>Click <a href="index.php">here</a> to go to the main TurkGate page.</p>' . $footer;
 				exit();
