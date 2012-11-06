@@ -1,6 +1,6 @@
 ## Introduction
 TurkGate, or Grouping and Access Tools for External surveys (for use
-with Amazon Mechanical Turk), for researchers that recruit through 
+with Amazon Mechanical Turk), is for researchers that recruit through 
 Mechanical Turk but run their studies on other sites. It provides better 
 control and verification of Mechanical Turk workers' access to an 
 external site. TurkGate was created for the purpose of conducting 
