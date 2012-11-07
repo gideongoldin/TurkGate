@@ -32,6 +32,7 @@ limitations under the License.
 		$databaseName = isset($_POST['databaseName']) ? $_POST['databaseName'] : "";
 		$databaseUsername = isset($_POST['databaseUsername']) ? $_POST['databaseUsername'] : "";
 		$databasePassword = isset($_POST['databasePassword']) ? $_POST['databasePassword'] : "";
+		$baseURL = isset($_POST['turkGateURL']) ? $_POST['turkGateURL'] : "";
 		
 		// Validate entries
 		if (empty($databaseHost) || empty($databaseName) || empty($databaseUsername) || empty($databasePassword)) {
@@ -68,7 +69,7 @@ limitations under the License.
 					if(!$result) {
 						echo '<p>TurkGate did not remove the file turkGateConfig.php. Might it have already been removed?</p><p>Click <a href="index.php">here</a> to go to the main TurkGate page.</p>';
 					} else {
-						echo '<p>TurkGate removed the file turkGateConfig.php.</p><p>Click <a href="index.php">here</a> to go to the main TurkGate page.</p>';
+						echo '<p>TurkGate removed the file turkGateConfig.php.</p><p>Click <a href="admin.php">here</a> to go to the TurkGate admin page.</p>';
 					}
 					
 					echo $footer;
@@ -86,6 +87,7 @@ limitations under the License.
 			define('DATABASE_NAME', '" . $databaseName . "');
 			define('DATABASE_USERNAME', '" . $databaseUsername . "');
 			define('DATABASE_PASSWORD', '" . $databasePassword . "');
+			define('BASE_URL', '" . $baseURL . "/TurkGate%20Server');
 			?>";
 				fwrite($configFileHandle, $configFileString);
 				fclose($configFileHandle);
@@ -106,7 +108,7 @@ limitations under the License.
 
 				// Installation is now complete
 				echo '<h1>TurkGate</h1><h2>Installation</h2><p>TurkGate Installation successful!</p>';
-				echo '<p>Click <a href="index.php">here</a> to go to the main TurkGate page.</p>' . $footer;
+				echo '<p>Click <a href="admin.php">here</a> to go to the TurkGate admin page.</p>' . $footer;
 				exit();
 			}
 		}
@@ -131,6 +133,12 @@ limitations under the License.
 				<label for="databaseHost">Database Host:</label>
 				<input type="text" name="databaseHost" value="localhost" required="required">
 				<i>(This value is usually 'localhost')</i>
+			</p>
+			
+			<p>
+				<label for="turkGateURL">TurkGate URL:</label>
+				<input type="text" name="turkGateURL" required="required">
+				<i>(The URL of the directory you pasted TurkGate into. E.g., http://YOURDOMAIN.EDU/TURKGATE)</i>
 			</p>
 			
 			<p>
