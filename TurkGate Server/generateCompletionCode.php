@@ -1,4 +1,12 @@
-<?php session_start(); ?>
+<?php 
+    session_start(); 
+
+    if (!include('turkGateConfig.php')) {
+        die('A configuration error occurred. ' 
+          . 'Please report this error to the HIT requester.');
+    }
+    
+?>
 
 <!--
 Copyright 2012 Adam Darlow and Gideon Goldin
@@ -44,21 +52,21 @@ limitations under the License.
 </head>
 <body>
   <?php
+      $encryptionKey = constant('KEY');
+	  
+	  $workerId = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($encryptionKey), base64_decode($_COOKIE['Worker_ID']), MCRYPT_MODE_CBC, md5(md5($encryptionKey))), "\0");
+	  $groupName = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($encryptionKey), base64_decode($_COOKIE['Group_Name']), MCRYPT_MODE_CBC, md5(md5($encryptionKey))), "\0");
+  
       // Add the Worker ID and the Group name to the input string
-      $inputString = 'w[' . $_COOKIE['Worker_ID'] . ']g[' 
-                     . $_COOKIE['Group_Name'] . ']';
+      $inputString = "w[$workerId]g[$groupName]";
 
       // Add any key-value pairs from the GET array to the input string
       foreach ($_GET as $key => $value) {
-          $inputString .= $key[0] . '[' . $value . ']';
+          $inputString .= $key[0]."[$value]";
       }
 
-      // Prepare the salt (replace 'shaker' with your own key)
-      // NOTE: This value must match that defined in verifyCompletionCode.php!
-      $salt = 'shaker';
-
       // Construct the completion code
-      $completionCode = $inputString . ':' . sha1($inputString . $salt);
+      $completionCode = $inputString . ':' . sha1($inputString . $encryptionKey);
 
       // Display the code to the user
       echo '<header><h1>Thank you!</h1></header>';

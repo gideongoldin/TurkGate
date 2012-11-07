@@ -124,11 +124,16 @@ if ($_GET['assignmentId'] == 'ASSIGNMENT_ID_NOT_AVAILABLE'
     } else {
         // ACCESS GRANTED
 
-        // save the worker ID for later creating the completion code
-        $_SESSION['Worker_ID'] = $workerId;
-        $_SESSION['Group_Name'] = $groupName;
-        setcookie('Worker_ID', $workerId, time() + (24 * 60 * 60), '/');
-        setcookie('Group_Name', $groupName, time() + (24 * 60 * 60), '/');
+        // save the worker ID and group name for later creating the completion code
+        $key = constant('KEY');
+		$encryptedWorkerId = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 
+		  md5($key), $workerId, MCRYPT_MODE_CBC, md5(md5($key))));
+		$encryptedGroupName = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 
+		  md5($key), $groupName, MCRYPT_MODE_CBC, md5(md5($key))));
+        $_SESSION['Worker_ID'] = $encryptedWorkerId;
+        $_SESSION['Group_Name'] = $encryptedGroupName;
+        setcookie('Worker_ID', $encryptedWorkerId, time() + (24 * 60 * 60), '/');
+        setcookie('Group_Name', $encryptedGroupName, time() + (24 * 60 * 60), '/');
 
         // Add the access to the database to block future access
         $query = "INSERT INTO SurveyRequest " 

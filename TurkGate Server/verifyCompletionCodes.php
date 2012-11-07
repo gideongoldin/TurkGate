@@ -1,3 +1,13 @@
+<?php 
+    session_start(); 
+
+    if (!include('turkGateConfig.php')) {
+        die('A configuration error occurred. ' 
+          . 'Please report this error to the HIT requester.');
+    }
+    
+?>
+
 <!--
 Copyright 2012 Adam Darlow and Gideon Goldin
 
@@ -77,28 +87,26 @@ THE SOFTWARE.
   </header>
 
   <?php
-  // Prepare the salt (replace 'shaker' with your own key)
-  // NOTE: This value must match that defined in verifyCompletionCode.php!
-  $salt = 'shaker';
+      $encryptionKey = constant('KEY');
+	  
+      // Parse the user-submitted results
+      if (isset($_POST['submit'])) {
+  	      $results = stripslashes($_POST["results"]);
 
-  // Parse the user-submitted results
-  if (isset($_POST['submit'])) {
-  	$results = stripslashes($_POST["results"]);
-
-	// Add a blank new line in case one was not included
-	// This is required for proper CSV parsing
-	$results .= "\n"; 
+	      // Add a blank new line in case one was not included
+	      // This is required for proper CSV parsing
+	      $results .= "\n"; 
 	
-	if (!include('lib/parsecsv.lib.php')) {
-        echo '<p>TurkGate has encountered a configuration error. Please ' 
-            . 'verify that the following file is present: lib/parsecsv.lib.php</p>'
-			. "<p>=<a href='javascript:history.back()'>Go back</a>.</p>"
-			. "<h5>&copy; 2012 <a href='https://github.com/gideongoldin/TurkGate' target='blank'>TurkGate</a></h5>";
-    }
+	      if (!include('lib/parsecsv.lib.php')) {
+              echo '<p>TurkGate has encountered a configuration error. Please ' 
+                  . 'verify that the following file is present: lib/parsecsv.lib.php</p>'
+			      . "<p>=<a href='javascript:history.back()'>Go back</a>.</p>"
+			      . "<h5>&copy; 2012 <a href='https://github.com/gideongoldin/TurkGate' target='blank'>TurkGate</a></h5>";
+          }
 	
-	$csv = new parseCSV();
-	$csv->delimiter = ",";
-	$csv->parse($results);
+	      $csv = new parseCSV();
+	      $csv->delimiter = ",";
+	      $csv->parse($results);
   ?>
 
   <table>
@@ -110,55 +118,57 @@ THE SOFTWARE.
     </tr>
 
     <?php 
-    // Extract values from user-submitted results
-    // For each row of the parsed CSV data, note key/value(row) pairs
-    foreach ($csv->data as $key => $row) :
-        // If there exists a completion code...
-		if(strlen($row['Answer.completionCode']) > 0) {
+          // Extract values from user-submitted results
+          // For each row of the parsed CSV data, note key/value(row) pairs
+          foreach ($csv->data as $key => $row) :
+              // If there exists a completion code...
+		      if(strlen($row['Answer.completionCode']) > 0) {
 		
-			// Display some basic information
-	        // NOTE: Mechanical Turk HIT template's completion code input box must
-	        // be named 'completionCode'
- 			echo '<tr>';
-	        echo '<td>' . $row['Answer.completionCode'] . '</td>';
-	        echo '</td><td>' . floor($row['WorkTimeInSeconds'] / 60) . 'min ' 
-	          . ($row['WorkTimeInSeconds'] % 60) . 's' . '</td>';
-	        echo '<td>' . $row['SubmitTime'] . '</td>';
+			      // Display some basic information
+	              // NOTE: Mechanical Turk HIT template's completion code input box must
+	              // be named 'completionCode'
+ 			      echo '<tr>';
+	              echo '<td>' . $row['Answer.completionCode'] . '</td>';
+	              echo '</td><td>' . floor($row['WorkTimeInSeconds'] / 60) . 'min ' 
+	                  . ($row['WorkTimeInSeconds'] % 60) . 's' . '</td>';
+	              echo '<td>' . $row['SubmitTime'] . '</td>';
 
-	        // Check if latter half of code is hashing of first half and salt
-	        echo '<td>';
-	        $codeIsValid = true;
-	        $completionCodeArray = explode(':', $row['Answer.completionCode']);
-	        if (sha1($completionCodeArray[0] . $salt) != $completionCodeArray[1]) {
-	            echo '<span class="invalid">INVALID HASHING</span>';
-	            $codeIsValid = false;
-	        }
+	              // Check if latter half of code is hashing of first half and encryption key
+	              echo '<td>';
+	              $codeIsValid = true;
+	              $completionCodeArray = explode(':', $row['Answer.completionCode']);
+	              if (sha1($completionCodeArray[0] . $encryptionKey) != $completionCodeArray[1]) {
+	                  echo '<span class="invalid">INVALID HASHING</span>';
+	                  $codeIsValid = false;
+	              }
 
-	        // Search for duplicate codes
-	        $codeIsUnique = true;
-	        foreach ($csv->data as $keyInner => $rowInner) {
-	            if ($rowInner['Answer.completionCode'] == $row['Answer.completionCode'] 
-	                && $key != $keyInner) {
+	              // Search for duplicate codes
+	              $codeIsUnique = true;
+	              foreach ($csv->data as $keyInner => $rowInner) {
+	                  if ($rowInner['Answer.completionCode'] == $row['Answer.completionCode'] 
+	                      && $key != $keyInner) {
 		
-					// Only show one duplicate tag per record
-					if($codeIsUnique) {
-		                echo '<span class="invalid">DUPLICATE(S) FOUND</span>';
-		                $codeIsUnique = false;
-					}
-	            }
-	        }
+					      // Only show one duplicate tag per record
+					      if($codeIsUnique) {
+		                      echo '<span class="invalid">DUPLICATE(S) FOUND</span>';
+		                      $codeIsUnique = false;
+					      }
+	                  }
+	              }
 
-	        if ($codeIsValid && $codeIsUnique) {
-	            echo '<span class="valid">VALID</span>';
-	        }
-	        echo '</td>';
-	        echo '</tr>';
-		}
-    endforeach;
+	              if ($codeIsValid && $codeIsUnique) {
+	                  echo '<span class="valid">VALID</span>';
+	              }
+	              echo '</td>';
+	              echo '</tr>';
+		      }
+          endforeach;
     ?>
   </table>
 
-  <?php } else { ?>
+  <?php 
+      } else { 
+  ?>
   <p>
     Copy and paste the entire contents of your downloaded Mechanical Turk 
     batch results file into the text area below:
@@ -172,7 +182,7 @@ THE SOFTWARE.
     </div>
   </form>
   <?php
-}
+      }
   ?>
 
   <footer>
