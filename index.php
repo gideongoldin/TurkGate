@@ -71,6 +71,7 @@
 
 	// Check if TurkGate is installed
 	$installed = @include('config.php');
+	
 	if(!installed) {
 		echo '<p>TurkGate does not appear to be install. See your administrator.</p><p>Go <a href="index.php">back</a>.</p>';
 		echo '<h5>Powered by <a href=http://gideongoldin.github.com/TurkGate/">TurkGate</a></h5>';
@@ -98,7 +99,8 @@
   </head>
   <body>
   	<h1>TurkGate</h1>
-  	<h2>HIT Generation Page</h2>
+  	<hr />
+	<h2>HIT Generation</h2>
 
 	<p>
 		From here you may generate the HTML code for your Web Interface HIT, or download files for use with the Command Line Tool.
@@ -120,7 +122,7 @@
 			<input type="text" name="groupName" value=<?php echo "'$groupName'"; ?> autofocus="autofocus" required="required">
 		</p>
 
-		<h3>For Mechanical Turk Web Interface: </h3>
+		<h4>For Mechanical Turk Web Interface: </h4>
 		
 		<p>Generate the HTML code to paste into your HIT using the values specified above.
 		Full instructions are on the <a href="http://gideongoldin.github.com/TurkGate/" target="blank">TurkGate Wiki</a>.</p>
@@ -137,7 +139,7 @@
 			}
 		?>
 		
-		<h3>For Mechanical Turk Command Line Tools: </h3>
+		<h4>For Mechanical Turk Command Line Tools: </h4>
 		
 		<p>Download the files for creating your HIT using the values specified above.
 		Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Command-Line-Tools" target="blank">TurkGate Wiki</a>.</p>
@@ -147,6 +149,23 @@
 		<input type="submit" name="downloadCLTFile" value="survey.question">
 	</form>
 	
+	<hr />
+	<h2>Completion Codes</h2>
+
+	<p>			
+		To automatically generate completion codes at the end of your surveys, 
+		redirect your workers to the following URL: <a href="#"><?php echo constant('BASE_URL'); ?>/codes/generate.php</a>.
+	</p>
+	
+	<p>
+		Click <a href="codes/verify.php">here</a> to verify completion codes.
+	</p>
+	
+	<p>
+		Visit the TurkGate Wiki pages on <a href="https://github.com/gideongoldin/TurkGate/wiki/Completion-Code-Generation" target="blank">Completion code generation</a> and <a href="https://github.com/gideongoldin/TurkGate/wiki/Completion-Code-Verification" target="blank">Completion code verification</a> for more information.
+	</p>
+	
+	<hr />
     <h5>
       Powered by <a href='http://gideongoldin.github.com/TurkGate/'>TurkGate</a>
     </h5>

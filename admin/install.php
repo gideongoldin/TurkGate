@@ -143,7 +143,7 @@ limitations under the License.
 			<p>
 				<label for="turkGateURL">TurkGate URL:</label>
 				<input type="text" name="turkGateURL" required="required">
-				<i>(The URL of the directory you pasted TurkGate into. E.g., http://YOURDOMAIN.EDU/TURKGATE)</i>
+				<i>(The URL of the directory you pasted TurkGate into. E.g., http://yourdomain.edu/TurkGate)</i>
 			</p>
 			
 			<p>

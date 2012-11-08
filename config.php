@@ -4,5 +4,5 @@
 			define('DATABASE_USERNAME', 'root');
 			define('DATABASE_PASSWORD', 'root');
 			define('BASE_URL', 'localhost:8888/TurkGate');
-			define('KEY', '6ebff2b21836dedca148686723883829b83dbcec');
+			define('KEY', '0fece1bc026d1091a261b4584904cca28914a96c');
 				?>
