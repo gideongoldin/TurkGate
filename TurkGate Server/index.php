@@ -1,35 +1,99 @@
-<?php session_start();
-
+<?php
 /*
-Copyright 2012 Adam Darlow and Gideon Goldin
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+	Copyright 2012 Adam Darlow and Gideon Goldin
 
-http://www.apache.org/licenses/LICENSE-2.0
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+
 */
 
-// Get TurkGate's database configuration
-$installed = @include('turkGateConfig.php');
+	if(isset($_POST['downloadCLTFile'])) {
+	
+		// Forces browser to download instead of open files
+		header("Content-Type: application/octet-stream");
+		
+		// Required for base URL
+		$installed = @include('turkGateConfig.php');
+		
+		//All of the variables in the files that need to be substitute
+		$substitutions = array( '[TurkGate location]' => constant('BASE_URL'));
+		$substitutions['[Survey URL]'] = $_POST['externalSurveyURL'];
+		$substitutions['[Group Name]'] = $_POST['groupName'];	
+			
+		// File name pulled from submit button values
+		$fileName = $_POST['downloadCLTFile'];
+		$file = '../Command Line Tools/' . $fileName;
+		
+		header("Content-Disposition: attachment; filename=" . $fileName);   
+		header("Content-Type: application/force-download");
+		header("Content-Type: application/octet-stream");
+		header("Content-Type: application/download");
+		header("Content-Description: File Transfer");            
+		header("Content-Length: " . filesize($file));
+		flush(); // this doesn't really matter.
+		$fp = fopen($file, "r");
+		while (!feof($fp)) {
+			
+			$text = fread($fp, 65536);
+			
+			// Perform the specified substitutions
+			// NOTE: Could fail with files larger than buffer size!
+			foreach ($substitutions as $original => $new) {
+			    $text = str_replace($original, $new, $text);
+			}
 
-// If the form was submitted, test survey access
-if (isset($_POST['submit'])) {
-    $workerID = urlencode($_POST['workerID']);
-    $groupName = urlencode($_POST['groupName']);
-	$surveyURL = urlencode($_POST['surveyURL']);
-	$source = urlencode($_POST['source']);
+			echo $text;
+			
+			// this is essential for large downloads
+		    flush(); 
+		} 
+		
+		fclose($fp);
+		exit;
+	}
 
-    header("Location: surveyAccess.php?assignmentId=test&workerId=$workerID&group=$groupName&survey=$surveyURL&source=$source");
-	exit();
-}
+	// Create a string for the HTML code
+	$webTemplateString = "";
+	
+	// Get the form values
+	$externalSurveyURL = isset($_POST['externalSurveyURL']) ? $_POST['externalSurveyURL'] : "";
+	$groupName = isset($_POST['groupName']) ? $_POST['groupName'] : "";	
+
+	// Check if TurkGate is installed
+	$installed = @include('turkGateConfig.php');
+	if(!installed) {
+		echo '<p>TurkGate does not appear to be install. See your administrator.</p><p>Go <a href="index.php">back</a>.</p>';
+		echo '<h5>Powered by <a href="https://github.com/gideongoldin/TurkGate">TurkGate</a></h5>';
+		exit;
+	} else {
+		if(isset($_POST['generateHTMLCode'])) {
+				// Modify the web template
+				// First read the entire file
+				$webTemplateString = file_get_contents('../Web Interface/HIT Template.html');
+
+				// Open the template
+				$fp = fopen('../Web Interface/HIT TemplateTest.html','w');
+
+				// Make the necessary changes
+				$webTemplateString = str_replace('surveyURL = "test";', 'surveyURL = "' . $_POST['externalSurveyURL'] .  '";', $webTemplateString);
+				$webTemplateString = str_replace('group = "testing js";', 'group = "' . $_POST['groupName'] .  '";', $webTemplateString);
+				$webTemplateString = str_replace('turkGateURL = "http://YOUR.INSTALLATION.EDU";', 'turkGateURL = "' . constant('BASE_URL') .  '";', $webTemplateString);
+				$copyright = "<!-- Copyright (c) 2012 Adam Darlow and Gideon Goldin. For more info, see http://gideongoldin.github.com/TurkGate/ -->\n";
+				$webTemplateString = preg_replace('/<!--[^>]*-->/', $copyright, $webTemplateString, 1);
+		}
+	}	
 ?>
+
 <!DOCTYPE HTML>
 <html>
   <head>
@@ -37,64 +101,57 @@ if (isset($_POST['submit'])) {
   </head>
   <body>
   	<h1>TurkGate</h1>
-  	<h2>Installation</h2>
-  	<?php
-  	    if ($installed) {
-  	        echo '<p>TurkGate has already been installed!</p>';
-  	    } else {
-  	        echo '<p>TurkGate is not yet installed. Go ' 
-  	            . '<a href="install.php">here</a> to install it.</p>';
-  	    }
-    ?>
-    <br>
-    <h2>Testing</h2>
-    <?php
-        if (!$installed) {
-        	echo '<h3>***** Testing is unlikely to work without installing ' 
-        	    . 'TurkGate first. *****</h3>';
-        }
-	?>
-    <p>To test the installation, enter a workerId and group name below and click Test.</p>
-      <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-      <table>
-        <tr>
-          <td> Worker Id: </td>
-          <td>
-          <input type="text" name="workerID" value="1">
-          </td>
-        </tr>
-        <tr>
-          <td> Group: </td>
-          <td>
-          <input type="text" name="groupName" value="test group">
-          </td>
-        </tr>
-        <tr>
-          <td> Survey URL: </td>
-          <td>
-            <input type="text" name="surveyURL" value="test">
-          </td>
-          <td><i>(The default sends you to a TurkGate test page.)</i></td>
-        </tr>
-      </table>
-      <p>
-      	You can also specify what kind of HIT you want to test. This changes 
-      	whether TurkGate displays a link to the survey or redirects to it.
-      </p>
-      <p>
-        <input type="radio" name="source" value="ext" checked>External HIT</input>
-      </p>
-      <p>
-      	<input type="radio" name="source" value="js">Javascript</input>
-      </p>
-      <p>
-      	<input type="submit" name="submit" value="Test">
-      </p>
-    </form>
+  	<h2>HIT Generation Page</h2>
 
+	<p>
+		From here you may generate the HTML code for your Web Interface HIT, or download files for use with the Command Line Tool.
+	</p>
+	
+	<form method="post" action="index.php">
+		
+		<p>
+			Please fill out the form below, and press generate.
+		</p>
+	
+		<p>
+			<label for="externalSurveyURL">External Survey URL:</label>
+			<input type="text" name="externalSurveyURL" value=<?php echo "'$externalSurveyURL'"; ?> autofocus="autofocus"> <!-- required="required" -->
+		</p>
+
+		<p>
+			<label for="groupName">Group Name:</label>
+			<input type="text" name="groupName" value=<?php echo "'$groupName'"; ?> autofocus="autofocus"> <!-- required="required" -->
+		</p>
+
+		<h3>For Mechanical Turk Web Interface: </h3>
+		
+		<p>Generate the HTML code to paste into your HIT using the values specified above.
+		Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Web-Interface" target="blank">TurkGate Wiki</a>.</p>
+	
+		<input type="submit" name="generateHTMLCode" value="Generate HTML code">
+
+		<?php
+			// Generate a text area with the HTML code
+			if(strlen($webTemplateString) > 0) {
+				echo '<p>Copy and paste the code below into the source code for your HIT:';
+				echo '<p><textarea rows="15" cols="80">';
+				echo $webTemplateString;
+				echo '</textarea></p>';
+			}
+		?>
+		
+		<h3>For Mechanical Turk Command Line Tools: </h3>
+		
+		<p>Download the files for creating your HIT using the values specified above.
+		Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Command-Line-Tools" target="blank">TurkGate Wiki</a>.</p>
+		
+		<input type="submit" name="downloadCLTFile" value="survey.input">
+		<input type="submit" name="downloadCLTFile" value="survey.properties">
+		<input type="submit" name="downloadCLTFile" value="survey.question">
+	</form>
+	
     <h5>
-      &copy; 2012 
-      <a href='https://github.com/gideongoldin/TurkGate'>TurkGate</a>
+      Powered by <a href='https://github.com/gideongoldin/TurkGate'>TurkGate</a>
     </h5>
   </body>
 </html>
