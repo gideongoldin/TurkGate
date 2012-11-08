@@ -21,6 +21,8 @@ limitations under the License.
 	</head>
 
 	<?php
+	require '../lib/fixhttp.lib.php';
+	
 	// Commonly used variables
 	$footer = "<h5>&copy; 2012 <a href='http://gideongoldin.github.com/TurkGate/' target='blank'>TurkGate</a></h5>";
 
@@ -32,7 +34,7 @@ limitations under the License.
 		$databaseName = isset($_POST['databaseName']) ? $_POST['databaseName'] : "";
 		$databaseUsername = isset($_POST['databaseUsername']) ? $_POST['databaseUsername'] : "";
 		$databasePassword = isset($_POST['databasePassword']) ? $_POST['databasePassword'] : "";
-		$baseURL = isset($_POST['turkGateURL']) ? $_POST['turkGateURL'] : "";
+		$baseURL = isset($_POST['turkGateURL']) ? fix_http($_POST['turkGateURL']) : "";
 		
 		// Validate entries that are relevant to both install and uninstall forms
 		if (empty($databaseHost) || empty($databaseName) || empty($databaseUsername) || empty($databasePassword)) {
@@ -79,11 +81,6 @@ limitations under the License.
 				
 				// Check if the TurkGate URL field is empty or not
 				if(!empty($baseURL)) {
-							
-						// Ensure baseURL begins with http
-						if (strpos($baseURL, "http") != 0) {
-                            $baseURL = "http://$baseURL";
-						}
 					
 						// Create the TurkGate configuration file
 						$configFileName = "../config.php";
