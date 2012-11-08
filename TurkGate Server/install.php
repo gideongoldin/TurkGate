@@ -81,6 +81,9 @@ limitations under the License.
 				$configFileName = "turkGateConfig.php";
 				$configFileHandle = fopen($configFileName, 'w') or die("<h1>TurkGate</h1><h2>Installation</h2><p>Error creating config file. " . mysql_error() . ".</p>" . $footer);
 
+				// Generate a random encryption key
+				$key = sha1(microtime(true) . mt_rand(10000,90000));
+
 				// Write (to) the TurkGate configuration file
 				$configFileString = "<?php
 			define('DATABASE_HOST', '" . $databaseHost . "');
@@ -88,7 +91,9 @@ limitations under the License.
 			define('DATABASE_USERNAME', '" . $databaseUsername . "');
 			define('DATABASE_PASSWORD', '" . $databasePassword . "');
 			define('BASE_URL', '" . $baseURL . "/TurkGate%20Server');
-			?>";
+			define('KEY', $key);
+				?>";
+				
 				fwrite($configFileHandle, $configFileString);
 				fclose($configFileHandle);
 
