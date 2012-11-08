@@ -16,6 +16,7 @@
 	limitations under the License.
 
 */
+	require 'lib/fixhttp.lib.php';
 
 	if(isset($_POST['downloadCLTFile'])) {
 	
@@ -27,9 +28,9 @@
 		
 		//All of the variables in the files that need to be substitute
 		$substitutions = array( '[[[TurkGate URL]]]' => constant('BASE_URL'));
-		$substitutions['[[[Survey URL]]]'] = $_POST['externalSurveyURL'];
+		$substitutions['[[[Survey URL]]]'] = fix_http($_POST['externalSurveyURL']);
 		$substitutions['[[[Group Name]]]'] = $_POST['groupName'];	
-			
+										
 		// File name pulled from submit button values
 		$fileName = $_POST['downloadCLTFile'];
 		$file = 'resources/CLTHIT/' . $fileName;
@@ -66,7 +67,7 @@
 	$webTemplateString = "";
 	
 	// Get the form values
-	$externalSurveyURL = isset($_POST['externalSurveyURL']) ? $_POST['externalSurveyURL'] : "";
+	$externalSurveyURL = isset($_POST['externalSurveyURL']) ? fix_http($_POST['externalSurveyURL']) : "";
 	$groupName = isset($_POST['groupName']) ? $_POST['groupName'] : "";	
 
 	// Check if TurkGate is installed
@@ -83,7 +84,7 @@
 			$webTemplateString = file_get_contents('resources/WebHIT/webTemplate.html');
 
 			// Make the necessary changes
-			$webTemplateString = str_replace('[[[Survey URL]]]', $_POST['externalSurveyURL'], $webTemplateString);
+			$webTemplateString = str_replace('[[[Survey URL]]]', fix_http($_POST['externalSurveyURL']), $webTemplateString);
 			$webTemplateString = str_replace('[[[Group Name]]]', $_POST['groupName'], $webTemplateString);
 			$webTemplateString = str_replace('[[[TurkGate URL]]]', constant('BASE_URL'), $webTemplateString);
 			$copyright = "<!-- Copyright (c) 2012 Adam Darlow and Gideon Goldin. For more info, see http://gideongoldin.github.com/TurkGate/ -->\n";

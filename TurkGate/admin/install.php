@@ -79,6 +79,12 @@ limitations under the License.
 				
 				// Check if the TurkGate URL field is empty or not
 				if(!empty($baseURL)) {
+							
+						// Ensure baseURL begins with http
+						if (strpos($baseURL, "http") != 0) {
+                            $baseURL = "http://$baseURL";
+						}
+					
 						// Create the TurkGate configuration file
 						$configFileName = "../config.php";
 						$configFileHandle = fopen($configFileName, 'w') or die('<h1>TurkGate</h1><h2>Installation</h2><p>Error creating config file. ' . mysql_error() . '.</p><p><a href="javascript:history.back()">Go back</a></p>' . $footer);
