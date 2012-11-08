@@ -1,8 +1,8 @@
 <?php
-			define('DATABASE_HOST', 'localhost');
-			define('DATABASE_NAME', 'TurkGate');
-			define('DATABASE_USERNAME', 'root');
-			define('DATABASE_PASSWORD', 'root');
-			define('BASE_URL', 'localhost:8888/TurkGate');
-			define('KEY', '0fece1bc026d1091a261b4584904cca28914a96c');
-				?>
+					define('DATABASE_HOST', 'localhost');
+					define('DATABASE_NAME', 'turkgate');
+					define('DATABASE_USERNAME', 'ggoldin');
+					define('DATABASE_PASSWORD', '5qL78p339Dm');
+					define('BASE_URL', 'research.clps.brown.edu/TurkGate/TurkGate');
+					define('KEY', 'b105cf0967eafa98b90d78127cb6cf0effc4e597');
+						?>

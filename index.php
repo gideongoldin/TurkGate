@@ -70,24 +70,24 @@
 	$groupName = isset($_POST['groupName']) ? $_POST['groupName'] : "";	
 
 	// Check if TurkGate is installed
-	$installed = @include('config.php');
+	$installed = @include 'config.php';
 	
-	if(!installed) {
-		echo '<p>TurkGate does not appear to be install. See your administrator.</p><p>Go <a href="index.php">back</a>.</p>';
+	if(!$installed) {
+		echo '<p>TurkGate does not appear to be installed. See your administrator.</p><p><a href="admin/index.php">Admin home</a></p>';
 		echo '<h5>Powered by <a href=http://gideongoldin.github.com/TurkGate/">TurkGate</a></h5>';
 		exit;
 	} else {
 		if(isset($_POST['generateHTMLCode'])) {
 				// Modify the web template
-				// First read the entire file
-				$webTemplateString = file_get_contents('resources/WebHIT/webTemplate.html');
+			// First read the entire file
+			$webTemplateString = file_get_contents('resources/WebHIT/webTemplate.html');
 
-				// Make the necessary changes
-				$webTemplateString = str_replace('[[[Survey URL]]]', $_POST['externalSurveyURL'], $webTemplateString);
-				$webTemplateString = str_replace('[[[Group Name]]]', $_POST['groupName'], $webTemplateString);
-				$webTemplateString = str_replace('[[[TurkGate URL]]]', constant('BASE_URL'), $webTemplateString);
-				$copyright = "<!-- Copyright (c) 2012 Adam Darlow and Gideon Goldin. For more info, see http://gideongoldin.github.com/TurkGate/ -->\n";
-				$webTemplateString = preg_replace('/<!--[^>]*-->/', $copyright, $webTemplateString, 1);
+			// Make the necessary changes
+			$webTemplateString = str_replace('[[[Survey URL]]]', $_POST['externalSurveyURL'], $webTemplateString);
+			$webTemplateString = str_replace('[[[Group Name]]]', $_POST['groupName'], $webTemplateString);
+			$webTemplateString = str_replace('[[[TurkGate URL]]]', constant('BASE_URL'), $webTemplateString);
+			$copyright = "<!-- Copyright (c) 2012 Adam Darlow and Gideon Goldin. For more info, see http://gideongoldin.github.com/TurkGate/ -->\n";
+			$webTemplateString = preg_replace('/<!--[^>]*-->/', $copyright, $webTemplateString, 1);
 		}
 	}	
 ?>
@@ -100,6 +100,7 @@
   <body>
   	<h1>TurkGate</h1>
   	<hr />
+
 	<h2>HIT Generation</h2>
 
 	<p>
@@ -150,6 +151,7 @@
 	</form>
 	
 	<hr />
+	
 	<h2>Completion Codes</h2>
 
 	<p>			
@@ -166,6 +168,7 @@
 	</p>
 	
 	<hr />
+	
     <h5>
       Powered by <a href='http://gideongoldin.github.com/TurkGate/'>TurkGate</a>
     </h5>

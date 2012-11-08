@@ -34,8 +34,8 @@ limitations under the License.
 		$databasePassword = isset($_POST['databasePassword']) ? $_POST['databasePassword'] : "";
 		$baseURL = isset($_POST['turkGateURL']) ? $_POST['turkGateURL'] : "";
 		
-		// Validate entries
-		if (empty($databaseHost) || empty($databaseName) || empty($databaseUsername) || empty($databasePassword) || empty($baseURL)) {
+		// Validate entries that are relevant to both install and uninstall forms
+		if (empty($databaseHost) || empty($databaseName) || empty($databaseUsername) || empty($databasePassword)) {
 			// Simple form validation for HTMLn where n < 5
 			echo "<h1>TurkGate</h1><h2>Installation</h2><p>Error: All fields are required. Please <a href='javascript:history.back()'>go back</a> and re-submit.</p>" . $footer;
 		} else {
@@ -48,73 +48,79 @@ limitations under the License.
 			
 			// Check if the uninstall (vs. install) form was submitted
 			if(isset($_POST['uninstallSubmit'])) {
-				
+							
 					echo '<h1>TurkGate</h1><h2>Uninstallation</h2>';
-					
-					// Remove the table 'SurveyRequest'
-					$query = "DROP TABLE $databaseName.SurveyRequest";
-					$result = mysql_query($query, $connection);
-					if(!$result) {
-						echo '<p>TurkGate could not find the SurveyRequest table. Might it have already been removed?</p>';
-					} else {
-						echo '<p>TurkGate removed the SurveyRequest table.</p>';
-					}
+			
+				// Remove the table 'SurveyRequest'
+				$query = "DROP TABLE $databaseName.SurveyRequest";
+				$result = mysql_query($query, $connection);
+				if(!$result) {
+					echo '<p>TurkGate could not find the SurveyRequest table. Might it have already been removed?</p>';
+				} else {
+					echo '<p>TurkGate removed the SurveyRequest table.</p>';
+				}
 
-					// Close the database connection
-					mysql_close($connection);
+				// Close the database connection
+				mysql_close($connection);
 
-					// Remove the TurkGate configuration file
-					$configFileName = "../config.php";
-					$result = unlink($configFileName);
-					if(!$result) {
-						echo '<p>TurkGate did not remove the file turkGateConfig.php. Might it have already been removed?</p><p><a href="javascript:history.back()">Go back</a></p>';
-					} else {
-						echo '<p>TurkGate removed the file turkGateConfig.php.</p><p><a href="index.php">Admin home</a></p>';
-					}
-					
-					echo $footer;
+				// Remove the TurkGate configuration file
+				$configFileName = "../config.php";
+				$result = unlink($configFileName);
+				if(!$result) {
+					echo '<p>TurkGate did not remove the file turkGateConfig.php. Might it have already been removed?</p><p><a href="javascript:history.back()">Go back</a></p>';
+				} else {
+					echo '<p>TurkGate removed the file turkGateConfig.php.</p><p><a href="index.php">Admin home</a></p>';
+				}
+			
+				echo $footer;
 				
 			} else {
 				// The install (vs. uninstall) form was submitted
 				
-				// Create the TurkGate configuration file
-				$configFileName = "../config.php";
-				$configFileHandle = fopen($configFileName, 'w') or die('<h1>TurkGate</h1><h2>Installation</h2><p>Error creating config file. ' . mysql_error() . '.</p><p><a href="javascript:history.back()">Go back</a></p>' . $footer);
+				// Check if the TurkGate URL field is empty or not
+				if(!empty($baseURL)) {
+						// Create the TurkGate configuration file
+						$configFileName = "../config.php";
+						$configFileHandle = fopen($configFileName, 'w') or die('<h1>TurkGate</h1><h2>Installation</h2><p>Error creating config file. ' . mysql_error() . '.</p><p><a href="javascript:history.back()">Go back</a></p>' . $footer);
 
-				// Generate a random encryption key
-				$key = sha1(microtime(true) . mt_rand(10000,90000));
+						// Generate a random encryption key
+						$key = sha1(microtime(true) . mt_rand(10000,90000));
 
-				// Write (to) the TurkGate configuration file
-				$configFileString = "<?php
-			define('DATABASE_HOST', '" . $databaseHost . "');
-			define('DATABASE_NAME', '" . $databaseName . "');
-			define('DATABASE_USERNAME', '" . $databaseUsername . "');
-			define('DATABASE_PASSWORD', '" . $databasePassword . "');
-			define('BASE_URL', '" . $baseURL . "');
-			define('KEY', '" . $key . "');
-				?>";
-				
-				fwrite($configFileHandle, $configFileString);
-				fclose($configFileHandle);
+						// Write (to) the TurkGate configuration file
+						$configFileString = "<?php
+					define('DATABASE_HOST', '" . $databaseHost . "');
+					define('DATABASE_NAME', '" . $databaseName . "');
+					define('DATABASE_USERNAME', '" . $databaseUsername . "');
+					define('DATABASE_PASSWORD', '" . $databasePassword . "');
+					define('BASE_URL', '" . $baseURL . "');
+					define('KEY', '" . $key . "');
+						?>";
 
-				// Create the table
-				$sql = "CREATE TABLE IF NOT EXISTS SurveyRequest 
-			(
-				requestID INT NOT NULL AUTO_INCREMENT,
-				PRIMARY KEY(requestID),
-				workerID VARCHAR(256),
-				URL VARCHAR(256),
-				groupName VARCHAR(256),
-				time DATETIME
-			)";
+						fwrite($configFileHandle, $configFileString);
+						fclose($configFileHandle);
 
-				mysql_query($sql, $connection) or die("<p>Error creating table: " . mysql_error() . "</p><p><a href='javascript:history.back()'>Go back</a></p>" . $footer);
-				mysql_close($connection);
+						// Create the table
+						$sql = "CREATE TABLE IF NOT EXISTS SurveyRequest 
+					(
+						requestID INT NOT NULL AUTO_INCREMENT,
+						PRIMARY KEY(requestID),
+						workerID VARCHAR(256),
+						URL VARCHAR(256),
+						groupName VARCHAR(256),
+						time DATETIME
+					)";
 
-				// Installation is now complete
-				echo '<h1>TurkGate</h1><h2>Installation</h2><p>TurkGate Installation successful!</p>';
-				echo '<p><a href="index.php">Admin home</a></p>' . $footer;
-				exit();
+						mysql_query($sql, $connection) or die("<p>Error creating table: " . mysql_error() . "</p><p><a href='javascript:history.back()'>Go back</a></p>" . $footer);
+						mysql_close($connection);
+
+						// Installation is now complete
+						echo '<h1>TurkGate</h1><h2>Installation</h2><p>TurkGate Installation successful!</p>';
+						echo '<p><a href="index.php">Admin home</a></p>' . $footer;
+						exit();
+				} else {
+					// Simple form validation for HTMLn where n < 5
+					echo "<h1>TurkGate</h1><h2>Installation</h2><p>Error: All fields are required. Please <a href='javascript:history.back()'>go back</a> and re-submit.</p>" . $footer;
+				}
 			}
 		}
 		exit();
