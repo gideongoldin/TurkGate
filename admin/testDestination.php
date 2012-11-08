@@ -21,9 +21,9 @@ if (isset($_POST['submit'])) {
         $varName = urlencode($_POST['varName']);
         $varValue = urlencode($_POST['varValue']);
 
-        header("Location: generateCompletionCode.php?$varName=$varValue");
+        header("Location: ../codes/generate.php?$varName=$varValue");
     } else {
-        header("Location: generateCompletionCode.php");
+        header("Location: ../codes/generate.php");
     }
 }
 ?>

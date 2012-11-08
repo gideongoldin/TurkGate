@@ -4,7 +4,7 @@
 used to perform the merging of variables into template files.  You can learn more about Velocity's capabilities at http://velocity.apache.org.
 -->
 <ExternalQuestion xmlns="http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd">    
-<ExternalURL>http://[TurkGate location]/surveyAccess.php?source=ext&amp;survey=${helper.urlencode($surveyURL)}&amp;group=${helper.urlencode($group)}</ExternalURL>
+<ExternalURL>http://[[[TurkGate URL]]]/gateway.php?source=ext&amp;survey=${helper.urlencode($surveyURL)}&amp;group=${helper.urlencode($group)}</ExternalURL>
     <FrameHeight>450</FrameHeight>
 </ExternalQuestion>
 

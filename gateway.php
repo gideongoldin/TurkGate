@@ -17,7 +17,7 @@
 
 session_start();
 
-if (!include('turkGateConfig.php')) {
+if (!include('config.php')) {
     die('A configuration error occurred. ' 
       . 'Please report this error to the HIT requester.');
 }
@@ -30,7 +30,7 @@ $surveyURL = urldecode($_GET['survey']);
 if (strlen($surveyURL) == 0 || $surveyURL == 'test') {
     // If no survey URL was submitted, or if 'test' was entered, insert the
     // testDestination.php page.
-    $surveyURL = 'testDestination.php';
+    $surveyURL = 'admin/testDestination.php';
 }
 
 // We use assignmentId to identify whether the worker is merely previewing the

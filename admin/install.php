@@ -22,7 +22,7 @@ limitations under the License.
 
 	<?php
 	// Commonly used variables
-	$footer = "<h5>&copy; 2012 <a href='https://github.com/gideongoldin/TurkGate' target='blank'>TurkGate</a></h5>";
+	$footer = "<h5>&copy; 2012 <a href='http://gideongoldin.github.com/TurkGate/' target='blank'>TurkGate</a></h5>";
 
 	// Check for form submissions
 	if (isset($_POST['installSubmit']) || isset($_POST['uninstallSubmit'])) {
@@ -35,7 +35,7 @@ limitations under the License.
 		$baseURL = isset($_POST['turkGateURL']) ? $_POST['turkGateURL'] : "";
 		
 		// Validate entries
-		if (empty($databaseHost) || empty($databaseName) || empty($databaseUsername) || empty($databasePassword)) {
+		if (empty($databaseHost) || empty($databaseName) || empty($databaseUsername) || empty($databasePassword) || empty($baseURL)) {
 			// Simple form validation for HTMLn where n < 5
 			echo "<h1>TurkGate</h1><h2>Installation</h2><p>Error: All fields are required. Please <a href='javascript:history.back()'>go back</a> and re-submit.</p>" . $footer;
 		} else {
@@ -64,12 +64,12 @@ limitations under the License.
 					mysql_close($connection);
 
 					// Remove the TurkGate configuration file
-					$configFileName = "turkGateConfig.php";
+					$configFileName = "../config.php";
 					$result = unlink($configFileName);
 					if(!$result) {
-						echo '<p>TurkGate did not remove the file turkGateConfig.php. Might it have already been removed?</p><p>Click <a href="index.php">here</a> to go to the main TurkGate page.</p>';
+						echo '<p>TurkGate did not remove the file turkGateConfig.php. Might it have already been removed?</p><p><a href="javascript:history.back()">Go back</a></p>';
 					} else {
-						echo '<p>TurkGate removed the file turkGateConfig.php.</p><p>Click <a href="admin.php">here</a> to go to the TurkGate admin page.</p>';
+						echo '<p>TurkGate removed the file turkGateConfig.php.</p><p><a href="index.php">Admin home</a></p>';
 					}
 					
 					echo $footer;
@@ -78,8 +78,8 @@ limitations under the License.
 				// The install (vs. uninstall) form was submitted
 				
 				// Create the TurkGate configuration file
-				$configFileName = "turkGateConfig.php";
-				$configFileHandle = fopen($configFileName, 'w') or die("<h1>TurkGate</h1><h2>Installation</h2><p>Error creating config file. " . mysql_error() . ".</p>" . $footer);
+				$configFileName = "../config.php";
+				$configFileHandle = fopen($configFileName, 'w') or die('<h1>TurkGate</h1><h2>Installation</h2><p>Error creating config file. ' . mysql_error() . '.</p><p><a href="javascript:history.back()">Go back</a></p>' . $footer);
 
 				// Generate a random encryption key
 				$key = sha1(microtime(true) . mt_rand(10000,90000));
@@ -90,8 +90,8 @@ limitations under the License.
 			define('DATABASE_NAME', '" . $databaseName . "');
 			define('DATABASE_USERNAME', '" . $databaseUsername . "');
 			define('DATABASE_PASSWORD', '" . $databasePassword . "');
-			define('BASE_URL', '" . $baseURL . "/TurkGate%20Server');
-			define('KEY', $key);
+			define('BASE_URL', '" . $baseURL . "');
+			define('KEY', '" . $key . "');
 				?>";
 				
 				fwrite($configFileHandle, $configFileString);
@@ -113,7 +113,7 @@ limitations under the License.
 
 				// Installation is now complete
 				echo '<h1>TurkGate</h1><h2>Installation</h2><p>TurkGate Installation successful!</p>';
-				echo '<p>Click <a href="admin.php">here</a> to go to the TurkGate admin page.</p>' . $footer;
+				echo '<p><a href="index.php">Admin home</a></p>' . $footer;
 				exit();
 			}
 		}

@@ -15,9 +15,9 @@ limitations under the License.
 
 -->
 <script type="text/javascript">
-  var surveyURL = "test";
-  var group = "testing js";
-  var turkGateURL = "http://YOUR.INSTALLATION.EDU";
+  var surveyURL = "[[[Survey URL]]]";
+  var group = "[[[Group Name]]]";
+  var turkGateURL = "[[[TurkGate URL]]]";
 
   // dynamically creates the text that warns workers about the policy of access
   // restriction
@@ -75,7 +75,7 @@ limitations under the License.
     phpArgs += "&workerId=" + urlVars["workerId"];
     phpArgs += "&assignmentId=" + urlVars["assignmentId"];
 
-    return '<a target="_blank" href="' + turkGateURL + '/surveyAccess.php?' 
+    return '<a target="_blank" href="' + turkGateURL + '/gateway.php?' 
            + phpArgs + '">Click here to open the study.</a>';
   }
 

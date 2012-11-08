@@ -1,7 +1,7 @@
 <?php 
     session_start(); 
 
-    if (!include('turkGateConfig.php')) {
+    if (!include('../config.php')) {
         die('A configuration error occurred. ' 
           . 'Please report this error to the HIT requester.');
     }
@@ -97,11 +97,11 @@ THE SOFTWARE.
 	      // This is required for proper CSV parsing
 	      $results .= "\n"; 
 	
-	      if (!include('lib/parsecsv.lib.php')) {
+	      if (!include('../lib/parsecsv.lib.php')) {
               echo '<p>TurkGate has encountered a configuration error. Please ' 
-                  . 'verify that the following file is present: lib/parsecsv.lib.php</p>'
+                  . 'verify that the following file is present: TurkGate/lib/parsecsv.lib.php</p>'
 			      . "<p>=<a href='javascript:history.back()'>Go back</a>.</p>"
-			      . "<h5>&copy; 2012 <a href='https://github.com/gideongoldin/TurkGate' target='blank'>TurkGate</a></h5>";
+			      . "<h5>&copy; 2012 <a href='http://gideongoldin.github.com/TurkGate/' target='blank'>TurkGate</a></h5>";
           }
 	
 	      $csv = new parseCSV();
@@ -173,7 +173,7 @@ THE SOFTWARE.
     Copy and paste the entire contents of your downloaded Mechanical Turk 
     batch results file into the text area below:
   </p>
-  <form method="post" action="verifyCompletionCodes.php">
+  <form method="post" action="verify.php">
     <div>
       <textarea name="results" rows="20" cols="100" wrap="off"></textarea>
     </div>
@@ -186,7 +186,7 @@ THE SOFTWARE.
   ?>
 
   <footer>
-    <h5>&copy; 2012 <a href='https://github.com/gideongoldin/TurkGate' target='blank'>TurkGate</a></h5>
+    <h5>&copy; 2012 <a href='http://gideongoldin.github.com/TurkGate/' target='blank'>TurkGate</a></h5>
   </footer>
 
 </body>

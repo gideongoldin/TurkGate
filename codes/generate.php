@@ -1,7 +1,7 @@
 <?php 
     session_start(); 
 
-    if (!include('turkGateConfig.php')) {
+    if (!include('../config.php')) {
         die('A configuration error occurred. ' 
           . 'Please report this error to the HIT requester.');
     }
@@ -72,7 +72,7 @@ limitations under the License.
       echo '<header><h1>Thank you!</h1></header>';
       echo '<p>Please enter the code below into Mechanical Turk:</p>';
       echo '<p id="code">' . $completionCode . '</p>';
-      echo "<footer><h5>&copy; 2012 <a href='https://github.com/gideongoldin/TurkGate' target='blank'>TurkGate</a></h5></footer>";
+      echo "<footer><h5>&copy; 2012 <a href='http://gideongoldin.github.com/TurkGate/' target='blank'>TurkGate</a></h5></footer>";
   ?>
 </body>
 </html>

@@ -23,16 +23,16 @@
 		header("Content-Type: application/octet-stream");
 		
 		// Required for base URL
-		$installed = @include('turkGateConfig.php');
+		$installed = @include('config.php');
 		
 		//All of the variables in the files that need to be substitute
-		$substitutions = array( '[TurkGate location]' => constant('BASE_URL'));
-		$substitutions['[Survey URL]'] = $_POST['externalSurveyURL'];
-		$substitutions['[Group Name]'] = $_POST['groupName'];	
+		$substitutions = array( '[[[TurkGate URL]]]' => constant('BASE_URL'));
+		$substitutions['[[[Survey URL]]]'] = $_POST['externalSurveyURL'];
+		$substitutions['[[[Group Name]]]'] = $_POST['groupName'];	
 			
 		// File name pulled from submit button values
 		$fileName = $_POST['downloadCLTFile'];
-		$file = '../Command Line Tools/' . $fileName;
+		$file = 'resources/CLTHIT/' . $fileName;
 		
 		header("Content-Disposition: attachment; filename=" . $fileName);   
 		header("Content-Type: application/force-download");
@@ -70,24 +70,21 @@
 	$groupName = isset($_POST['groupName']) ? $_POST['groupName'] : "";	
 
 	// Check if TurkGate is installed
-	$installed = @include('turkGateConfig.php');
+	$installed = @include('config.php');
 	if(!installed) {
 		echo '<p>TurkGate does not appear to be install. See your administrator.</p><p>Go <a href="index.php">back</a>.</p>';
-		echo '<h5>Powered by <a href="https://github.com/gideongoldin/TurkGate">TurkGate</a></h5>';
+		echo '<h5>Powered by <a href=http://gideongoldin.github.com/TurkGate/">TurkGate</a></h5>';
 		exit;
 	} else {
 		if(isset($_POST['generateHTMLCode'])) {
 				// Modify the web template
 				// First read the entire file
-				$webTemplateString = file_get_contents('../Web Interface/HIT Template.html');
-
-				// Open the template
-				$fp = fopen('../Web Interface/HIT TemplateTest.html','w');
+				$webTemplateString = file_get_contents('resources/WebHIT/webTemplate.html');
 
 				// Make the necessary changes
-				$webTemplateString = str_replace('surveyURL = "test";', 'surveyURL = "' . $_POST['externalSurveyURL'] .  '";', $webTemplateString);
-				$webTemplateString = str_replace('group = "testing js";', 'group = "' . $_POST['groupName'] .  '";', $webTemplateString);
-				$webTemplateString = str_replace('turkGateURL = "http://YOUR.INSTALLATION.EDU";', 'turkGateURL = "' . constant('BASE_URL') .  '";', $webTemplateString);
+				$webTemplateString = str_replace('[[[Survey URL]]]', $_POST['externalSurveyURL'], $webTemplateString);
+				$webTemplateString = str_replace('[[[Group Name]]]', $_POST['groupName'], $webTemplateString);
+				$webTemplateString = str_replace('[[[TurkGate URL]]]', constant('BASE_URL'), $webTemplateString);
 				$copyright = "<!-- Copyright (c) 2012 Adam Darlow and Gideon Goldin. For more info, see http://gideongoldin.github.com/TurkGate/ -->\n";
 				$webTemplateString = preg_replace('/<!--[^>]*-->/', $copyright, $webTemplateString, 1);
 		}
@@ -115,18 +112,18 @@
 	
 		<p>
 			<label for="externalSurveyURL">External Survey URL:</label>
-			<input type="text" name="externalSurveyURL" value=<?php echo "'$externalSurveyURL'"; ?> autofocus="autofocus"> <!-- required="required" -->
+			<input type="text" name="externalSurveyURL" value=<?php echo "'$externalSurveyURL'"; ?> autofocus="autofocus" required="required">
 		</p>
 
 		<p>
 			<label for="groupName">Group Name:</label>
-			<input type="text" name="groupName" value=<?php echo "'$groupName'"; ?> autofocus="autofocus"> <!-- required="required" -->
+			<input type="text" name="groupName" value=<?php echo "'$groupName'"; ?> autofocus="autofocus" required="required">
 		</p>
 
 		<h3>For Mechanical Turk Web Interface: </h3>
 		
 		<p>Generate the HTML code to paste into your HIT using the values specified above.
-		Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Web-Interface" target="blank">TurkGate Wiki</a>.</p>
+		Full instructions are on the <a href="http://gideongoldin.github.com/TurkGate/" target="blank">TurkGate Wiki</a>.</p>
 	
 		<input type="submit" name="generateHTMLCode" value="Generate HTML code">
 
@@ -151,7 +148,7 @@
 	</form>
 	
     <h5>
-      Powered by <a href='https://github.com/gideongoldin/TurkGate'>TurkGate</a>
+      Powered by <a href='http://gideongoldin.github.com/TurkGate/'>TurkGate</a>
     </h5>
   </body>
 </html>

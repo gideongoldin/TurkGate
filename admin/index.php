@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 // Get TurkGate's database configuration
-$installed = @include('turkGateConfig.php');
+$installed = @include('../config.php');
 
 // If the form was submitted, test survey access
 if (isset($_POST['submit'])) {
@@ -26,10 +26,11 @@ if (isset($_POST['submit'])) {
 	$surveyURL = urlencode($_POST['surveyURL']);
 	$source = urlencode($_POST['source']);
 
-    header("Location: surveyAccess.php?assignmentId=test&workerId=$workerID&group=$groupName&survey=$surveyURL&source=$source");
+    header("Location: ../gateway.php?assignmentId=test&workerId=$workerID&group=$groupName&survey=$surveyURL&source=$source");
 	exit();
 }
 ?>
+
 <!DOCTYPE HTML>
 <html>
   <head>
@@ -41,9 +42,10 @@ if (isset($_POST['submit'])) {
   	<?php
   	    if ($installed) {
   	        echo '<p>TurkGate has already been installed!</p>';
+			echo '<p><a href="install.php">Uninstall TurkGate</a></p>';
   	    } else {
-  	        echo '<p>TurkGate is not yet installed. Go ' 
-  	            . '<a href="install.php">here</a> to install it.</p>';
+  	        echo '<p>TurkGate is not yet installed.</p>';
+			echo '<p><a href="install.php">Install TurkGate</a></p>'; 
   	    }
     ?>
     <br>
@@ -82,10 +84,10 @@ if (isset($_POST['submit'])) {
       	whether TurkGate displays a link to the survey or redirects to it.
       </p>
       <p>
-        <input type="radio" name="source" value="ext" checked>External HIT</input>
+        <input type="radio" name="source" value="ext" checked>Command Line Tools HIT</input>
       </p>
       <p>
-      	<input type="radio" name="source" value="js">Javascript</input>
+      	<input type="radio" name="source" value="js">Web Interface HIT</input>
       </p>
       <p>
       	<input type="submit" name="submit" value="Test">
