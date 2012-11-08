@@ -9,11 +9,11 @@ research-oriented features not included with Amazon Mechanical Turk.
 
 ## What does TurkGate do?
 
-TurkGate comprises three major features:
+TurkGate serves three major functions:
 
-1.  Limiting access to groups of surveys
-2.  Preventing survey previews
-3.  Verifying survey completion
+1.  Preventing workers from accessing multiple surveys in the same group
+2.  Preventing workers from previewing surveys
+3.  Using secure codes to verify that workers completed their surveys
 
 First and foremost, TurkGate allows you to group HITs together, such
 that workers may only access one survey within a group. As soon as a
@@ -37,10 +37,12 @@ validated automatically.
 
 After performing a web-based installation, TurkGate initializes a 
 database on your server to track workers, HITs, and groups. Any number 
-of coordinated researchers can share one such installation. To control 
-access to their surveys the researchers simply create their Mechanical 
-Turk HITs using the templates provided for HIT creation via Mechanical 
-Turk's web interface *or* its command line tools. 
+of coordinated researchers can share one such installation. The 
+researchers get easy to use web-based tools for creating HITs with 
+TurkGate access  control, providing workers with dynamic, secure 
+completion codes, and verifying those completion codes. 
+
 
 ## More information
+
 Please visit the [TurkGate Wiki](https://github.com/gideongoldin/TurkGate/wiki "TurkGate Wiki") for more information.
