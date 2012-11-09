@@ -41,23 +41,18 @@
 		header("Content-Type: application/download");
 		header("Content-Description: File Transfer");            
 		header("Content-Length: " . filesize($file));
-		flush(); // this doesn't really matter.
+		//flush(); // this doesn't really matter.
 		$fp = fopen($file, "r");
-		while (!feof($fp)) {
-			
-			$text = fread($fp, 65536);
-			
-			// Perform the specified substitutions
-			// NOTE: Could fail with files larger than buffer size!
-			foreach ($substitutions as $original => $new) {
-			    $text = str_replace($original, $new, $text);
-			}
 
-			echo $text;
-			
-			// this is essential for large downloads
-		    flush(); 
-		} 
+		$text = stream_get_contents($fp);
+		
+		// Perform the specified substitutions
+		// NOTE: Could fail with files larger than buffer size!
+		foreach ($substitutions as $original => $new) {
+		    $text = str_replace($original, $new, $text);
+		}
+
+		echo $text;
 		
 		fclose($fp);
 		exit;
@@ -121,7 +116,7 @@
 
 		<p>
 			<label for="groupName">Group Name:</label>
-			<input type="text" name="groupName" value=<?php echo "'$groupName'"; ?> autofocus="autofocus" required="required">
+			<input type="text" name="groupName" value=<?php echo "'$groupName'"; ?> required="required">
 		</p>
 
 		<h4>For Mechanical Turk Web Interface: </h4>
