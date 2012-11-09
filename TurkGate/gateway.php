@@ -130,8 +130,11 @@ if ($_GET['assignmentId'] == 'ASSIGNMENT_ID_NOT_AVAILABLE'
 		  md5($key), $workerId, MCRYPT_MODE_CBC, md5(md5($key))));
 		$encryptedGroupName = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 
 		  md5($key), $groupName, MCRYPT_MODE_CBC, md5(md5($key))));
-        $_SESSION['Worker_ID'] = $encryptedWorkerId;
-        $_SESSION['Group_Name'] = $encryptedGroupName;
+		  
+		// Temporarily removing session variables because completion code doesn't look for them
+        //$_SESSION['Worker_ID'] = $encryptedWorkerId;
+        //$_SESSION['Group_Name'] = $encryptedGroupName;
+		
         setcookie('Worker_ID', $encryptedWorkerId, time() + (24 * 60 * 60), '/');
         setcookie('Group_Name', $encryptedGroupName, time() + (24 * 60 * 60), '/');
 
