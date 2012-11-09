@@ -44,6 +44,8 @@
 		//flush(); // this doesn't really matter.
 		$fp = fopen($file, "r");
 
+		// NOTE: The buffer limit should be noted here
+		// to verify that the entire file is read!
 		$text = stream_get_contents($fp);
 		
 		// Perform the specified substitutions
