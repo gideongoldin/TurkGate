@@ -5,6 +5,22 @@
         die('A configuration error occurred. ' 
           . 'Please report this error to the HIT requester.');
     }
+	
+    $encryptionKey = constant('KEY');
+	  
+	$workerId = "";
+	$groupName = "";
+	
+	if(isset($_COOKIE['Worker_ID']) && isset($_COOKIE['Group_Name'])) {
+	    $workerId = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($encryptionKey), base64_decode($_COOKIE['Worker_ID']), MCRYPT_MODE_CBC, md5(md5($encryptionKey))), "\0");
+	    $groupName = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($encryptionKey), base64_decode($_COOKIE['Group_Name']), MCRYPT_MODE_CBC, md5(md5($encryptionKey))), "\0");
+	}
+  
+
+	// Clear previously set cookies
+	// Set the expiration date to the past
+	setcookie("Worker_ID", "", time()-3600, '/');
+	setcookie("Group_Name", "", time()-3600, '/');
     
 ?>
 
@@ -52,16 +68,6 @@ limitations under the License.
 </head>
 <body>
   <?php
-      $encryptionKey = constant('KEY');
-	  
-	  $workerId = "";
-	  $groupName = "";
-	
-	  if(isset($_COOKIE['Worker_ID']) && isset($_COOKIE['Group_Name'])) {
-	  	$workerId = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($encryptionKey), base64_decode($_COOKIE['Worker_ID']), MCRYPT_MODE_CBC, md5(md5($encryptionKey))), "\0");
-	  	$groupName = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($encryptionKey), base64_decode($_COOKIE['Group_Name']), MCRYPT_MODE_CBC, md5(md5($encryptionKey))), "\0");
-	  }
-  
       // Add the Worker ID and the Group name to the input string
       $inputString = "w[$workerId]g[$groupName]";
 
@@ -78,11 +84,6 @@ limitations under the License.
       echo '<p>Please enter the code below into Mechanical Turk:</p>';
       echo '<p id="code">' . $completionCode . '</p>';
       echo "<footer><h5>&copy; 2012 <a href='http://gideongoldin.github.com/TurkGate/' target='blank'>TurkGate</a></h5></footer>";
-
-	  // Clear previously set cookies
-	  // Set the expiration date to the past
-	  setcookie("Worker_ID", "", time()-3600);
-	  setcookie("Group_Name", "", time()-3600);
   ?>
 </body>
 </html>
