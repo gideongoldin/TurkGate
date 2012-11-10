@@ -94,81 +94,97 @@
 <html>
   <head>
     <title>TurkGate</title>
+	<link rel="stylesheet" href="css/styles.css">
   </head>
   <body>
-  	<h1>TurkGate</h1>
-  	<hr />
+	<div class="wrapper">
+		<header>
+	  		<a href="index.php"><h1>TurkGate</h1></a>
+		</header>
+  	
+		<hr />
 
-	<h2>HIT Generation</h2>
-
-	<p>
-		From here you may generate the HTML code for your Web Interface HIT, or download files for use with the Command Line Tool.
-	</p>
-	
-	<form method="post" action="index.php">
-		
 		<p>
-			Please fill out the form below, and press generate.
+			From here you may generate the HTML code for your Web Interface HIT, or download files for use with the Command Line Tool.
+		</p>
+	
+		<form method="post" action="index.php" id="hitGenerationForm">
+			<fieldset>
+			<legend>HIT Generation</legend>
+		
+			<p>
+				Please specify a survey URL and group name:
+			</p>
+	
+			<p>
+				
+				<input type="text" name="externalSurveyURL" value=<?php echo "'$externalSurveyURL'"; ?> size="40" placeholder="http://surveysite.com/surveyid" autofocus required>
+				<label for="externalSurveyURL">External Survey URL*</label>
+			</p>
+
+			<p>
+				
+				<input type="text" name="groupName" value=<?php echo "'$groupName'"; ?> size="40" placeholder="Test group name" required>
+				<label for="groupName">Group Name*</label>
+			</p>
+
+			<h4>For the Mechanical Turk Web Interface: </h4>
+		
+			<p>Generate the HTML code to paste into your HIT using the values specified above.
+			Full instructions are on the <a href="http://gideongoldin.github.com/TurkGate/" target="blank">TurkGate Wiki</a>.</p>
+	
+			<p>
+				<input type="submit" name="generateHTMLCode" id="generateHTMLCode" value="Generate HTML code">
+			</p>
+
+			<?php
+				// Generate a text area with the HTML code
+				if(strlen($webTemplateString) > 0) {
+					echo '<p>Copy and paste the code below into the source code for your HIT:';
+					echo '<p><textarea rows="15" cols="80">';
+					echo $webTemplateString;
+					echo '</textarea></p>';
+				}
+			?>
+		
+			<h4>For the Mechanical Turk Command Line Tools: </h4>
+		
+			<p>Download the files for creating your HIT using the values specified above.
+			Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Command-Line-Tools" target="blank">TurkGate Wiki</a>.</p>
+		
+			<p>
+				Download: 
+				<input type="submit" name="downloadCLTFile" value="survey.input">
+				<input type="submit" name="downloadCLTFile" value="survey.properties">
+				<input type="submit" name="downloadCLTFile" value="survey.question">
+			</p>
+			</fieldset>
+		</form>
+	
+		<hr />
+	
+		<h4>Completion Codes</h4>
+
+		<p>			
+			To automatically generate completion codes at the end of your surveys, 
+			redirect your workers to the following URL: <a href="#"><?php echo constant('BASE_URL'); ?>/codes/generate.php</a>.
 		</p>
 	
 		<p>
-			<label for="externalSurveyURL">External Survey URL:</label>
-			<input type="text" name="externalSurveyURL" value=<?php echo "'$externalSurveyURL'"; ?> autofocus="autofocus" required="required">
+			Click <a href="codes/verify.php">here</a> to verify completion codes.
 		</p>
-
+	
 		<p>
-			<label for="groupName">Group Name:</label>
-			<input type="text" name="groupName" value=<?php echo "'$groupName'"; ?> required="required">
+			Visit the TurkGate Wiki pages on <a href="https://github.com/gideongoldin/TurkGate/wiki/Completion-Code-Generation" target="blank">Completion code generation</a> and <a href="https://github.com/gideongoldin/TurkGate/wiki/Completion-Code-Verification" target="blank">Completion code verification</a> for more information.
 		</p>
-
-		<h4>For Mechanical Turk Web Interface: </h4>
-		
-		<p>Generate the HTML code to paste into your HIT using the values specified above.
-		Full instructions are on the <a href="http://gideongoldin.github.com/TurkGate/" target="blank">TurkGate Wiki</a>.</p>
 	
-		<input type="submit" name="generateHTMLCode" value="Generate HTML code">
-
-		<?php
-			// Generate a text area with the HTML code
-			if(strlen($webTemplateString) > 0) {
-				echo '<p>Copy and paste the code below into the source code for your HIT:';
-				echo '<p><textarea rows="15" cols="80">';
-				echo $webTemplateString;
-				echo '</textarea></p>';
-			}
-		?>
-		
-		<h4>For Mechanical Turk Command Line Tools: </h4>
-		
-		<p>Download the files for creating your HIT using the values specified above.
-		Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Command-Line-Tools" target="blank">TurkGate Wiki</a>.</p>
-		
-		<input type="submit" name="downloadCLTFile" value="survey.input">
-		<input type="submit" name="downloadCLTFile" value="survey.properties">
-		<input type="submit" name="downloadCLTFile" value="survey.question">
-	</form>
+		<hr />
 	
-	<hr />
-	
-	<h2>Completion Codes</h2>
-
-	<p>			
-		To automatically generate completion codes at the end of your surveys, 
-		redirect your workers to the following URL: <a href="#"><?php echo constant('BASE_URL'); ?>/codes/generate.php</a>.
-	</p>
-	
-	<p>
-		Click <a href="codes/verify.php">here</a> to verify completion codes.
-	</p>
-	
-	<p>
-		Visit the TurkGate Wiki pages on <a href="https://github.com/gideongoldin/TurkGate/wiki/Completion-Code-Generation" target="blank">Completion code generation</a> and <a href="https://github.com/gideongoldin/TurkGate/wiki/Completion-Code-Verification" target="blank">Completion code verification</a> for more information.
-	</p>
-	
-	<hr />
-	
-    <h5>
-      Powered by <a href='http://gideongoldin.github.com/TurkGate/'>TurkGate</a>
-    </h5>
+		<footer>
+		    <h5>
+		      Powered by <a href='http://gideongoldin.github.com/TurkGate/'>TurkGate</a>
+		    </h5>
+		</footer>
+	</div>
   </body>
 </html>
