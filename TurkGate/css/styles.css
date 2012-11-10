@@ -68,9 +68,19 @@ fieldset, legend {
 
 legend {
   font-weight: 600;
-  letter-spacing: 2px;
 }
 
 input {
 	background:white;
+}
+
+#generatedHTMLCode {
+	-webkit-box-shadow: inset 2px 2px 2px 0px #dddddd;
+	    -moz-box-shadow: inset 2px 2px 2px 0px #dddddd;
+	    box-shadow: inset 2px 2px 2px 0px #dddddd;
+	overflow:auto;
+	margin: 10px;
+	    overflow: auto;
+	    padding: 7px 10px;
+	font-family: monospace;
 }

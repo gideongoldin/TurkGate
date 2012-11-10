@@ -141,7 +141,7 @@
 				// Generate a text area with the HTML code
 				if(strlen($webTemplateString) > 0) {
 					echo '<p>Copy and paste the code below into the source code for your HIT:';
-					echo '<p><textarea rows="15" cols="80">';
+					echo '<p><textarea rows="15" cols="80" id="generatedHTMLCode">';
 					echo $webTemplateString;
 					echo '</textarea></p>';
 				}
