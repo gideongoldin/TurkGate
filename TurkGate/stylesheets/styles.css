@@ -1,0 +1,11 @@
+textarea {
+	width: 100%;
+}
+
+/* Code generation page style*/ 
+#code {
+	color: yellow;
+	background: black;
+	font-family: monospace;
+	padding: 10px 0;
+}
