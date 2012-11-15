@@ -123,45 +123,47 @@
 		</div>
 		
 		<div class="ten columns omega"> <!-- Ten columns omega -->
-			<div id="tabs"> <!-- Tabs -->
+			<div> <!-- Tabs -->
 				
 				<!-- Tab headers -->
-				<ul>
-					<li>
-						<a href="#tabs-1">Web Interface</a>
+				<ul class="tabs">
+					<li class="active" rel="tab1">
+						Web Interface
 					</li>
-					<li>
-						<a href="#tabs-2">Command Line Tools</a>
+					<li rel="tab2">
+						Command Line Tools
 					</li>
 				</ul>
 				
-				<div id="tabs-1"> <!-- 1st Tab content -->
-					<p>
-						Generate the HTML code to paste into your HIT using the values specified above. Full instructions are on the <a href="http://gideongoldin.github.com/TurkGate/" target="blank">TurkGate Wiki</a>.
-					</p>
-					<p>
-						<input type="submit" name="generateHTMLCode" id="generateHTMLCode" value="Generate HTML code">
-					</p>
-					<?php
-						// Generate a text area with the HTML code
-						if(strlen($webTemplateString) > 0) {
-							echo '<p>Copy and paste the code below into the source code for your HIT:';
-							echo '<p><textarea rows="15" cols="80" id="generatedHTMLCode">';
-							echo $webTemplateString;
-							echo '</textarea></p>';
-						}
-					?>
-				</div> <!-- 1st Tab content -->
+				<div class="tab_container">
+					<div id="tab1" class="tab_content">
+						<p>
+							Generate the HTML code to paste into your HIT using the values specified above. Full instructions are on the <a href="http://gideongoldin.github.com/TurkGate/" target="blank">TurkGate Wiki</a>.
+						</p>
+						<p>
+							<input type="submit" name="generateHTMLCode" id="generateHTMLCode" value="Generate HTML code">
+						</p>
+						<?php
+							// Generate a text area with the HTML code
+							if(strlen($webTemplateString) > 0) {
+								echo '<p>Copy and paste the code below into the source code for your HIT:';
+								echo '<p><textarea rows="15" cols="80" id="generatedHTMLCode">';
+								echo $webTemplateString;
+								echo '</textarea></p>';
+							}
+						?>
+					</div>
 				
-				<div id="tabs-2"> <!-- 2nd Tab content -->
-					<p>
-						Download the files for creating your HIT using the values specified above. Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Command-Line-Tools" target="blank">TurkGate Wiki</a>.
-					</p>
-					<h4>Download:</h4>
-					<p>
-						<input type="submit" name="downloadCLTFile" value="survey.input"> <input type="submit" name="downloadCLTFile" value="survey.properties"> <input type="submit" name="downloadCLTFile" value="survey.question">
-					</p>
-				</div> <!-- 2nd Tab content -->
+					<div id="tab2" class="tab_content">
+						<p>
+							Download the files for creating your HIT using the values specified above. Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Command-Line-Tools" target="blank">TurkGate Wiki</a>.
+						</p>
+						<h4>Download:</h4>
+						<p>
+							<input type="submit" name="downloadCLTFile" value="survey.input"> <input type="submit" name="downloadCLTFile" value="survey.properties"> <input type="submit" name="downloadCLTFile" value="survey.question">
+						</p>
+					</div>
+				</div>
 			</div> <!-- Tabs -->
 		</div> <!-- Ten columns omega -->
 		</form>
@@ -186,7 +188,16 @@
 <!-- Custom jQuery actions -->
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#tabs").tabs();
+		$(".tab_content").hide();
+		$(".tab_content:first").show(); 
+
+		$("ul.tabs li").click(function() {
+			$("ul.tabs li").removeClass("active");
+			$(this).addClass("active");
+			$(".tab_content").hide();
+			var activeTab = $(this).attr("rel"); 
+			$("#"+activeTab).fadeIn(); 
+		});
 	});
 </script> 
 
