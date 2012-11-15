@@ -2,7 +2,7 @@
 
 body {
   padding:50px;
-  font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font:14px/1.5 "Times New Roman", serif;
   color:#777;
   font-weight:300;
 }
@@ -10,6 +10,8 @@ body {
 h1, h2, h3, h4, h5, h6 {
   color:#222;
   margin:0 0 20px;
+  font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
 }
 
 p, ul, ol, table, pre, dl {
@@ -51,14 +53,14 @@ a small {
 }
 
 hr {
- border:0;
+  border:0;
   background:#e5e5e5;
   height:1px;
   margin:0 0 20px;
 }
 
 label {
-	font-style: italic;
+  font-style: italic;
 }
 
 fieldset, legend {
@@ -71,16 +73,9 @@ legend {
 }
 
 input {
-	background:white;
+  background:white;
 }
 
 #generatedHTMLCode {
-	-webkit-box-shadow: inset 2px 2px 2px 0px #dddddd;
-	    -moz-box-shadow: inset 2px 2px 2px 0px #dddddd;
-	    box-shadow: inset 2px 2px 2px 0px #dddddd;
-	overflow:auto;
-	margin: 10px;
-	    overflow: auto;
-	    padding: 7px 10px;
-	font-family: monospace;
+  font-family: monospace;
 }

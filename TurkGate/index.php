@@ -108,56 +108,55 @@
 			From here you may generate the HTML code for your Web Interface HIT, or download files for use with the Command Line Tool.
 		</p>
 	
+		<h2>Generate a HIT</h1>
+	
 		<form method="post" action="index.php" id="hitGenerationForm">
 			<fieldset>
 			<legend>HIT Generation</legend>
-		
-			<p>
-				Please specify a survey URL and group name:
-			</p>
+				<p>
+					Please specify a survey URL and group name:
+				</p>
 	
-			<p>
-				
-				<input type="text" name="externalSurveyURL" value=<?php echo "'$externalSurveyURL'"; ?> size="40" placeholder="http://surveysite.com/surveyid" autofocus required>
-				<label for="externalSurveyURL">External Survey URL*</label>
-			</p>
+				<p>
+					<input type="text" name="externalSurveyURL" value=<?php echo "'$externalSurveyURL'"; ?> size="40" placeholder="http://surveysite.com/surveyid" autofocus required>
+					<label for="externalSurveyURL">External Survey URL*</label>
+				</p>
 
-			<p>
-				
-				<input type="text" name="groupName" value=<?php echo "'$groupName'"; ?> size="40" placeholder="Test group name" required>
-				<label for="groupName">Group Name*</label>
-			</p>
+				<p>
+					<input type="text" name="groupName" value=<?php echo "'$groupName'"; ?> size="40" placeholder="Test group name" required>
+					<label for="groupName">Group Name*</label>
+				</p>
 
-			<h4>For the Mechanical Turk Web Interface: </h4>
+				<h4>For the Mechanical Turk Web Interface: </h4>
 		
-			<p>Generate the HTML code to paste into your HIT using the values specified above.
-			Full instructions are on the <a href="http://gideongoldin.github.com/TurkGate/" target="blank">TurkGate Wiki</a>.</p>
+				<p>Generate the HTML code to paste into your HIT using the values specified above.
+				Full instructions are on the <a href="http://gideongoldin.github.com/TurkGate/" target="blank">TurkGate Wiki</a>.</p>
 	
-			<p>
-				<input type="submit" name="generateHTMLCode" id="generateHTMLCode" value="Generate HTML code">
-			</p>
+				<p>
+					<input type="submit" name="generateHTMLCode" id="generateHTMLCode" value="Generate HTML code">
+				</p>
 
-			<?php
-				// Generate a text area with the HTML code
-				if(strlen($webTemplateString) > 0) {
-					echo '<p>Copy and paste the code below into the source code for your HIT:';
-					echo '<p><textarea rows="15" cols="80" id="generatedHTMLCode">';
-					echo $webTemplateString;
-					echo '</textarea></p>';
-				}
-			?>
+				<?php
+					// Generate a text area with the HTML code
+					if(strlen($webTemplateString) > 0) {
+						echo '<p>Copy and paste the code below into the source code for your HIT:';
+						echo '<p><textarea rows="15" cols="80" id="generatedHTMLCode">';
+						echo $webTemplateString;
+						echo '</textarea></p>';
+					}
+				?>
 		
-			<h4>For the Mechanical Turk Command Line Tools: </h4>
+				<h4>For the Mechanical Turk Command Line Tools: </h4>
 		
-			<p>Download the files for creating your HIT using the values specified above.
-			Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Command-Line-Tools" target="blank">TurkGate Wiki</a>.</p>
+				<p>Download the files for creating your HIT using the values specified above.
+				Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Command-Line-Tools" target="blank">TurkGate Wiki</a>.</p>
 		
-			<p>
-				Download: 
-				<input type="submit" name="downloadCLTFile" value="survey.input">
-				<input type="submit" name="downloadCLTFile" value="survey.properties">
-				<input type="submit" name="downloadCLTFile" value="survey.question">
-			</p>
+				<p>
+					Download: 
+					<input type="submit" name="downloadCLTFile" value="survey.input">
+					<input type="submit" name="downloadCLTFile" value="survey.properties">
+					<input type="submit" name="downloadCLTFile" value="survey.question">
+				</p>
 			</fieldset>
 		</form>
 	
@@ -182,8 +181,9 @@
 	
 		<footer>
 		    <h5>
-		      Powered by <a href='http://gideongoldin.github.com/TurkGate/'>TurkGate</a>
+		      Powered by <a href='http://gideongoldin.github.com/TurkGate/'>TurkGate</a>. <span style="float:right;">Copyright &copy; Adam Darlow & Gideon Goldin.</span>
 		    </h5>
+			
 		</footer>
 	</div>
   </body>
