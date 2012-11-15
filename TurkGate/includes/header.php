@@ -8,8 +8,8 @@
 	<!-- Basic Page Needs
   ================================================== -->
 	<meta charset="utf-8">
-	<title>TurkGate</title>
-	<meta name="description" content="">
+	<title><?php echo $title ?></title>
+	<meta name="description" content="<?php echo $description ?>">
 	<meta name="author" content="">
 
 	<!-- Mobile Specific Metas
@@ -18,11 +18,11 @@
 
 	<!-- CSS
   ================================================== -->
-	<link rel="stylesheet" href="stylesheets/base.css">
-	<link rel="stylesheet" href="stylesheets/skeleton.css">
-	<link rel="stylesheet" href="stylesheets/layout.css">
+	<link rel="stylesheet" href="<?php echo $basePath ?>stylesheets/base.css">
+	<link rel="stylesheet" href="<?php echo $basePath ?>stylesheets/skeleton.css">
+	<link rel="stylesheet" href="<?php echo $basePath ?>stylesheets/layout.css">
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" /> <!-- jQuery UI theme -->
-	<link rel="stylesheet" href="stylesheets/styles.css"> <!-- TurkGate-specific styling -->
+	<link rel="stylesheet" href="<?php echo $basePath ?>stylesheets/styles.css"> <!-- TurkGate-specific styling -->
 
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -30,7 +30,7 @@
 
 	<!-- Favicons
 	================================================== -->
-	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="shortcut icon" href="<?php echo $basePath ?>images/favicon.ico">
 	
 	<!-- Libraries needed by TurkGate
 	================================================== -->
@@ -40,3 +40,5 @@
 </head>
 
 <body>
+	
+  <div class="container"> <!-- Container -->
