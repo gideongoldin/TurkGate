@@ -72,5 +72,6 @@ limitations under the License.
     <p>Please enter the code below into Mechanical Turk:</p>
     <p id="code"><?php echo $completionCode ?></p>
   </div>
-
-<?php require_once('../includes/footer.php'); ?>
+    
+<!-- Import the footer -->
+<?php require_once($basePath . 'includes/footer.php'); ?>

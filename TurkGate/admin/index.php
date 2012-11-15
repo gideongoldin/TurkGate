@@ -31,13 +31,16 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <title>TurkGate</title>
-  </head>
+
+<!-- Import the header -->
+<?php 
+    $title = 'TurkGate Central';
+    $description = 'TurkGate tools for researchers.';
+    $basePath = '../';
+    require_once($basePath . 'includes/header.php'); 
+?>
   <body>
-  	<h1>TurkGate</h1>
+  	<header><h1>TurkGate Administration Page</h1></header>
   	<h2>Installation</h2>
   	<?php
   	    if ($installed) {
@@ -93,10 +96,6 @@ if (isset($_POST['submit'])) {
       	<input type="submit" name="submit" value="Test">
       </p>
     </form>
-
-    <h5>
-      &copy; 2012 
-      <a href='https://github.com/gideongoldin/TurkGate'>TurkGate</a>
-    </h5>
-  </body>
-</html>
+    
+<!-- Import the footer -->
+<?php require_once($basePath . 'includes/footer.php'); ?>

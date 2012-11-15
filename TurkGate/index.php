@@ -200,6 +200,6 @@
 		});
 	});
 </script> 
-
+  
 <!-- Import the footer -->
-<?php require_once('includes/footer.php'); ?>
+<?php require_once($basePath . 'includes/footer.php'); ?>
