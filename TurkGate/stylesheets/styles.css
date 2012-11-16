@@ -78,6 +78,11 @@ ul.tabs li.active{
 .danger {
 	background-color: maroon;
 	color: white;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  
 }
 .danger h1, .danger h2, .danger h3, 
 .danger h4, .danger h5, .danger h6 {

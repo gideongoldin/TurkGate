@@ -185,7 +185,7 @@ limitations under the License.
 				Please enter your database (e.g., MySQL) login information below.
 			</p>
 			<p>
-				Uninstalling TurkGate will remove all TurkGate-generated files and tables. It will not remove TurkGate source files.
+				Uninstalling TurkGate will remove all TurkGate-generated files and database tables. All of the access records for your groups will be lost. It will not remove TurkGate source files.
 			</p>
 
 			<form method="post" action="install.php" onsubmit="if(!confirm('Are you sure you want to uninstall TurkGate?')) { return false; }">
