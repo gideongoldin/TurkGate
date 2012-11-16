@@ -146,12 +146,16 @@
 						<?php
 							// Generate a text area with the HTML code
 							if(strlen($webTemplateString) > 0) {
+								$textAreaId = 'generatedHTMLCode';
+								
 								echo '<div id="generatedContent" style="display:none;">';
 								echo '<em><small>Copy and paste the code below into the source code for your HIT:</em></small>';
-								echo '<textarea rows="8" id="generatedHTMLCode">';
+								echo '<textarea rows="8" id="' . $textAreaId . '">';
 								echo $webTemplateString;
 								echo '</textarea>';
 								echo '</div>';
+								
+								require_once 'lib/autoselect.php';
 							}
 						?>
 					</div>
