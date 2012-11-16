@@ -34,13 +34,12 @@ if (isset($_POST['submit'])) {
 
 <!-- Import the header -->
 <?php 
-    $title = 'TurkGate Central';
-    $description = 'TurkGate tools for researchers.';
+    $title = 'TurkGate Administration';
+    $description = 'TurkGate tools for the administrator.';
     $basePath = '../';
     require_once($basePath . 'includes/header.php'); 
 ?>
-  <body>
-  	<header><h1>TurkGate Administration Page</h1></header>
+  	<header><h1>TurkGate Administration</h1></header>
   	<h2>Installation</h2>
   	<?php
   	    if ($installed) {
@@ -61,29 +60,19 @@ if (isset($_POST['submit'])) {
 	?>
     <p>To test the installation, enter a workerId and group name below and click Test.</p>
       <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-      <table>
-        <tr>
-          <td> Worker Id: </td>
-          <td>
+      	
+	      <label for="workerID">Worker Id:</label>
           <input type="text" name="workerID" value="1">
-          </td>
-        </tr>
-        <tr>
-          <td> Group: </td>
-          <td>
+          
+	      <label for="groupName">Group:</label>
           <input type="text" name="groupName" value="test group">
-          </td>
-        </tr>
-        <tr>
-          <td> Survey URL: </td>
-          <td>
-            <input type="text" name="surveyURL" value="test">
-          </td>
-          <td><i>(The default sends you to a TurkGate test page.)</i></td>
-        </tr>
-      </table>
+          
+	      <label for="surveyURL">Survey URL:</label>
+          <input type="text" name="surveyURL" value="test">
+          <i>(The default sends you to a TurkGate test page.)</i>
+          <br />
       <p>
-      	You can also specify what kind of HIT you want to test. This changes 
+      	You must also specify what kind of HIT you want to test. This changes 
       	whether TurkGate displays a link to the survey or redirects to it.
       </p>
       <p>

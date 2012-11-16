@@ -14,17 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>TurkGate</title>
-	</head>
-
 	<?php
 	require '../lib/fixhttp.lib.php';
-	
-	// Commonly used variables
-	$footer = "<h5>&copy; 2012 <a href='http://gideongoldin.github.com/TurkGate/' target='blank'>TurkGate</a></h5>";
 
 	// Check for form submissions
 	if (isset($_POST['installSubmit']) || isset($_POST['uninstallSubmit'])) {
@@ -39,14 +30,14 @@ limitations under the License.
 		// Validate entries that are relevant to both install and uninstall forms
 		if (empty($databaseHost) || empty($databaseName) || empty($databaseUsername) || empty($databasePassword)) {
 			// Simple form validation for HTMLn where n < 5
-			echo "<h1>TurkGate</h1><h2>Installation</h2><p>Error: All fields are required. Please <a href='javascript:history.back()'>go back</a> and re-submit.</p>" . $footer;
+			echo "<h1>TurkGate</h1><h2>Installation</h2><p>Error: All fields are required. Please <a href='javascript:history.back()'>go back</a> and re-submit.</p>";
 		} else {
 			
 			// Connect to the database
-			$connection = mysql_connect($databaseHost, $databaseUsername, $databasePassword) or die("<h1>TurkGate</h1><h2>Installation</h2><p>Error connecting to database. " . mysql_error() . ". See your system administrator.</p><p><a href='javascript:history.back()'>Go back</a></p>" . $footer);
+			$connection = mysql_connect($databaseHost, $databaseUsername, $databasePassword) or die("<h1>TurkGate</h1><h2>Installation</h2><p>Error connecting to database. " . mysql_error() . ". See your system administrator.</p><p><a href='javascript:history.back()'>Go back</a></p>");
 
 			// Select the database
-			mysql_select_db($databaseName, $connection) or die("<h1>TurkGate</h1><h2>Installation</h2><p>Error selecting database: " . mysql_error() . "</p><p><a href='javascript:history.back()'>Go back</a></p>" . $footer);
+			mysql_select_db($databaseName, $connection) or die("<h1>TurkGate</h1><h2>Installation</h2><p>Error selecting database: " . mysql_error() . "</p><p><a href='javascript:history.back()'>Go back</a></p>");
 			
 			// Check if the uninstall (vs. install) form was submitted
 			if(isset($_POST['uninstallSubmit'])) {
@@ -73,8 +64,6 @@ limitations under the License.
 				} else {
 					echo '<p>TurkGate removed the file turkGateConfig.php.</p><p><a href="index.php">Admin home</a></p>';
 				}
-			
-				echo $footer;
 				
 			} else {
 				// The install (vs. uninstall) form was submitted
@@ -113,7 +102,7 @@ limitations under the License.
 						time DATETIME
 					)";
 
-						mysql_query($sql, $connection) or die("<p>Error creating table: " . mysql_error() . "</p><p><a href='javascript:history.back()'>Go back</a></p>" . $footer);
+						mysql_query($sql, $connection) or die("<p>Error creating table: " . mysql_error() . "</p><p><a href='javascript:history.back()'>Go back</a></p>");
 						mysql_close($connection);
 
 						// Installation is now complete
@@ -122,7 +111,7 @@ limitations under the License.
 						exit();
 				} else {
 					// Simple form validation for HTMLn where n < 5
-					echo "<h1>TurkGate</h1><h2>Installation</h2><p>Error: All fields are required. Please <a href='javascript:history.back()'>go back</a> and re-submit.</p>" . $footer;
+					echo "<h1>TurkGate</h1><h2>Installation</h2><p>Error: All fields are required. Please <a href='javascript:history.back()'>go back</a> and re-submit.</p>";
 				}
 			}
 		}
@@ -130,8 +119,15 @@ limitations under the License.
 	}
 ?>
 
-	<body>
-		<h1>TurkGate</h1>
+
+<!-- Import the header -->
+<?php 
+    $title = 'TurkGate Installation';
+    $description = 'TurkGate installation and uninstallation page.';
+    $basePath = '../';
+    require_once($basePath . 'includes/header.php'); 
+?>
+	<header><h1>TurkGate Install/Uninstall</h1></header>
 		<h2>To install...</h2>
 
 		<p>
@@ -217,8 +213,6 @@ limitations under the License.
 				</p>
 
 			</form>
-
-		<?php echo $footer ?>
-
-	</body>
-</html>
+    
+<!-- Import the footer -->
+<?php require_once($basePath . 'includes/footer.php'); ?>
