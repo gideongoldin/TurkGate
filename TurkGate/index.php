@@ -104,7 +104,7 @@
   </header>
 </div>		
 
-	<div class="sixteen columns clearfix" style="border-top: 1px solid #DDD; padding-top:10px;"> <!-- sixteen columns clearfix -->
+	<div class="sixteen columns clearfix" style="border-top: 1px solid #ccc; padding-top:10px;"> <!-- sixteen columns clearfix -->
 		<form method="post" action="index.php" id="hitGenerationForm" name="hitGenerationForm">
 		<h3>Generate a HIT</h3>
 		<div class="six columns alpha">
@@ -140,16 +140,18 @@
 						<p>
 							Generate the HTML code to paste into your HIT using the values specified above. Full instructions are on the <a href="http://gideongoldin.github.com/TurkGate/" target="blank">TurkGate Wiki</a>.
 						</p>
-						<p>
-							<input type="submit" name="generateHTMLCode" id="generateHTMLCode" value="Generate HTML code">
-						</p>
+						
+						<input type="submit" name="generateHTMLCode" id="generateHTMLCode" value="Generate HTML code">
+						
 						<?php
 							// Generate a text area with the HTML code
 							if(strlen($webTemplateString) > 0) {
-								echo '<p>Copy and paste the code below into the source code for your HIT:';
-								echo '<p><textarea rows="15" cols="80" id="generatedHTMLCode">';
+								echo '<div id="generatedContent" style="display:none;">';
+								echo '<em><small>Copy and paste the code below into the source code for your HIT:</em></small>';
+								echo '<textarea rows="8" id="generatedHTMLCode">';
 								echo $webTemplateString;
-								echo '</textarea></p>';
+								echo '</textarea>';
+								echo '</div>';
 							}
 						?>
 					</div>
@@ -158,10 +160,9 @@
 						<p>
 							Download the files for creating your HIT using the values specified above. Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Command-Line-Tools" target="blank">TurkGate Wiki</a>.
 						</p>
-						<h4>Download:</h4>
-						<p>
-							<input type="submit" name="downloadCLTFile" value="survey.input"> <input type="submit" name="downloadCLTFile" value="survey.properties"> <input type="submit" name="downloadCLTFile" value="survey.question">
-						</p>
+						<em><small>Download:</small></em>
+						
+						<input type="submit" name="downloadCLTFile" value="survey.input"> <input type="submit" name="downloadCLTFile" value="survey.properties"> <input type="submit" name="downloadCLTFile" value="survey.question">
 					</div>
 				</div>
 			</div> <!-- Tabs -->
@@ -170,7 +171,7 @@
 	</div> <!-- sixteen columns clearfix -->
 
 	
-<div class="sixteen columns" style="border-top: 1px solid #DDD; padding-top:10px;">	
+<div class="sixteen columns" style="border-top: 1px solid #ccc; padding-top:10px;">	
 <h3>
 	Completion Codes
 </h3>
@@ -196,8 +197,13 @@
 			$(this).addClass("active");
 			$(".tab_content").hide();
 			var activeTab = $(this).attr("rel"); 
-			$("#"+activeTab).fadeIn(); 
+			$("#"+activeTab).show(); 
 		});
+		
+		// Animate textarea if exists
+		if($('#generatedContent').length > 0) {
+			$('#generatedContent').slideDown();
+		}
 	});
 </script> 
   
