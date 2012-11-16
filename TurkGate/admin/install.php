@@ -128,25 +128,36 @@ limitations under the License.
     require_once($basePath . 'includes/header.php'); 
 ?>
 	<header><h1>TurkGate Install/Uninstall</h1></header>
-		<h2>To install...</h2>
-
-		<p>
-			Please enter your database (e.g., MySQL) login information below.
-		</p>
-		<p>
-			Installing TurkGate will automatically add a table ('SurveyRequest') to the database specified below.
-		</p>
+			<div> <!-- Tabs -->
+				<!-- Tab headers -->
+				<ul class="tabs">
+					<li class="active" rel="tab1">
+						<h3>Install</h3>
+					</li>
+					<li rel="tab2">
+						<h3 style="color: darkred">Uninstall</h3>
+					</li>
+				</ul>
+		
+				<div class="tab_container">
+					<div id="tab1" class="tab_content">
+		<h4>To install, first enter the URL of your TurkGate folder.</h4>
 
 		<form method="post" action="install.php">
-           <p>
-				<label for="databaseHost">Database Host:</label>
-				<input type="text" class="remove-bottom" name="databaseHost" value="localhost" required="required">
-				<span class="comment">(This value is usually 'localhost')</span>
-			</p>
 			<p>
 				<label for="turkGateURL">TurkGate URL:</label>
 				<input type="text" class="remove-bottom" name="turkGateURL" required="required">
 				<span class="comment">(The URL of the directory you pasted TurkGate into. E.g., http://yourdomain.edu/TurkGate)</span>
+			</p>
+
+		<h4>
+			TurkGate needs to store information in a database (e.g., MySQL). Please enter the login information below.
+			A table called <span style="font-style: italic">SurveyRequest</span> will be added to your database.
+		</h4>
+           <p>
+				<label for="databaseHost">Database Host:</label>
+				<input type="text" class="remove-bottom" name="databaseHost" value="localhost" required="required">
+				<span class="comment">(This value is usually 'localhost')</span>
 			</p>
 			<p>
 				<label for="databaseName">Database Name:</label>
@@ -166,9 +177,8 @@ limitations under the License.
 			</p>
 
 		</form>
-		
-		<hr />
-		
+</div>
+					<div id="tab2" class="tab_content danger">
 			<h2>To uninstall...</h2>
 
 			<p>
@@ -207,6 +217,30 @@ limitations under the License.
 				</p>
 
 			</form>
+			</div>
+			</div>
+			</div> <!-- Tabs -->
+
+<!-- Custom jQuery actions -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".tab_content").hide();
+		$(".tab_content:first").show(); 
+
+		$("ul.tabs li").click(function() {
+			$("ul.tabs li").removeClass("active");
+			$(this).addClass("active");
+			$(".tab_content").hide();
+			var activeTab = $(this).attr("rel"); 
+			$("#"+activeTab).show(); 
+		});
+		
+		// Animate textarea if exists
+		if($('#generatedContent').length > 0) {
+			$('#generatedContent').slideDown();
+		}
+	});
+</script> 
     
 <!-- Import the footer -->
 <?php require_once($basePath . 'includes/footer.php'); ?>

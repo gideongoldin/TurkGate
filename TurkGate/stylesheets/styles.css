@@ -74,3 +74,13 @@ ul.tabs li.active{
 	font-size: 1.2em;
 	display: none;
 }
+
+.danger {
+	background-color: maroon;
+	color: white;
+}
+.danger h1, .danger h2, .danger h3, 
+.danger h4, .danger h5, .danger h6 {
+	color: white;	
+}
+
