@@ -19,14 +19,14 @@ header > h1 {
 
 /* Tabs */
 ul.tabs {
-		margin: 0;
-		padding: 0;
-		float: left;
-		list-style: none;
-		height: 32px;
-		border-bottom: 1px solid #999999;
-		border-left: 1px solid #999999;
-		width: 100%;
+	margin: 0;
+	padding: 0;
+	float: left;
+	list-style: none;
+	height: 32px;
+	border-bottom: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	width: 100%;
 }
 ul.tabs li {
 	float: left;
@@ -35,7 +35,7 @@ ul.tabs li {
 	padding: 0px 21px ;
 	height: 31px;
 	line-height: 31px;
-	border: 1px solid #999999;
+	border: 1px solid #ccc;
 	border-left: none;
 	font-weight: bold;
 	background: #EEEEEE;
@@ -50,12 +50,13 @@ ul.tabs li.active{
 	border-bottom: 1px solid #FFFFFF;
 }
 .tab_container {
-	border: 1px solid #999999;
+	border: 1px solid #ccc;
 	border-top: none;
 	clear: both;
 	float: left; 
 	width: 100%;
 	background: #FFFFFF;
+	margin-bottom:20px;
 }
 .tab_content {
 	padding: 20px;
