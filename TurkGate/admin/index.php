@@ -39,7 +39,12 @@ if (isset($_POST['submit'])) {
     $basePath = '../';
     require_once($basePath . 'includes/header.php'); 
 ?>
-  	<header><h1>TurkGate Administration</h1></header>
+<div class="sixteen columns">
+  <header>
+	<h1 class="remove-bottom">TurkGate</h1>
+  </header>
+</div>		
+<div class="sixteen columns clearfix" style="border-top: 1px solid #ccc; padding-top:10px;"> <!-- sixteen columns clearfix -->
   	<h2>Installation</h2>
   	<?php
   	    if ($installed) {
@@ -60,17 +65,17 @@ if (isset($_POST['submit'])) {
 	?>
     <p>To test the installation, enter a workerId and group name below and click Test.</p>
       <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-      	
+      	<p>
 	      <label for="workerID">Worker Id:</label>
-          <input type="text" name="workerID" value="1">
+          <input type="text" name="workerID" value="1" />
           
 	      <label for="groupName">Group:</label>
-          <input type="text" name="groupName" value="test group">
+          <input type="text" name="groupName" value="test group" />
           
 	      <label for="surveyURL">Survey URL:</label>
-          <input type="text" name="surveyURL" value="test">
-          <i>(The default sends you to a TurkGate test page.)</i>
-          <br />
+          <input class="remove-bottom" type="text" name="surveyURL" value="test" />
+          <span class="comment">(Default value sends you to a TurkGate test page.)</span>
+        </p>
       <p>
       	You must also specify what kind of HIT you want to test. This changes 
       	whether TurkGate displays a link to the survey or redirects to it.
@@ -85,6 +90,7 @@ if (isset($_POST['submit'])) {
       	<input type="submit" name="submit" value="Test">
       </p>
     </form>
+</div>
     
 <!-- Import the footer -->
 <?php require_once($basePath . 'includes/footer.php'); ?>

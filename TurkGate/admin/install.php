@@ -138,35 +138,29 @@ limitations under the License.
 		</p>
 
 		<form method="post" action="install.php">
-
-			<p>
+           <p>
 				<label for="databaseHost">Database Host:</label>
-				<input type="text" name="databaseHost" value="localhost" required="required">
-				<i>(This value is usually 'localhost')</i>
+				<input type="text" class="remove-bottom" name="databaseHost" value="localhost" required="required">
+				<span class="comment">(This value is usually 'localhost')</span>
 			</p>
-			
 			<p>
 				<label for="turkGateURL">TurkGate URL:</label>
-				<input type="text" name="turkGateURL" required="required">
-				<i>(The URL of the directory you pasted TurkGate into. E.g., http://yourdomain.edu/TurkGate)</i>
+				<input type="text" class="remove-bottom" name="turkGateURL" required="required">
+				<span class="comment">(The URL of the directory you pasted TurkGate into. E.g., http://yourdomain.edu/TurkGate)</span>
 			</p>
-			
 			<p>
 				<label for="databaseName">Database Name:</label>
-				<input type="text" name="databaseName" required="required" autofocus="autofocus">
-				<i>(E.g., 'TurkGate')</i>
+				<input type="text" class="remove-bottom" name="databaseName" required="required" autofocus="autofocus">
+				<span class="comment">(E.g., 'TurkGate')</span>
 			</p>
-
 			<p>
 				<label for="databaseUsername">Database Username:</label>
 				<input type="text" name="databaseUsername" required="required">
 			</p>
-
 			<p>
 				<label for="databasePassword">Database Password:</label>
 				<input type="password" name="databasePassword" required="required">
 			</p>
-		
 			<p>
 				<input type="submit" name="installSubmit" value="Install TurkGate">
 			</p>
@@ -188,14 +182,14 @@ limitations under the License.
 
 				<p>
 					<label for="databaseHost">Database Host:</label>
-					<input type="text" name="databaseHost" value="localhost" required="required">
-					<i>(This value is usually 'localhost')</i>
+					<input type="text" class="remove-bottom" name="databaseHost" value="localhost" required="required">
+					<span class="comment">(This value is usually 'localhost')</span>
 				</p>
 
 				<p>
 					<label for="databaseName">Database Name:</label>
-					<input type="text" name="databaseName" required="required" autofocus="autofocus">
-					<i>(E.g., 'TurkGate')</i>
+					<input type="text" class="remove-bottom" name="databaseName" required="required" autofocus="autofocus">
+					<span class="comment">(E.g., 'TurkGate')</span>
 				</p>
 
 				<p>

@@ -1,6 +1,17 @@
-/* Textarea */
 textarea {
 	width: 100%;
+}
+
+.comment {
+	color: darkgrey;
+	font-size: small;
+	font-style: italic;
+	margin-bottom: 20px;
+	padding: 6px 4px;
+}
+
+.short {
+	width: 50%;
 }
 
 /* Code style for generation page */ 
