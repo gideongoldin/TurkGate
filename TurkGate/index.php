@@ -72,6 +72,10 @@
 	}
 	
 	$(document).ready(function(){    
+		
+		// each of the submission buttons sets the function to be called upon submission, but doesn't 
+		// actually call the function. Only the submit event triggers the function, allowing it to check 
+		// that all required fields have been filled out.
         $('#generateHTMLCode').click( function () { 
         	$('#hitGenerationForm').data("submitFunction", generateWebCode); 
         });
