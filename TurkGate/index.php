@@ -16,78 +16,8 @@
 	limitations under the License.
 
 */
-	require 'lib/fixhttp.lib.php';
 
-	if(isset($_POST['downloadCLTFile'])) {
-	
-		// Forces browser to download instead of open files
-		header("Content-Type: application/octet-stream");
-		
-		// Required for base URL
-		$installed = @include('config.php');
-		
-		//All of the variables in the files that need to be substitute
-		$substitutions = array( '[[[TurkGate URL]]]' => constant('BASE_URL'));
-		$substitutions['[[[Survey URL]]]'] = fix_http($_POST['externalSurveyURL']);
-		$substitutions['[[[Group Name]]]'] = $_POST['groupName'];   
-										
-		// File name pulled from submit button values
-		$fileName = $_POST['downloadCLTFile'];
-		$file = 'resources/CLTHIT/' . $fileName;
-		
-		header("Content-Disposition: attachment; filename=" . $fileName);   
-		header("Content-Type: application/force-download");
-		header("Content-Type: application/octet-stream");
-		header("Content-Type: application/download");
-		header("Content-Description: File Transfer");            
-		header("Content-Length: " . filesize($file));
-		//flush(); // this doesn't really matter.
-		$fp = fopen($file, "r");
-
-		// NOTE: The buffer limit should be noted here
-		// to verify that the entire file is read!
-		$text = stream_get_contents($fp);
-		
-		// Perform the specified substitutions
-		// NOTE: Could fail with files larger than buffer size!
-		foreach ($substitutions as $original => $new) {
-			$text = str_replace($original, $new, $text);
-		}
-
-		echo $text;
-		
-		fclose($fp);
-		exit;
-	}
-
-	// Create a string for the HTML code
-	$webTemplateString = "";
-	
-	// Get the form values
-	$externalSurveyURL = isset($_POST['externalSurveyURL']) ? fix_http($_POST['externalSurveyURL']) : "";
-	$groupName = isset($_POST['groupName']) ? $_POST['groupName'] : "";    
-
-	// Check if TurkGate is installed
-	$installed = @include 'config.php';
-	
-	if(!$installed) {
-		echo '<p>TurkGate does not appear to be installed. See your administrator.</p><p><a href="admin/index.php">Admin home</a></p>';
-		echo '<h5>Powered by <a href=http://gideongoldin.github.com/TurkGate/">TurkGate</a></h5>';
-		exit;
-	} else {
-		if(isset($_POST['generateHTMLCode'])) {
-				// Modify the web template
-			// First read the entire file
-			$webTemplateString = file_get_contents('resources/WebHIT/webTemplate.html');
-
-			// Make the necessary changes
-			$webTemplateString = str_replace('[[[Survey URL]]]', fix_http($_POST['externalSurveyURL']), $webTemplateString);
-			$webTemplateString = str_replace('[[[Group Name]]]', $_POST['groupName'], $webTemplateString);
-			$webTemplateString = str_replace('[[[TurkGate URL]]]', constant('BASE_URL'), $webTemplateString);
-			$copyright = "<!-- Copyright (c) 2012 Adam Darlow and Gideon Goldin. For more info, see http://gideongoldin.github.com/TurkGate/ -->\n";
-			$webTemplateString = preg_replace('/<!--[^>]*-->/', $copyright, $webTemplateString, 1);
-		}
-	}   
+    require_once('config.php');
 ?>
 
 <!-- Import the header -->
@@ -97,6 +27,82 @@
     $basePath = '';
     require_once($basePath . 'includes/header.php'); 
 ?>
+<script src="lib/fixhttp.lib.js"></script>
+<script type="text/javascript">
+	function generateWebCode() {
+		var surveyURL = fix_http($('#externalSurveyURL').val());
+		var groupName = $('#groupName').val();
+		var copyright = "<!-- Copyright (c) 2012 Adam Darlow and Gideon Goldin. For more info, see http://gideongoldin.github.com/TurkGate/ -->\n"; 
+		
+		var htmlCode = <?php echo json_encode(file_get_contents('resources/WebHIT/webTemplate.html')); ?>;
+		htmlCode = htmlCode.replace('[[[Survey URL]]]', surveyURL);
+		htmlCode = htmlCode.replace('[[[Group Name]]]', groupName);
+		htmlCode = htmlCode.replace('[[[TurkGate URL]]]', "<?php echo constant('BASE_URL'); ?>");
+		htmlCode = htmlCode.replace('/<!--[^>]*-->/', copyright);
+		
+		$('#generatedHTMLCode').val(htmlCode);
+		$('#generatedContent').slideDown();
+	}
+	
+	function endsWith(str, suffix) {
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+	
+	function downloadCLTFile(fileName) {
+		var surveyURL = fix_http($('#externalSurveyURL').val());
+		var groupName = $('#groupName').val();
+
+		var url = 'lib/downloadFile.php?file=' + encodeURIComponent(fileName);
+		
+		if (endsWith(fileName, 'question')) {
+			url = url + '&sub1=' + encodeURIComponent('[[[TurkGate URL]]]<?php echo constant('BASE_URL'); ?>');
+		}
+		else if (endsWith(fileName, 'input')) {
+			url = url + '&sub1=' + encodeURIComponent('[[[Survey URL]]]' + surveyURL);
+			url = url + '&sub2=' + encodeURIComponent('[[[Group Name]]]' + groupName);
+		}
+		
+		window.open(url);
+		
+		return false;
+	}
+	
+	function createDownloadHandler(fileName) {
+		return function() { return downloadCLTFile(fileName); };
+	}
+	
+	$(document).ready(function(){    
+        $('#generateHTMLCode').click( function () { 
+        	$('#hitGenerationForm').data("submitFunction", generateWebCode); 
+        });
+        
+        $('#downloadCLTInputFile').click( function () { 
+        	$('#hitGenerationForm').data("submitFunction", createDownloadHandler('survey.input')); 
+        });
+        
+        $('#downloadCLTPropertiesFile').click( function () { 
+        	$('#hitGenerationForm').data("submitFunction", createDownloadHandler('survey.properties')); 
+        });
+        
+        $('#downloadCLTQuestionFile').click( function () { 
+        	$('#hitGenerationForm').data("submitFunction", createDownloadHandler('survey.question')); 
+        });
+        
+        $('#generatedContent').slideUp();
+        
+        // submitting the form calls whatever function has been set
+        $('#hitGenerationForm').submit(function () { 
+          var subFunc = $('#hitGenerationForm').data("submitFunction");
+          if (typeof subFunc === 'function') {
+          	subFunc();
+          }
+          $('#hitGenerationForm').removeData("submitFunction");      
+            	
+          return false; 
+        });
+    });
+	
+</script>
 		
 <div class="sixteen columns">
   <header>
@@ -105,7 +111,7 @@
 </div>		
 
 	<div class="sixteen columns clearfix" style="border-top: 1px solid #ccc; padding-top:10px;"> <!-- sixteen columns clearfix -->
-		<form method="post" action="index.php" id="hitGenerationForm" name="hitGenerationForm">
+		<form method="post" id="hitGenerationForm" name="hitGenerationForm">
 		<h3>Generate a HIT</h3>
 		<div class="six columns alpha">
 			<p>
@@ -115,10 +121,10 @@
 				Please specify a survey URL and group name:
 			</p>
 			<p>
-				<label for="externalSurveyURL">*External Survey URL:</label> <input type="text" name="externalSurveyURL" value='<?php echo "$externalSurveyURL"; ?>' size="40" placeholder="http://surveysite.com/surveyid" autofocus="" required="">
+				<label for="externalSurveyURL">*External Survey URL:</label> <input type="text" name="externalSurveyURL" id="externalSurveyURL" value='' size="40" placeholder="http://surveysite.com/surveyid" autofocus="" required="">
 			</p>
 			<p>
-				<label for="groupName">*Group Name:</label> <input type="text" name="groupName" value='<?php echo "$groupName"; ?>' size="40" placeholder="Test group name" required="">
+				<label for="groupName">*Group Name:</label> <input type="text" name="groupName" id="groupName" value='' size="40" placeholder="Test group name" required="">
 			</p>
 		</div>
 		
@@ -144,20 +150,13 @@
 						<input type="submit" name="generateHTMLCode" id="generateHTMLCode" value="Generate HTML code">
 						
 						<?php
-							// Generate a text area with the HTML code
-							if(strlen($webTemplateString) > 0) {
-								$textAreaId = 'generatedHTMLCode';
-								
-								echo '<div id="generatedContent" style="display:none;">';
-								echo '<em><small>Copy and paste the code below into the source code for your HIT:</em></small>';
-								echo '<textarea rows="8" id="' . $textAreaId . '">';
-								echo $webTemplateString;
-								echo '</textarea>';
-								echo '</div>';
-								
+								$textAreaId = 'generatedHTMLCode';								
 								require_once 'lib/autoselect.php';
-							}
-						?>
+                        ?>								
+						<div id="generatedContent">
+							<em><small>Copy and paste the code below into the source code for your HIT:</em></small>
+							<textarea rows="8" style="height:80;" id="<?php echo $textAreaId; ?>"></textarea>
+						</div>
 					</div>
 				
 					<div id="tab2" class="tab_content">
@@ -166,7 +165,9 @@
 						</p>
 						<em><small>Download:</small></em>
 						
-						<input type="submit" name="downloadCLTFile" value="survey.input"> <input type="submit" name="downloadCLTFile" value="survey.properties"> <input type="submit" name="downloadCLTFile" value="survey.question">
+						  <input type="submit" name="downloadCLTFile" id="downloadCLTInputFile" value="survey.input"> 
+  						  <input type="submit" name="downloadCLTFile" id="downloadCLTPropertiesFile" value="survey.properties"> 
+						  <input type="submit" name="downloadCLTFile" id="downloadCLTQuestionFile" value="survey.question">
 					</div>
 				</div>
 			</div> <!-- Tabs -->
@@ -203,11 +204,6 @@
 			var activeTab = $(this).attr("rel"); 
 			$("#"+activeTab).show(); 
 		});
-		
-		// Animate textarea if exists
-		if($('#generatedContent').length > 0) {
-			$('#generatedContent').slideDown();
-		}
 	});
 </script> 
   

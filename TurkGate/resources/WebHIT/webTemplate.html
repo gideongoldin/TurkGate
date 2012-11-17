@@ -38,11 +38,6 @@ limitations under the License.
     return urlVars;
   }
 
-  // helper function for encoding url variables
-  function myEncode(str) {
-    return encodeURIComponent(str);
-  }
-
   // tests whether cookies are enabled
   function test_cookies() {
     var cookieEnabled = (navigator.cookieEnabled) ? true : false;
@@ -70,8 +65,8 @@ limitations under the License.
     }
 
     var phpArgs = "source=js&";
-    phpArgs += "survey=" + myEncode(surveyURL);
-    phpArgs += "&group=" + myEncode(group);
+    phpArgs += "survey=" + encodeURIComponent(surveyURL);
+    phpArgs += "&group=" + encodeURIComponent(group);
     phpArgs += "&workerId=" + urlVars["workerId"];
     phpArgs += "&assignmentId=" + urlVars["assignmentId"];
 
