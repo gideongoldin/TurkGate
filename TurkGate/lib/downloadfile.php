@@ -32,7 +32,6 @@
 		// NOTE: Could fail with files larger than buffer size!
 		foreach ($substitutions as $original => $new) {
 			$text = str_replace(urldecode($original), urldecode($new), $text);
-			$text = $text . "\n" . urldecode($original) . " => " . urldecode($new);
 		}
 
 		echo $text;
