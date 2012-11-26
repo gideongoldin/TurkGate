@@ -15,8 +15,6 @@ limitations under the License.
 -->
 
 	<?php
-	require '../lib/fixhttp.lib.php';
-
 	// Check for form submissions
 	if (isset($_POST['installSubmit']) || isset($_POST['uninstallSubmit'])) {
 		
