@@ -13,6 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
+<!-- Import the header -->
+<?php 
+    $title = 'TurkGate Installation';
+    $description = 'TurkGate installation and uninstallation page.';
+    $basePath = '../';
+    require_once($basePath . 'includes/header.php'); 
+?>
 
 	<?php
 	// Check for form submissions
@@ -23,7 +30,7 @@ limitations under the License.
 		$databaseName = isset($_POST['databaseName']) ? $_POST['databaseName'] : "";
 		$databaseUsername = isset($_POST['databaseUsername']) ? $_POST['databaseUsername'] : "";
 		$databasePassword = isset($_POST['databasePassword']) ? $_POST['databasePassword'] : "";
-		$baseURL = isset($_POST['turkGateURL']) ? fix_http($_POST['turkGateURL']) : "";
+		$baseURL = isset($_POST['turkGateURL']) ? $_POST['turkGateURL'] : "";
 		
 		// Validate entries that are relevant to both install and uninstall forms
 		if (empty($databaseHost) || empty($databaseName) || empty($databaseUsername) || empty($databasePassword)) {
@@ -105,26 +112,30 @@ limitations under the License.
 
 						// Installation is now complete
 						echo '<h1>TurkGate</h1><h2>Installation</h2><p>TurkGate Installation successful!</p>';
-						echo '<p><a href="index.php">Admin home</a></p>' . $footer;
-						exit();
+						echo '<p><a href="index.php">Admin home</a></p>';
 				} else {
 					// Simple form validation for HTMLn where n < 5
 					echo "<h1>TurkGate</h1><h2>Installation</h2><p>Error: All fields are required. Please <a href='javascript:history.back()'>go back</a> and re-submit.</p>";
 				}
 			}
 		}
+		require_once($basePath . 'includes/footer.php');		
 		exit();
 	}
 ?>
 
+			
+<script src="../lib/fixhttp.lib.js"></script>
+<script type="text/javascript">
 
-<!-- Import the header -->
-<?php 
-    $title = 'TurkGate Installation';
-    $description = 'TurkGate installation and uninstallation page.';
-    $basePath = '../';
-    require_once($basePath . 'includes/header.php'); 
-?>
+  $(document).ready(function() {
+    $('#turkGateURL').blur(function() {
+      $('#turkGateURL').val(fix_http($('#turkGateURL').val()));
+    });
+  });
+
+</script>
+
 	<header><h1>TurkGate Install/Uninstall</h1></header>
 			<div> <!-- Tabs -->
 				<!-- Tab headers -->
@@ -144,7 +155,7 @@ limitations under the License.
 		<form method="post" action="install.php">
 			<p>
 				<label for="turkGateURL">TurkGate URL:</label>
-				<input type="text" class="remove-bottom" name="turkGateURL" required="required">
+				<input type="text" class="remove-bottom" name="turkGateURL" id="turkGateURL" required="required" >
 				<span class="comment">(The URL of the directory you pasted TurkGate into. E.g., http://yourdomain.edu/TurkGate)</span>
 			</p>
 

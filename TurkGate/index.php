@@ -29,6 +29,7 @@
 ?>
 <script src="lib/fixhttp.lib.js"></script>
 <script type="text/javascript">
+
 	function generateWebCode() {
 		var surveyURL = fix_http($('#externalSurveyURL').val());
 		var groupName = $('#groupName').val();
@@ -73,6 +74,11 @@
 	
 	$(document).ready(function(){    
 		
+
+        $('#externalSurveyURL').blur(function() {
+          $('#externalSurveyURL').val(fix_http($('#externalSurveyURL').val()));
+        });
+        
 		// each of the submission buttons sets the function to be called upon submission, but doesn't 
 		// actually call the function. Only the submit event triggers the function, allowing it to check 
 		// that all required fields have been filled out.
