@@ -22,6 +22,33 @@ textarea {
 	padding: 10px 0;
 }
 
+/* Code style for verifify page */
+table {
+	margin-bottom:10px;
+	table-layout: fixed;
+	width: 100%
+}
+td, th {
+	border:1px solid #ccc;
+	word-wrap: break-word;
+	width:25%;
+	padding:4px;
+}
+th {
+	font-weight:bold;
+}
+.valid, .invalid {
+	background: red;
+	color: white;
+	padding: 0 2px;
+	margin: 0 2px;
+	border-radius: 2px;
+	font-family: monospace;
+}
+.valid {
+	background: green;
+}
+
 /* Header h1 */
 header > h1 {
 	margin-top: 40px;

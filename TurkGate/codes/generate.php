@@ -21,7 +21,6 @@
 	// Set the expiration date to the past
 	setcookie("Worker_ID", "", time()-3600, '/');
 	setcookie("Group_Name", "", time()-3600, '/');
-    
 ?>
 
 <!--
@@ -70,8 +69,16 @@ limitations under the License.
   </div>
   <div class="sixteen columns clearfix" style="border-top: 1px solid #DDD; padding-top:10px;"> <!-- sixteen columns clearfix -->
     <p>Please enter the code below into Mechanical Turk:</p>
-    <p id="code"><?php echo $completionCode ?></p>
+    <p id="code" style="text-align:center; font-weight:bold;"><?php echo $completionCode ?></p>
   </div>
     
-<!-- Import the footer -->
-<?php require_once($basePath . 'includes/footer.php'); ?>
+<!-- Add the footer (less credit info) -->
+	<footer>
+		<div class="sixteen columns clearfix" style="border-top: 1px solid #DDD; padding-top:10px;">
+			<h6>
+		  		Powered by <a href='http://gideongoldin.github.com/TurkGate/'>TurkGate</a>.
+			</h6>	
+		</div> <!-- sixteen columns clearfix -->
+	</footer>
+	</body>
+</html>

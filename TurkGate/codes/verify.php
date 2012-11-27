@@ -48,43 +48,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
 
-<!doctype html>
-<head>
-  <title>TurkGate</title>
-  <style type="text/css">
-	body {
-		margin: 50px auto;
-		text-align: center;
-	}
-	table {
-		margin: 0px auto;
-	}
-	th {
-		border-bottom: 1px dotted black;
-	}
-	td {
-		padding: 0 20px;
-	}
-	.valid, .invalid {
-		background: red;
-		color: white;
-		padding: 0 2px;
-		margin: 0 2px;
-		border-radius: 2px;
-		font-family: monospace;
-	}
-	.valid {
-		background: green;
-	}
-	footer, a {
-		color: gray;
-	}
-  </style>
-</head>
-<body>
+<!-- Import the header -->
+<?php 
+    $title = 'TurkGate Administration';
+    $description = 'TurkGate tools for the administrator.';
+    $basePath = '../';
+    require_once($basePath . 'includes/header.php'); 
+?>
+<div class="sixteen columns">
   <header>
-    <h1>Completion Code Verification</h1>
+	<h1 class="remove-bottom">TurkGate Code Verification</h1>
   </header>
+</div>
+<div class="sixteen columns clearfix" style="border-top: 1px solid #ccc; padding-top:10px;"> <!-- sixteen columns clearfix -->
 
   <?php
       $encryptionKey = constant('KEY');
@@ -169,26 +145,24 @@ THE SOFTWARE.
   <?php 
       } else { 
   ?>
-  <p>
-    Copy and paste the entire contents of your downloaded Mechanical Turk 
-    batch results file into the text area below:
-  </p>
-  <form method="post" action="verify.php">
-    <div>
-      <textarea name="results" rows="20" cols="100" wrap="off"></textarea>
-    </div>
-    <div>
-      <input type="submit" value="Verify codes" name="submit">
-    </div>
-  </form>
+
+  	<p>
+	    Copy and paste the entire contents of your downloaded Mechanical Turk 
+	    batch results file into the text area below:
+	  </p>
+	  <form method="post" action="verify.php">
+	    <div>
+	      <textarea name="results" rows="20" wrap="off"></textarea>
+	    </div>
+	    <div>
+	      <input type="submit" value="Verify codes" name="submit">
+	    </div>
+	  </form>
+
   <?php
       }
   ?>
+	</div>
 
-  <footer>
-    <h5>&copy; 2012 <a href='http://gideongoldin.github.com/TurkGate/' target='blank'>TurkGate</a></h5>
-  </footer>
-
-</body>
-</html>
-
+<!-- Import the footer -->
+<?php require_once($basePath . 'includes/footer.php'); ?>

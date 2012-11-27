@@ -31,7 +31,6 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-
 <!-- Import the header -->
 <?php 
     $title = 'TurkGate Administration';
@@ -41,56 +40,57 @@ if (isset($_POST['submit'])) {
 ?>
 <div class="sixteen columns">
   <header>
-	<h1 class="remove-bottom">TurkGate</h1>
+	<h1 class="remove-bottom">TurkGate Administration</h1>
   </header>
-</div>		
+</div>
+		
 <div class="sixteen columns clearfix" style="border-top: 1px solid #ccc; padding-top:10px;"> <!-- sixteen columns clearfix -->
-  	<h2>Installation</h2>
+  	<h3>Installation</h3>
   	<?php
   	    if ($installed) {
-  	        echo '<p>TurkGate has already been installed!</p>';
-			echo '<p><a href="install.php">Uninstall TurkGate</a></p>';
+  	        echo '<p>TurkGate has already been installed!';
+			echo '<br /><a href="install.php">Uninstall TurkGate</a></p>';
   	    } else {
-  	        echo '<p>TurkGate is not yet installed.</p>';
-			echo '<p><a href="install.php">Install TurkGate</a></p>'; 
+  	        echo '<p>TurkGate is not yet installed.';
+			echo '<br /><a href="install.php">Install TurkGate</a></p>'; 
   	    }
     ?>
-    <br>
-    <h2>Testing</h2>
+</div>
+<div class="sixteen columns" style="border-top: 1px solid #ccc; padding-top:10px;">	
+    <h3>Testing</h3>
     <?php
         if (!$installed) {
-        	echo '<h3>***** Testing is unlikely to work without installing ' 
-        	    . 'TurkGate first. *****</h3>';
+        	echo '<br /><strong><p style="background:darkred; color:white; text-align:center;">NOTE: Testing is unlikely to work as TurkGate is not yet installed!</p></strong>';
         }
 	?>
     <p>To test the installation, enter a workerId and group name below and click Test.</p>
-      <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-      	<p>
+    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    	<p>
 	      <label for="workerID">Worker Id:</label>
           <input type="text" name="workerID" value="1" />
-          
+        
 	      <label for="groupName">Group:</label>
           <input type="text" name="groupName" value="test group" />
-          
+        
 	      <label for="surveyURL">Survey URL:</label>
           <input class="remove-bottom" type="text" name="surveyURL" value="test" />
           <span class="comment">(Default value sends you to a TurkGate test page.)</span>
         </p>
-      <p>
-      	You must also specify what kind of HIT you want to test. This changes 
-      	whether TurkGate displays a link to the survey or redirects to it.
-      </p>
-      <p>
-        <input type="radio" name="source" value="ext" checked>Command Line Tools HIT</input>
-      </p>
-      <p>
-      	<input type="radio" name="source" value="js">Web Interface HIT</input>
-      </p>
-      <p>
-      	<input type="submit" name="submit" value="Test">
-      </p>
+	    <p>
+	      	You must also specify what kind of HIT you want to test. This changes 
+	      	whether TurkGate displays a link to the survey or redirects to it.
+	    </p>
+	    <p>
+	        <input type="radio" name="source" value="js">Web Interface HIT</input>
+			<br />
+			<input type="radio" name="source" value="ext" checked>Command Line Tools HIT</input> 
+	    </p>
+	    <p>
+	      	<input type="submit" name="submit" value="Test">
+	    </p>
     </form>
 </div>
+
     
 <!-- Import the footer -->
 <?php require_once($basePath . 'includes/footer.php'); ?>
