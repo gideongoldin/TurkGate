@@ -1,5 +1,16 @@
 textarea {
 	width: 100%;
+	font-family: monospace;
+}
+
+header h1 a {
+	color: #181818;
+	text-decoration:none;
+}
+
+header h1 a:hover {
+	color: #181818;
+	text-decoration:underline;
 }
 
 .comment {

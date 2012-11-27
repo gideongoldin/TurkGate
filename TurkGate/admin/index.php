@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
 ?>
 <div class="sixteen columns">
   <header>
-	<h1 class="remove-bottom">TurkGate Administration</h1>
+	<h1 class="remove-bottom"><a href="../index.php">TurkGate</a> Administration</h1>
   </header>
 </div>
 		

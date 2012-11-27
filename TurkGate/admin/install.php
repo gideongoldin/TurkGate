@@ -34,7 +34,7 @@ limitations under the License.
 		
 		echo '<div class="sixteen columns">';
 		echo '<header>';
-		echo '<h1 class="remove-bottom">TurkGate Installation/Uninstallation</h1>';
+		echo '<h1 class="remove-bottom"><a href="../index.php">TurkGate</a> Installation/Uninstallation</h1>';
 		echo '</header>';
 		echo '</div>';
 		echo '<div class="sixteen columns clearfix" style="border-top: 1px solid #ccc; padding-top:10px;">';
@@ -154,7 +154,7 @@ limitations under the License.
 
 <div class="sixteen columns">
   <header>
-	<h1 class="remove-bottom">TurkGate Install/Uninstall</h1>
+	<h1 class="remove-bottom"><a href="index.php">TurkGate</a> Installation/Uninstallation</h1>
   </header>
 </div>
 <div class="sixteen columns clearfix" style="border-top: 1px solid #ccc; padding-top:10px;"> <!-- sixteen columns clearfix -->
