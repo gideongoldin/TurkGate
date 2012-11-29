@@ -1,26 +1,28 @@
 <?php 
     session_start(); 
 
-    if (!include('../config.php')) {
+    if (!include_once('../config.php')) {
         die('A configuration error occurred. ' 
           . 'Please report this error to the HIT requester.');
     }
 	
-    $encryptionKey = constant('KEY');
-	  
-	$workerId = "";
-	$groupName = "";
+	require_once('../lib/tempstorage.php');
 	
-	if(isset($_COOKIE['Worker_ID']) && isset($_COOKIE['Group_Name'])) {
-	    $workerId = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($encryptionKey), base64_decode($_COOKIE['Worker_ID']), MCRYPT_MODE_CBC, md5(md5($encryptionKey))), "\0");
-	    $groupName = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($encryptionKey), base64_decode($_COOKIE['Group_Name']), MCRYPT_MODE_CBC, md5(md5($encryptionKey))), "\0");
+	$store = new tempStorage();
+	  
+	$workerId = $store->retreive('Worker_ID');
+	if ($workerId == null) {
+		$workerId = '';
+	} else {
+		$store->clear('Worker_ID');
 	}
-  
-
-	// Clear previously set cookies
-	// Set the expiration date to the past
-	setcookie("Worker_ID", "", time()-3600, '/');
-	setcookie("Group_Name", "", time()-3600, '/');
+	
+	$groupName = $store->retreive('Group_Name');
+	if ($groupName == null) {
+		$groupName = '';
+	} else {
+		$store->clear('Group_Name');
+	}
 ?>
 
 <!--
@@ -62,7 +64,7 @@ limitations under the License.
     }
 
     // Construct the completion code
-    $completionCode = $inputString . ':' . sha1($inputString . $encryptionKey);
+    $completionCode = $inputString . ':' . sha1($inputString . constant('KEY'));
 ?>
   <div class="sixteen columns">
     <header><h1>Thank you!</h1></header>

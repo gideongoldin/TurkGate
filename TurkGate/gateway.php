@@ -17,10 +17,13 @@
 
 session_start();
 
-if (!include('config.php')) {
+if (!include_once('config.php')) {
     die('A configuration error occurred. ' 
       . 'Please report this error to the HIT requester.');
 }
+
+require_once 'lib/accesscontrol.php';
+require_once 'lib/tempstorage.php';
 
 $groupName = urldecode($_GET['group']);
 
@@ -70,82 +73,16 @@ if ($_GET['assignmentId'] == 'ASSIGNMENT_ID_NOT_AVAILABLE'
     $htmlComments = '<p>Comments (optional): <br><textarea cols="60" rows="4" '  
       . 'id="comments" name="comments"></textarea></p>';
 
-    // parameters for accessing the database
-    $dbUsername = constant('DATABASE_USERNAME');
-    $dbPassword = constant('DATABASE_PASSWORD');
-    $dbName = constant('DATABASE_NAME');
-    $dbHost = constant('DATABASE_HOST');
+    $accessController = new accessControl();
 
-    // connect to the database
-    $con = mysql_connect($dbHost, $dbUsername, $dbPassword) 
-           or die('There was an error connecting to the database. ' . 
-             'Please contact the requester to notify them of the error.');
-
-    mysql_select_db($dbName) 
-      or die('There was an error selecting the database. ' . 
-        'Please contact the requester to notify them of the error.');
-
-    // Look for entries with the same workerId and groupName.
-    $query = "SELECT * FROM SurveyRequest WHERE " 
-      . "SurveyRequest.workerID='$workerId' " 
-      . "AND SurveyRequest.groupName='$groupName';";
-	  
-    $result = mysql_query($query) 
-              or die('There was an error retreiving access info. Please ' 
-                . 'contact the requester to notify them of the error.');
-
-    //If one exists, this worker has already done a survey in the group and will
+    //If access isn't granted, this worker has already done a survey in the group and will
     // be blocked from reaching the survey.
-    // On the chance that they completed the survey but then closed the browser,
-    // we still give them the option to enter a completion code.
-    if (mysql_numrows($result) > 0) {
-        echo '<html><body>';
-        // If this page was reached from a link and the HIT page is accessible in
-        // another window
-        if ($_GET['source'] == 'js') {
-            echo 'If you completed the survey for this HIT, enter the ' 
-              . 'completion code in the HIT page on Mechanical Turk.<br>';
-        } else {
-            // If this is an external hit, the submission form and explanation
-            // for being blocked are presented in the HIT page
-            echo $htmlForm;
-            echo 'If you accidentally left this page after accepting the HIT, ' 
-              . 'but have completed the survey you can enter the completion ' 
-              . 'code here.';
-            echo $htmlCompletionCode;
-            echo $htmlComments;
-            echo $htmlSubmitButton;
-            echo '</form>';
-        }
-
-        echo 'Otherwise, you may have already completed another survey in ' 
-          . 'this group and cannot complete this one. Please return the HIT.<br>';
-        echo '</body></html>';
-    } else {
-        // ACCESS GRANTED
-
-        // save the worker ID and group name for later creating the completion code
-        $key = constant('KEY');
-		$encryptedWorkerId = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 
-		  md5($key), $workerId, MCRYPT_MODE_CBC, md5(md5($key))));
-		$encryptedGroupName = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 
-		  md5($key), $groupName, MCRYPT_MODE_CBC, md5(md5($key))));
+    if ($accessController->checkAccess($workerId, $groupName, true, $surveyURL)) {        // ACCESS GRANTED
+	
+		$store = new tempStorage();
 		  
-		// Temporarily removing session variables because completion code doesn't look for them
-        //$_SESSION['Worker_ID'] = $encryptedWorkerId;
-        //$_SESSION['Group_Name'] = $encryptedGroupName;
-		
-        setcookie('Worker_ID', $encryptedWorkerId, time() + (24 * 60 * 60), '/');
-        setcookie('Group_Name', $encryptedGroupName, time() + (24 * 60 * 60), '/');
-
-        // Add the access to the database to block future access
-        $query = "INSERT INTO SurveyRequest " 
-          . "(SurveyRequest.workerID, SurveyRequest.groupName, SurveyRequest.URL) " 
-          . "VALUES ('$workerId', '$groupName', '$surveyURL');";
-		  
-        $result = mysql_query($query) 
-                  or die('There was an error saving to the database. Please ' 
-                    . 'contact the requester to notify them of the error.');
+		$store->store('Worker_ID', $workerId, true);
+		$store->store('Group_Name', $groupName, true);
 
         if ($_GET['source'] == 'js') {
             // if coming from javascript, simply redirect because the HIT
@@ -189,8 +126,34 @@ if ($_GET['assignmentId'] == 'ASSIGNMENT_ID_NOT_AVAILABLE'
             echo '</form>';
 
             echo '</body></html>';
+        }    	
+    } else {
+    	// ACCESS DENIED
+        // On the chance that they completed the survey but then closed the browser,
+        // we still give them the option to enter a completion code.
+    	echo '<html><body>';
+        // If this page was reached from a link and the HIT page is accessible in
+        // another window
+        if ($_GET['source'] == 'js') {
+            echo 'If you completed the survey for this HIT, enter the ' 
+              . 'completion code in the HIT page on Mechanical Turk.<br>';
+        } else {
+            // If this is an external hit, the submission form and explanation
+            // for being blocked are presented in the HIT page
+            echo $htmlForm;
+            echo 'If you accidentally left this page after accepting the HIT, ' 
+              . 'but have completed the survey you can enter the completion ' 
+              . 'code here.';
+            echo $htmlCompletionCode;
+            echo $htmlComments;
+            echo $htmlSubmitButton;
+            echo '</form>';
         }
+
+        echo 'Otherwise, you may have already completed another survey in ' 
+          . 'this group and cannot complete this one. Please return the HIT.<br>';
+        echo '</body></html>';
     }
 
-    mysql_close($con);
+    $accessController->close();
 }
