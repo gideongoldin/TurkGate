@@ -154,7 +154,7 @@
 				<div class="tab_container">
 					<div id="tab1" class="tab_content">
 						<p>
-							Generate the HTML code to paste into your HIT using the values specified above. Full instructions are on the <a href="http://gideongoldin.github.com/TurkGate/" target="blank">TurkGate Wiki</a>.
+							Generate the HTML code to paste into your HIT. Full instructions are on the <a href="http://gideongoldin.github.com/TurkGate/" target="blank">TurkGate Wiki</a>.
 						</p>
 						
 						<input type="submit" name="generateHTMLCode" id="generateHTMLCode" value="Generate HTML code">
@@ -171,7 +171,7 @@
 				
 					<div id="tab2" class="tab_content">
 						<p>
-							Download the files for creating your HIT using the values specified above. Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Command-Line-Tools" target="blank">TurkGate Wiki</a>.
+							Download the files for creating your HIT. Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Command-Line-Tools" target="blank">TurkGate Wiki</a>.
 						</p>
 						<em><small>Download:</small></em>
 						
@@ -191,13 +191,26 @@
 	Completion Codes
 </h3>
 <p>
-	To automatically generate completion codes at the end of your surveys, redirect your workers to the following URL: <a href="#"><?php echo constant('BASE_URL'); ?>/codes/generate.php</a>.
+	To automatically generate completion codes at the end of your surveys, redirect your workers to one of the following URLs:
+	
+	<?php
+	    $numDigits = 6;
+		$generateCodeLink = constant('BASE_URL') . '/codes/generate.php?stamp=' . mt_rand(pow(10, $numDigits), pow(10, $numDigits + 1) - 1);	
+	?>
+	
+	<dl>
+		<dt>For Qualtrics:</dt>
+		<dd><a href="#"><?php echo $generateCodeLink ?>&responseID=${e://Field/ResponseID}</a></dd>
+			
+		<dt>For LimeSurvey:</dt>
+		<dd><a href="#"><?php echo $generateCodeLink ?>&user={SAVEDID}&survey={SID}</a></dd>	
+			
+		<dt>For other sites:</dt>
+		<dd><a href="#"><?php echo $generateCodeLink ?></a>
+	</dl>
 </p>
 <p>
 	Click <a href="codes/verify.php">here</a> to verify completion codes.
-</p>
-<p>
-	Visit the TurkGate Wiki pages on <a href="https://github.com/gideongoldin/TurkGate/wiki/Completion-Code-Generation" target="blank">Completion code generation</a> and <a href="https://github.com/gideongoldin/TurkGate/wiki/Completion-Code-Verification" target="blank">Completion code verification</a> for more information.
 </p>
 </div>
 
