@@ -1,3 +1,12 @@
+.new-section .section-begin {
+	font-size: 110%;
+	font-weight: bold;
+}
+
+.new-section {
+	margin: 10px 0 5px 0;
+}
+
 textarea {
 	width: 100%;
 	font-family: monospace;
