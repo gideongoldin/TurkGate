@@ -77,7 +77,7 @@ limitations under the License.
 			require_once '../lib/autoselect.php';
     ?>	
 	<div class="thirteen columns offset-by-one">
-    	<textarea rows="4" id="<?php echo $textAreaId; ?>" readonly><?php echo $completionCode ?><?php echo $completionCode ?><?php echo $completionCode ?></textarea>
+    	<textarea rows="4" id="<?php echo $textAreaId; ?>" readonly><?php echo $completionCode ?></textarea>
 	</div>
   </div>
     
