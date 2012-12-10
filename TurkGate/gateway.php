@@ -157,3 +157,5 @@ if ($_GET['assignmentId'] == 'ASSIGNMENT_ID_NOT_AVAILABLE'
 
     $accessController->close();
 }
+
+?>
