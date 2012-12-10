@@ -39,7 +39,7 @@
 		htmlCode = htmlCode.replace('[[[Survey URL]]]', surveyURL);
 		htmlCode = htmlCode.replace('[[[Group Name]]]', groupName);
 		htmlCode = htmlCode.replace('[[[TurkGate URL]]]', "<?php echo constant('BASE_URL'); ?>");
-		htmlCode = htmlCode.replace('/<!--[^>]*-->/', copyright);
+		htmlCode = htmlCode.replace(/<!--[^>]*-->/, copyright);
 		
 		$('#generatedHTMLCode').val(htmlCode);
 		$('#generatedContent').slideDown();

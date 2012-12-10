@@ -2,7 +2,7 @@
 			<div class="sixteen columns clearfix" style="border-top: 1px solid #DDD; padding-top:10px;">
 				<div class="eight columns alpha">
 					<h6>
-					  Powered by <a href='http://gideongoldin.github.com/TurkGate/'>TurkGate</a>.
+					  Powered by <a href='http://gideongoldin.github.com/TurkGate/'>TurkGate</a> (version 0.3.2)
 					</h6>	
 				</div>
 				<div class="eight columns omega">

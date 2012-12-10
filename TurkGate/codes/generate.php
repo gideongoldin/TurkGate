@@ -67,20 +67,19 @@ limitations under the License.
     $completionCode = $inputString . ':' . sha1($inputString . constant('KEY'));
 ?>
   <div class="sixteen columns">
-    <header><h1>Thank you!</h1></header>
+    <header><h1>Completion Code</h1></header>
   </div>
-  <div class="sixteen columns clearfix" style="border-top: 1px solid #DDD; padding-top:10px;"> <!-- sixteen columns clearfix -->
-    <p>Please enter the code below into Mechanical Turk:</p>
-    <p id="code" style="text-align:center; font-weight:bold;"><?php echo $completionCode ?></p>
+  <div class="sixteen columns" style="border-top: 1px solid #DDD; padding-top:10px;"> <!-- sixteen columns clearfix -->
+    <p>Please copy <em>all</em> of the text from the box below into Mechanical Turk:</p>
+	<?php
+			$textAreaId = 'code';	
+			$keepAllSelected = true;							
+			require_once '../lib/autoselect.php';
+    ?>	
+	<div class="thirteen columns offset-by-one">
+    	<textarea rows="4" id="<?php echo $textAreaId; ?>" readonly><?php echo $completionCode ?></textarea>
+	</div>
   </div>
     
-<!-- Add the footer (less credit info) -->
-	<footer>
-		<div class="sixteen columns clearfix" style="border-top: 1px solid #DDD; padding-top:10px;">
-			<h6>
-		  		Powered by <a href='http://gideongoldin.github.com/TurkGate/'>TurkGate</a>.
-			</h6>	
-		</div> <!-- sixteen columns clearfix -->
-	</footer>
-	</body>
+</body>
 </html>
