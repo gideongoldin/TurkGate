@@ -3,6 +3,16 @@ textarea {
 	font-family: monospace;
 }
 
+textarea#code {
+	text-align:center; 
+	font-weight:bold;
+	color: darkgreen;
+	min-height: 0;
+	font-size: 120%;
+	background: none;
+	resize: none;
+}
+
 dt {
 	font-weight: bold;
 	margin-top: 10px;
@@ -32,14 +42,6 @@ header h1 a:hover {
 
 .short {
 	width: 50%;
-}
-
-/* Code style for generation page */ 
-#code {
-	color: yellow;
-	background: black;
-	font-family: monospace;
-	padding: 10px 0;
 }
 
 /* Code style for verifify page */

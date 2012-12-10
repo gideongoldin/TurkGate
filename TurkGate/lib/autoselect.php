@@ -1,6 +1,7 @@
 <script type="text/javascript">
-  $(document).ready(function(){    
-    $('#<?php echo $textAreaId ?>').focus(function() {
+  $(document).ready(function(){ 
+	   
+    selectAllFunction = function() {
       $this = $(this);
     
       $this.select();
@@ -15,6 +16,16 @@
         $this.unbind("mouseup");
         return false;
       });
-    });
+    };
+
+	<?php
+		if ($keepAllSelected) {
+		    echo "$('#$textAreaId').click(selectAllFunction);";		
+			// Handle selections that start outside the element
+		    echo "$('#$textAreaId').mouseup(selectAllFunction);";			
+		} else {
+		    echo "$('#$textAreaId').focus(selectAllFunction);";			
+		}
+	?>
   });
 </script>
