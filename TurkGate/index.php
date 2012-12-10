@@ -190,28 +190,34 @@
 <h3>
 	Completion Codes
 </h3>
-<p>
-	To automatically generate completion codes at the end of your surveys, redirect your workers to one of the following URLs:
-	
+<div class="sixteen columns" style="padding-top:5px; margin-left: 0;">	
+<p class="new-section">
+	<span class="section-begin">Provide completion codes</span> to your participants at the end of your survey by sending them to one of the following URLs:
+</p>
+</div>
 	<?php
 	    $numDigits = 6;
 		$generateCodeLink = constant('BASE_URL') . '/codes/generate.php?stamp=' . mt_rand(pow(10, $numDigits), pow(10, $numDigits + 1) - 1);	
 	?>
 	
-	<dl>
-		<dt>For Qualtrics:</dt>
-		<dd><a href="#"><?php echo $generateCodeLink ?>&responseID=${e://Field/ResponseID}</a></dd>
-			
-		<dt>For LimeSurvey:</dt>
-		<dd><a href="#"><?php echo $generateCodeLink ?>&user={SAVEDID}&survey={SID}</a></dd>	
-			
-		<dt>For other sites:</dt>
-		<dd><a href="#"><?php echo $generateCodeLink ?></a>
-	</dl>
+	<div class="fourteen columns offset-by-one" style="padding-top:5px;">
+		<dl>
+			<dt>For Qualtrics:</dt>
+			<dd><a href="#"><?php echo $generateCodeLink ?>&responseID=${e://Field/ResponseID}</a></dd>
+				
+			<dt>For LimeSurvey:</dt>
+			<dd><a href="#"><?php echo $generateCodeLink ?>&user={SAVEDID}&survey={SID}</a></dd>	
+				
+			<dt>For other sites:</dt>
+			<dd><a href="#"><?php echo $generateCodeLink ?></a></dd>
+		</dl>
+	</div>
+	<div class="sixteen columns" style="padding-top:5px; margin-left: 0;">	
+
+<p class="new-section">
+	<span class="section-begin">Verify completion codes</span> at <a href="codes/verify.php">this page</a>.
 </p>
-<p>
-	Click <a href="codes/verify.php">here</a> to verify completion codes.
-</p>
+</div>
 </div>
 
 <!-- Custom jQuery actions -->
