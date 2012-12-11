@@ -46,8 +46,3 @@ of coordinated researchers can share one such installation. The
 researchers get easy to use web-based tools for creating HITs with 
 TurkGate access  control, providing workers with dynamic, secure 
 completion codes, and verifying those completion codes. 
-
-
-## More information
-
-Please visit the [TurkGate Wiki](https://github.com/gideongoldin/TurkGate/wiki "TurkGate Wiki") for more information.
