@@ -19,13 +19,22 @@ limitations under the License.
   var group = "[[[Group Name]]]";
   var turkGateURL = "[[[TurkGate URL]]]";
 
+
   // dynamically creates the text that warns workers about the policy of access
   // restriction
-  function createGroupText() {
-    return "<p>This study is part of a group of studies called " + group + 
+  function createGroupText(preview, group, gateURL) {
+    var text =  "<p>This study is part of a group of studies called " + group + 
       ". If you have accepted any other studies in the group, you will not " 
-      + "be able to complete this study. In this case, please don't accept " 
-      + "the HIT, because you'll have to return it.</p>";
+      + "be able to access this study or complete this HIT. "
+      
+    if (preview) {  
+      text += "In this case, please don't accept the HIT, because you'll have to return it. ";
+      text += "<a target='_blank' href='" + gateURL + "'>Click this link to check your eligibility.</a>";
+    }
+      
+    text += "</p>";
+      
+    return text;
   }
 
   // helper function for extracting and decoding url variables
@@ -50,37 +59,48 @@ limitations under the License.
   }
 
   // create a link to the survey access php page
-  function createSurveyAccessLink() {
+  function createSurveyAccessLink(urlVars, preview) {
 
     // require cookies to be enabled
     if (!test_cookies()) {
       return "<p>Please enable cookies in order to continue with this HIT.</p>"
     }
 
-    var urlVars = getUrlVars();
-
-    if (urlVars["assignmentId"] == undefined 
-        || urlVars["assignmentId"] == "ASSIGNMENT_ID_NOT_AVAILABLE") {
-      return "<p>A link to the study will appear here after you accept the HIT.</p>";
-    }
-
     var phpArgs = "source=js&";
-    phpArgs += "survey=" + encodeURIComponent(surveyURL);
     phpArgs += "&group=" + encodeURIComponent(group);
     phpArgs += "&workerId=" + urlVars["workerId"];
-    phpArgs += "&assignmentId=" + urlVars["assignmentId"];
+    if (!preview) {
+        phpArgs += "survey=" + encodeURIComponent(surveyURL);
+        phpArgs += "&assignmentId=" + urlVars["assignmentId"];
+    }
 
-    return '<a target="_blank" href="' + turkGateURL + '/gateway.php?' 
-           + phpArgs + '">Click here to open the study.</a>';
+    return turkGateURL + '/gateway.php?' + phpArgs;
   }
 
   // runs automatically when the page loads and fills in the dynamically
   // generated HTML
   window.onload = function() {
+  	
+  	var urlVars = getUrlVars();
+  	  	  
+    var preview = (urlVars["assignmentId"] == undefined 
+        || urlVars["assignmentId"] == "ASSIGNMENT_ID_NOT_AVAILABLE");
+            
+    var link = createSurveyAccessLink(urlVars, preview);
 
-    document.getElementById("showGroup").innerHTML = createGroupText();
+    if (preview) {
+    	document.getElementById("previewText").style.display = "block";
+    	document.getElementById("acceptedText").style.display = "none";
+    } else {
 
-    document.getElementById("phpLink").innerHTML = createSurveyAccessLink();
+      document.getElementById("phpLink").innerHTML = 
+        '<a target="_blank" href="' + link + '">Click here to open the study.</a>';
+
+    	document.getElementById("previewText").style.display = "none";
+    	document.getElementById("acceptedText").style.display = "block";
+    }
+    
+    document.getElementById("groupText").innerHTML = createGroupText(preview, group, link);
   }
 </script>
 
@@ -88,12 +108,17 @@ limitations under the License.
   Accessing the survey requires Javascript and cookies. 
   Please enable Javascript and cookies or don't accept the HIT. Thank you.
 </noscript>
-<div name="showGroup" id="showGroup"></div>
+<div name="previewText" id="previewText">
 <p>
   For technical reasons, 
   you cannot preview the study and can only access it once you have accepted 
   the HIT. Once you accept the HIT, you will receive a link to the study. 
 </p>
+</div>
+<div name="groupText" id="groupText"></div>
+<div name="acceptedText" id="acceptedText">
+  <div name="phpLink" id="phpLink"></div>
+</div>
 <p>
   At the end of the survey you will receive a confirmation code. Submit that 
   confirmation code in the text entry box below in order to receive credit for 
@@ -102,7 +127,6 @@ limitations under the License.
 <p>
   Thank you.
 </p>
-<div name="phpLink" id="phpLink"></div>
 <p>
   &nbsp;
 </p>

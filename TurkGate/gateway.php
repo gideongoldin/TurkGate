@@ -25,55 +25,78 @@ if (!include_once('config.php')) {
 require_once 'lib/accesscontrol.php';
 require_once 'lib/tempstorage.php';
 
-$groupName = urldecode($_GET['group']);
+$accessController = new accessControl();
 
-// parse survey identifier, first word is a code for finding the base URL, 
-// second word is a survey-specific id
-$surveyURL = urldecode($_GET['survey']);
-if (strlen($surveyURL) == 0 || $surveyURL == 'test') {
-    // If no survey URL was submitted, or if 'test' was entered, insert the
-    // testDestination.php page.
-    $surveyURL = 'admin/testDestination.php';
-}
+
+$workerId = htmlspecialchars($_GET['workerId']);
+
+$groupName = urldecode($_GET['group']);
 
 // We use assignmentId to identify whether the worker is merely previewing the
 // HIT or has accepted it.
-if ($_GET['assignmentId'] == 'ASSIGNMENT_ID_NOT_AVAILABLE' 
-    || empty($_GET['assignmentId'])) {
+if (empty($_GET['assignmentId']) || 
+	$_GET['assignmentId'] == 'ASSIGNMENT_ID_NOT_AVAILABLE') {
+	
+    $accessAllowed = $accessController->checkAccess($workerId, $groupName, false);
+    $popUp = ($_GET['source'] == 'js');
 
     // Block previews of the HIT, but warn about possible exclusion based on
     // group name
-
-    echo '<p>Sorry, this study cannot be previewed. ' 
-      . 'Please accept the HIT in order to view it.</p>';
-    echo "<p>You won't be able to complete the HIT if you have already done " 
-      . "other HITs related to $groupName. If this is the case, do not " 
-      . "accept the HIT.</p>";
-    echo '<p>If you have disabled browser cookies or if you restart your ' 
-      . 'browser after accepting the HIT, it might not work properly. Be sure ' 
-      . 'to have any plug-ins required by the HIT installed before accepting ' 
-      . 'it.</p>';
+	if ($accessAllowed) {
+		if ($popUp) {
+	        echo "<p>You have not done any surveys in the $groupName group.</p>";
+	        echo '<p>Once you accept the HIT, you will be able to access the survey.</p>';
+		} else {
+		    echo '<p>Sorry, this study cannot be previewed. ' 
+		      . 'Please accept the HIT in order to view it.</p>';
+		    echo "<p>You will be able to view the survey because you have not accepted " 
+		      . "any other HITs related to $groupName.</p>";
+		    echo '<p>If you have disabled browser cookies or if you restart your ' 
+		      . 'browser after accepting the HIT, it might not work properly. Be sure ' 
+		      . 'to have any plug-ins required by the HIT installed before accepting ' 
+		      . 'it.</p>';			
+		}
+	} else {
+		if ($popUp) {
+	        echo "<p>You have already accessed a survey in the $groupName group.</p>";
+	        echo '<p>Do NOT accept the HIT, because you will NOT be able to access the survey.</p>';
+		} else {
+		    echo '<p>Sorry, you should not accept this HIT.</p>';
+		    echo "<p>You will be NOT able to view the survey or complete the HIT because you " 
+		      . "have previously accepted other HITs related to $groupName.</p>";
+		}
+		
+	}
 } else {
     // This worker has accepted the HIT, so we can continue
-
-    $workerId = htmlspecialchars($_GET['workerId']);
     $assignId = htmlspecialchars($_GET['assignmentId']);
+	
 
-    // This is the form for submitting the completion codes and comments for an
-    // external HIT.
-    // Not needed if this page was reached through a link from a regular HIT.
-    $htmlForm = "<form id='mturk_form' method='POST' " 
-      . "action='http://www.mturk.com/mturk/externalSubmit'>" 
-      . "<input type='hidden' id='assignmentId' name='assignmentId' " 
-      . "value='$assignId'>";
-    $htmlCompletionCode = '<p>Completion code: <input type="text" ' 
-      . 'name="completion_code" id="completion_code" size="60"></p>';
-    $htmlSubmitButton = '<input id="submit_button" type="submit" '  
-      . 'name="submit_button" value="Submit" onclick="allowExit()">';
-    $htmlComments = '<p>Comments (optional): <br><textarea cols="60" rows="4" '  
-      . 'id="comments" name="comments"></textarea></p>';
-
-    $accessController = new accessControl();
+	// parse survey identifier, first word is a code for finding the base URL, 
+	// second word is a survey-specific id
+	$surveyURL = urldecode($_GET['survey']);
+	
+	
+	if (strlen($surveyURL) == 0 || $surveyURL == 'test') {
+	    // If no survey URL was submitted, or if 'test' was entered, insert the
+	    // testDestination.php page.
+	    $surveyURL = 'admin/testDestination.php';
+	}
+		
+	// This is the form for submitting the completion codes and comments for an
+	// external HIT.
+	// Not needed if this page was reached through a link from a regular HIT.
+	$htmlForm = "<form id='mturk_form' method='POST' " 
+	  . "action='http://www.mturk.com/mturk/externalSubmit'>" 
+	  . "<input type='hidden' id='assignmentId' name='assignmentId' " 
+	  . "value='$assignId'>";
+	$htmlCompletionCode = '<p>Completion code: <input type="text" ' 
+	  . 'name="completion_code" id="completion_code" size="60"></p>';
+	$htmlSubmitButton = '<input id="submit_button" type="submit" '  
+	  . 'name="submit_button" value="Submit" onclick="allowExit()">';
+	$htmlComments = '<p>Comments (optional): <br><textarea cols="60" rows="4" '  
+	  . 'id="comments" name="comments"></textarea></p>';
+	
 
     //If access isn't granted, this worker has already done a survey in the group and will
     // be blocked from reaching the survey.
