@@ -28,42 +28,52 @@ require_once 'lib/tempstorage.php';
 $accessController = new accessControl();
 
 
-$workerId = htmlspecialchars($_GET['workerId']);
+$workerId = null;
+if (!empty($_GET['workerId'])) {
+	$workerId = htmlspecialchars($_GET['workerId']);
+} else if (!empty($_POST['checkid_id'])) {
+	$workerId = htmlspecialchars($_POST['checkid_id']);
+}
+	
 
 $groupName = urldecode($_GET['group']);
 
-// We use assignmentId to identify whether the worker is merely previewing the
-// HIT or has accepted it.
-if (empty($_GET['assignmentId']) || 
-	$_GET['assignmentId'] == 'ASSIGNMENT_ID_NOT_AVAILABLE') {
-	
-    $accessAllowed = $accessController->checkAccess($workerId, $groupName, false);
-    $popUp = ($_GET['source'] == 'js');
+$isExternalHIT = empty($_GET['source']) || $_GET['source'] == 'ext';
+$isPreview = empty($_GET['assignmentId']) || 
+	$_GET['assignmentId'] == 'ASSIGNMENT_ID_NOT_AVAILABLE';
 
-    // Block previews of the HIT, but warn about possible exclusion based on
-    // group name
-	if ($accessAllowed) {
-		if ($popUp) {
+if ($isPreview) {
+	
+	if ($workerId == null) { ?>
+	  <p>Sorry, this study cannot be previewed. Please accept the HIT in order to view it.</p>
+	  <p>
+	  	You will only be able to view the survey if you have not accepted  
+	    any other HITs related in the '<?php echo $groupName; ?>' group. You can check your eligibility below (opens in a new window).
+      </p>
+	  <p>
+	  	<form id='checkid_form' method='POST' target='_blank' action='gateway.php?group=<?php echo urlencode($groupName); ?>'> 
+	  	  Mechanical Turk Worker ID: 
+	  	  <input type="text" name="checkid_id" id="checkid_id" size="30" required="">
+		  <input type="submit" name="checkid_submit" id="checkid_submit" value="Check Eligibility">
+	  	</form>
+	  </p>
+	  <p>
+	  	If you have disabled browser cookies or if you restart your 
+	    browser after accepting the HIT, it might not work properly. Be sure  
+	    to have any plug-ins required by the HIT installed before accepting it.
+	  </p>
+<?php
+	} else {
+	    $accessAllowed = $accessController->checkAccess($workerId, $groupName, false);
+	
+	    // Block previews of the HIT, but warn about possible exclusion based on
+	    // group name
+		if ($accessAllowed) {
 	        echo "<p>You have not done any surveys in the $groupName group.</p>";
 	        echo '<p>Once you accept the HIT, you will be able to access the survey.</p>';
 		} else {
-		    echo '<p>Sorry, this study cannot be previewed. ' 
-		      . 'Please accept the HIT in order to view it.</p>';
-		    echo "<p>You will be able to view the survey because you have not accepted " 
-		      . "any other HITs related to $groupName.</p>";
-		    echo '<p>If you have disabled browser cookies or if you restart your ' 
-		      . 'browser after accepting the HIT, it might not work properly. Be sure ' 
-		      . 'to have any plug-ins required by the HIT installed before accepting ' 
-		      . 'it.</p>';			
-		}
-	} else {
-		if ($popUp) {
 	        echo "<p>You have already accessed a survey in the $groupName group.</p>";
 	        echo '<p>Do NOT accept the HIT, because you will NOT be able to access the survey.</p>';
-		} else {
-		    echo '<p>Sorry, you should not accept this HIT.</p>';
-		    echo "<p>You will be NOT able to view the survey or complete the HIT because you " 
-		      . "have previously accepted other HITs related to $groupName.</p>";
 		}
 		
 	}

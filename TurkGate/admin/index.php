@@ -20,13 +20,17 @@ limitations under the License.
 $installed = @include('../config.php');
 
 // If the form was submitted, test survey access
-if (isset($_POST['submit'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	
+	// only add an assignment ID if testing as an accepted HIT, not a preview
+	$acceptString = isset($_POST['submitTestAccept']) ? 'assignmentId=test&' : '';
+	
     $workerID = urlencode($_POST['workerID']);
     $groupName = urlencode($_POST['groupName']);
 	$surveyURL = urlencode($_POST['surveyURL']);
 	$source = urlencode($_POST['source']);
-
-    header("Location: ../gateway.php?assignmentId=test&workerId=$workerID&group=$groupName&survey=$surveyURL&source=$source");
+	
+    header("Location: ../gateway.php?".$acceptString."workerId=$workerID&group=$groupName&survey=$surveyURL&source=$source");
 	exit();
 }
 ?>
@@ -86,7 +90,8 @@ if (isset($_POST['submit'])) {
 			<input type="radio" name="source" value="ext" checked>Command Line Tools HIT</input> 
 	    </p>
 	    <p>
-	      	<input type="submit" name="submit" value="Test">
+	      	<input type="submit" name="submitTestPreview" value="Test Preview HIT">
+	      	<input type="submit" name="submitTestAccept" value="Test Accept HIT">
 	    </p>
     </form>
 </div>
