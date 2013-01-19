@@ -71,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
     	<p>
 	      <label for="workerID">Worker ID:</label>
-          <input type="text" name="workerID" id="workerID" class="adjacent"/>
-          <input type="button" value="Random ID" id="randomID" class="adjacent"/>
+          <input type="text" name="workerID" id="workerID" class="adjacent" />
+          <input type="button" value="Random ID" id="randomID" class="adjacent" />
         
 	      <label for="groupName">Group:</label>
           <input type="text" name="groupName" value="test group" />
