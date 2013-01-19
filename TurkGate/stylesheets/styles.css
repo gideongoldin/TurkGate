@@ -147,11 +147,11 @@ ul.tabs li.active{
 	color: white;	
 }
 
-.adjacent {
+input.adjacent {
 	display: inline;
 	vertical-align: bottom;
 }
 
-.adjacent + .adjacent {
+input.adjacent + .adjacent {
 	margin-left: 2em;
 }
