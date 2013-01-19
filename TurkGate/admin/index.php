@@ -70,8 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p>To test the installation, enter a workerId and group name below and click Test.</p>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
     	<p>
-	      <label for="workerID">Worker Id:</label>
-          <input type="text" name="workerID" value="1" />
+	      <label for="workerID">Worker ID:</label>
+          <input type="text" name="workerID" id="workerID" class="adjacent"/>
+          <input type="button" value="Random ID" id="randomID" class="adjacent"/>
         
 	      <label for="groupName">Group:</label>
           <input type="text" name="groupName" value="test group" />
@@ -95,6 +96,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	    </p>
     </form>
 </div>
+
+<script>
+	function randomizeWorkerID() {
+		var randomID = "testID_" + Math.floor(Math.random()*10000000000).toString(16);
+		$("#workerID").val(randomID);
+	}
+
+	$(document).ready(function() {
+		randomizeWorkerID();
+		$("#randomID").click(randomizeWorkerID);
+	});
+</script>
 
     
 <!-- Import the footer -->

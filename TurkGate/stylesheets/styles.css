@@ -147,3 +147,11 @@ ul.tabs li.active{
 	color: white;	
 }
 
+.adjacent {
+	display: inline;
+	vertical-align: bottom;
+}
+
+.adjacent + .adjacent {
+	margin-left: 2em;
+}
