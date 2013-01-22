@@ -147,15 +147,13 @@
 		});
 
 		// Setup autocomplete for group name
-
+		$("#groupName").focus(function() {
+			$( this ).autocomplete( "search");
+		});
 
 		$( "#groupName" ).autocomplete({
       		source: "lib/fetchgroupnames.php",
-      		// select: function( event, ui ) {
-        // 		log( ui.item ?
-        //   			"Selected: " + ui.item.value + " aka " + ui.item.id :
-        //   			"Nothing selected, input was " + this.value );
-      		// 	}
+      		minLength: 0,
       	});
 
 

@@ -60,7 +60,7 @@ class DatabaseObject {
 	 */
 	function getGroupNames($term = '') {
 		$return_arr = array();
-		$fetch = mysql_query("SELECT DISTINCT groupName FROM SurveyRequest WHERE groupName LIKE '$term%'");
+		$fetch = mysql_query("SELECT DISTINCT groupName FROM SurveyRequest WHERE groupName LIKE '%$term%'");
 		while ($row = mysql_fetch_array($fetch, MYSQL_ASSOC)) {
         	$row_array['value'] = $row['groupName'];
         	array_push($return_arr,$row_array); // Adds data to end of array

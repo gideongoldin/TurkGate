@@ -164,15 +164,6 @@ header nav {
 	position: absolute;
 	bottom: 0;
 }
-/*
-header nav ul {
-    position: absolute; 
-    bottom: 0px; 
-    right: 0px;
-    display: inline-block;
-}
-*/
-
 
 nav ul li {
 	float:left;
@@ -204,3 +195,18 @@ nav ul li:last-child {
 header {
 	margin-top: 1em;
 }
+
+/* Autocomplete box in index.php */
+
+.ui-autocomplete {
+    max-height: 15em;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+  /* IE 6 doesn't support max-height
+   * we use height instead, but this forces the menu to always be this tall
+   */
+  * html .ui-autocomplete {
+    height: 15em;
+  }
