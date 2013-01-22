@@ -1,11 +1,11 @@
 <?php
 
-	require('/databaseobject.php');
+	require('databaseobject.php');
 
 	$databaseObject = new DatabaseObject();
 
 	$databaseObject->getGroupNames($_GET['term']);
 
-	//$databaseObject->close();
+	$databaseObject->close();
 
 ?>
