@@ -152,6 +152,6 @@ input.adjacent {
 	vertical-align: bottom;
 }
 
-input.adjacent + .adjacent {
+input.adjacent + input.adjacent {
 	margin-left: 2em;
 }

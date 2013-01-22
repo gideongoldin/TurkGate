@@ -243,6 +243,8 @@ limitations under the License.
 <!-- Custom jQuery actions -->
 <script type="text/javascript">
 	$(document).ready(function() {
+		
+
 		$(".tab_content").hide();
 		$(".tab_content:first").show(); 
 

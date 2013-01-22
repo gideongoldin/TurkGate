@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script>
 	function randomizeWorkerID() {
-		var randomID = "testID_" + Math.floor(Math.random()*10000000000).toString(16);
+		var randomID = "testID_" + Math.floor(Math.random()*Math.pow(10, 10)).toString(16);
 		$("#workerID").val(randomID);
 	}
 
