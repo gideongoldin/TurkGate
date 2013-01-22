@@ -161,10 +161,10 @@ limitations under the License.
 	<div><!-- Tabs -->
 		<!-- Tab headers -->
 		<ul class="tabs">
-			<li class="active" rel="tab1">
+			<li id="installTab" rel="tab1">
 				Install
 			</li>
-			<li rel="tab2" style="color:darkred;">
+			<li id="uninstallTab" rel="tab2" style="color:darkred;">
 				Uninstall
 			</li>
 		</ul>
@@ -242,17 +242,30 @@ limitations under the License.
 
 <!-- Custom jQuery actions -->
 <script type="text/javascript">
-	$(document).ready(function() {
-		$(".tab_content").hide();
-		$(".tab_content:first").show(); 
 
-		$("ul.tabs li").click(function() {
+	function chooseTab(tabElement) {
 			$("ul.tabs li").removeClass("active");
-			$(this).addClass("active");
+			tabElement.addClass("active");
 			$(".tab_content").hide();
-			var activeTab = $(this).attr("rel"); 
+			var activeTab = tabElement.attr("rel"); 
 			$("#"+activeTab).show(); 
-		});
+	}
+	
+	$(document).ready(function() {
+		var tabId = window.location.hash;
+		
+		switch (tabId) {
+			case "#install":
+				chooseTab($("#installTab"));
+				break;
+			case "#uninstall":
+				chooseTab($("#uninstallTab"));
+				break;
+			default:
+				chooseTab($("ul.tabs li:first"));
+		}
+
+		$("ul.tabs li").click(function() { chooseTab($(this)); });
 		
 		// Animate textarea if exists
 		if($('#generatedContent').length > 0) {
