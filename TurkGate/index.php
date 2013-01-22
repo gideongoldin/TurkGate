@@ -38,14 +38,32 @@
 				From here you may generate the HTML code for your Web Interface HIT, or download files for use with the Command Line Tool.
 			</p>
 			<p>
-				Please specify a survey URL and group name:
+				<label for="HITType">HIT Type:</label>
+				<select name="HITType">
+  					<option value="webInterface">Web Interface</option>
+  					<option value="CLT">Command Line Tools</option>
+				</select>
 			</p>
 			<p>
-				<label for="externalSurveyURL">*External Survey URL:</label> <input type="text" name="externalSurveyURL" id="externalSurveyURL" value='' size="40" placeholder="http://surveysite.com/surveyid" autofocus="" required="">
+				<label for="surveySites">External Survey Site:</label>
+				<select name="surveySites">
+  					<option value="LimeSurvey">LimeSurvey</option>
+  					<option value="Qualtrics" selected>Qualtrics</option>
+  					<option value="Other">Other Sites / Custom</option>
+				</select>
 			</p>
 			<p>
-				<label for="groupName">*Group Name:</label> <input type="text" name="groupName" id="groupName" value='' size="40" placeholder="Test group name" required="">
-
+				<label for="externalSurveyURL">External Survey URL:</label>
+				<input type="text" name="externalSurveyURL" id="externalSurveyURL" value='' size="40" placeholder="http://surveysite.com/surveyid" autofocus="" required="">
+			</p>
+			<p>
+				<label for="groupName">Group Name:</label>
+				<span class="comment">Previously created group names will appear below</span>
+				<input type="text" name="groupName" id="groupName" value='' size="40" placeholder="Test group name" required="" class="adjacent">				
+			</p>
+			<p>
+				<label for="associatedURLs">Survey URLs in Group:</label>
+				<textarea rows="8" style="height:80;" disabled id="associatedURLs"></textarea>
 			</p>
 		</div>
 		
@@ -153,14 +171,35 @@
 
 		$( "#groupName" ).autocomplete({
       		source: "lib/fetchgroupnames.php",
+      		delay: 0,
       		minLength: 0,
+      		select: function(event, ui) { 
+      			populateAssociatedURLs(ui.item.value);
+      		},
+      		change: function(event, ui) { 
+      			populateAssociatedURLs(ui.item.value);
+      		}
       	});
 
+		$("#groupName").keyup( function() { 
+			populateAssociatedURLs($("#groupName").val());
+		});      	
 
 	});
-</script> 
 
-<script type="text/javascript">
+	function populateAssociatedURLs(groupName) {
+			$.ajax({                                      
+      			url: 'lib/fetchsurveyurls.php',                        
+      			data: "group="+groupName,
+      			dataType: 'json', 
+      			success: function(data) {
+      				$("#associatedURLs").val("");
+			        for (var i=0; i<data.length; i++) {
+			        	$("#associatedURLs").val($("#associatedURLs").val() + data[i].value + "\n");
+			        }
+			    } 
+    		});
+	}
 
 	function generateWebCode() {
 		var surveyURL = fix_http($('#externalSurveyURL').val());

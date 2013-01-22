@@ -15,8 +15,6 @@
  limitations under the License.
  */
 
-require_once('../config.php');
-
 class DatabaseObject {
 	
 	var $con = NULL;
@@ -63,6 +61,20 @@ class DatabaseObject {
 		$fetch = mysql_query("SELECT DISTINCT groupName FROM SurveyRequest WHERE groupName LIKE '%$term%'");
 		while ($row = mysql_fetch_array($fetch, MYSQL_ASSOC)) {
         	$row_array['value'] = $row['groupName'];
+        	array_push($return_arr,$row_array); // Adds data to end of array
+    	}
+ 
+		echo json_encode($return_arr);
+	}
+
+	/**
+ 	 * Gets group's survey URLs from database.
+	 */
+	function getGroupURLs($group = '') {
+		$return_arr = array();
+		$fetch = mysql_query("SELECT DISTINCT URL FROM SurveyRequest WHERE groupName='$group'");
+		while ($row = mysql_fetch_array($fetch, MYSQL_ASSOC)) {
+        	$row_array['value'] = $row['URL'];
         	array_push($return_arr,$row_array); // Adds data to end of array
     	}
  

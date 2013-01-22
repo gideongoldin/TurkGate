@@ -15,7 +15,9 @@
  limitations under the License.
  */
 
+
 session_start();
+
 
 if (!include_once('config.php')) {
     die('A configuration error occurred. ' 
