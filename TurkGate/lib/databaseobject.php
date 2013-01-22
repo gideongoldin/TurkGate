@@ -15,8 +15,9 @@
  limitations under the License.
  */
 
+require_once('../config.php');
 
-class accessControl {
+class DatabaseObject {
 	
 	var $con = NULL;
 
@@ -24,10 +25,12 @@ class accessControl {
 	 * Constructor
 	 * @params parameters for database access
 	 */  
-    function accessControl($dbUsername = null,
+    function DatabaseObject($dbUsername = null,
                            $dbPassword = null,
                            $dbName = null,
                            $dbHost = null) {
+
+
                            
         if ($dbUsername === null) {
         	$dbUsername = constant('DATABASE_USERNAME');
@@ -50,6 +53,20 @@ class accessControl {
 	    mysql_select_db($dbName) 
 	      or die('There was an error selecting the database. ' . 
 	        'Please contact the requester to notify them of the error.');
+	}
+
+	/**
+ 	 * Gets group names from database.
+	 */
+	function getGroupNames($term = '') {
+		$return_arr = array();
+		$fetch = mysql_query("SELECT groupName FROM SurveyRequest WHERE groupName LIKE '$term%'");
+		while ($row = mysql_fetch_array($fetch, MYSQL_ASSOC)) {
+        	$row_array['value'] = $row['name'];
+        	array_push($return_arr,$row_array); // Adds data to end of array
+    	}
+ 
+		echo json_encode($return_arr);
 	}
 						   
 	/**

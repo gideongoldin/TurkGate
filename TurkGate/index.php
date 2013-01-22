@@ -29,91 +29,6 @@
     require_once($basePath . 'includes/header.php'); 
 ?>
 <script src="lib/fixhttp.lib.js"></script>
-<script type="text/javascript">
-
-	function generateWebCode() {
-		var surveyURL = fix_http($('#externalSurveyURL').val());
-		var groupName = $('#groupName').val();
-		var copyright = "<!-- Copyright (c) 2012 Adam Darlow and Gideon Goldin. For more info, see http://gideongoldin.github.com/TurkGate/ -->\n"; 
-		
-		var htmlCode = <?php echo json_encode(file_get_contents('resources/WebHIT/webTemplate.html')); ?>;
-		htmlCode = htmlCode.replace('[[[Survey URL]]]', surveyURL);
-		htmlCode = htmlCode.replace('[[[Group Name]]]', groupName);
-		htmlCode = htmlCode.replace('[[[TurkGate URL]]]', "<?php echo constant('BASE_URL'); ?>");
-		htmlCode = htmlCode.replace(/<!--[^>]*-->/, copyright);
-		
-		$('#generatedHTMLCode').val(htmlCode);
-		$('#generatedContent').slideDown();
-	}
-	
-	function endsWith(str, suffix) {
-        return str.indexOf(suffix, str.length - suffix.length) !== -1;
-    }
-	
-	function downloadCLTFile(fileName) {
-		var surveyURL = fix_http($('#externalSurveyURL').val());
-		var groupName = $('#groupName').val();
-
-		var url = 'lib/downloadFile.php?file=' + encodeURIComponent(fileName);
-		
-		if (endsWith(fileName, 'question')) {
-			url = url + '&sub1=' + encodeURIComponent('[[[TurkGate URL]]]<?php echo constant('BASE_URL'); ?>');
-		}
-		else if (endsWith(fileName, 'input')) {
-			url = url + '&sub1=' + encodeURIComponent('[[[Survey URL]]]' + surveyURL);
-			url = url + '&sub2=' + encodeURIComponent('[[[Group Name]]]' + groupName);
-		}
-		
-		window.open(url);
-		
-		return false;
-	}
-	
-	function createDownloadHandler(fileName) {
-		return function() { return downloadCLTFile(fileName); };
-	}
-	
-	$(document).ready(function(){    
-		
-
-        $('#externalSurveyURL').blur(function() {
-          $('#externalSurveyURL').val(fix_http($('#externalSurveyURL').val()));
-        });
-        
-		// each of the submission buttons sets the function to be called upon submission, but doesn't 
-		// actually call the function. Only the submit event triggers the function, allowing it to check 
-		// that all required fields have been filled out.
-        $('#generateHTMLCode').click( function () { 
-        	$('#hitGenerationForm').data("submitFunction", generateWebCode); 
-        });
-        
-        $('#downloadCLTInputFile').click( function () { 
-        	$('#hitGenerationForm').data("submitFunction", createDownloadHandler('survey.input')); 
-        });
-        
-        $('#downloadCLTPropertiesFile').click( function () { 
-        	$('#hitGenerationForm').data("submitFunction", createDownloadHandler('survey.properties')); 
-        });
-        
-        $('#downloadCLTQuestionFile').click( function () { 
-        	$('#hitGenerationForm').data("submitFunction", createDownloadHandler('survey.question')); 
-        });
-        
-        $('#generatedContent').slideUp();
-        
-        // submitting the form calls whatever function has been set
-        $('#hitGenerationForm').submit(function () { 
-          var subFunc = $('#hitGenerationForm').data("submitFunction");
-          if (typeof subFunc === 'function') {
-          	subFunc();
-          }
-          $('#hitGenerationForm').removeData("submitFunction");      
-            	
-          return false; 
-        });
-    });
-	
-</script>
 		
 	<div class="sixteen columns clearfix" style="border-top: 1px solid #ccc; padding-top:10px;"> <!-- sixteen columns clearfix -->
 		<form method="post" id="hitGenerationForm" name="hitGenerationForm">
@@ -130,6 +45,7 @@
 			</p>
 			<p>
 				<label for="groupName">*Group Name:</label> <input type="text" name="groupName" id="groupName" value='' size="40" placeholder="Test group name" required="">
+
 			</p>
 		</div>
 		
@@ -218,6 +134,7 @@
 <!-- Custom jQuery actions -->
 <script type="text/javascript">
 	$(document).ready(function() {
+		// Setup tabs
 		$(".tab_content").hide();
 		$(".tab_content:first").show(); 
 
@@ -228,8 +145,108 @@
 			var activeTab = $(this).attr("rel"); 
 			$("#"+activeTab).show(); 
 		});
+
+		// Setup autocomplete for group name
+
+
+		$( "#groupName" ).autocomplete({
+      		source: "lib/fetchgroupnames.php",
+      		// select: function( event, ui ) {
+        // 		log( ui.item ?
+        //   			"Selected: " + ui.item.value + " aka " + ui.item.id :
+        //   			"Nothing selected, input was " + this.value );
+      		// 	}
+      	});
+
+
 	});
 </script> 
+
+<script type="text/javascript">
+
+	function generateWebCode() {
+		var surveyURL = fix_http($('#externalSurveyURL').val());
+		var groupName = $('#groupName').val();
+		var copyright = "<!-- Copyright (c) 2012 Adam Darlow and Gideon Goldin. For more info, see http://gideongoldin.github.com/TurkGate/ -->\n"; 
+		
+		var htmlCode = <?php echo json_encode(file_get_contents('resources/WebHIT/webTemplate.html')); ?>;
+		htmlCode = htmlCode.replace('[[[Survey URL]]]', surveyURL);
+		htmlCode = htmlCode.replace('[[[Group Name]]]', groupName);
+		htmlCode = htmlCode.replace('[[[TurkGate URL]]]', "<?php echo constant('BASE_URL'); ?>");
+		htmlCode = htmlCode.replace(/<!--[^>]*-->/, copyright);
+		
+		$('#generatedHTMLCode').val(htmlCode);
+		$('#generatedContent').slideDown();
+	}
+	
+	function endsWith(str, suffix) {
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+	
+	function downloadCLTFile(fileName) {
+		var surveyURL = fix_http($('#externalSurveyURL').val());
+		var groupName = $('#groupName').val();
+
+		var url = 'lib/downloadFile.php?file=' + encodeURIComponent(fileName);
+		
+		if (endsWith(fileName, 'question')) {
+			url = url + '&sub1=' + encodeURIComponent('[[[TurkGate URL]]]<?php echo constant('BASE_URL'); ?>');
+		}
+		else if (endsWith(fileName, 'input')) {
+			url = url + '&sub1=' + encodeURIComponent('[[[Survey URL]]]' + surveyURL);
+			url = url + '&sub2=' + encodeURIComponent('[[[Group Name]]]' + groupName);
+		}
+		
+		window.open(url);
+		
+		return false;
+	}
+	
+	function createDownloadHandler(fileName) {
+		return function() { return downloadCLTFile(fileName); };
+	}
+	
+	$(document).ready(function(){    
+		
+
+        $('#externalSurveyURL').blur(function() {
+          $('#externalSurveyURL').val(fix_http($('#externalSurveyURL').val()));
+        });
+        
+		// each of the submission buttons sets the function to be called upon submission, but doesn't 
+		// actually call the function. Only the submit event triggers the function, allowing it to check 
+		// that all required fields have been filled out.
+        $('#generateHTMLCode').click( function () { 
+        	$('#hitGenerationForm').data("submitFunction", generateWebCode); 
+        });
+        
+        $('#downloadCLTInputFile').click( function () { 
+        	$('#hitGenerationForm').data("submitFunction", createDownloadHandler('survey.input')); 
+        });
+        
+        $('#downloadCLTPropertiesFile').click( function () { 
+        	$('#hitGenerationForm').data("submitFunction", createDownloadHandler('survey.properties')); 
+        });
+        
+        $('#downloadCLTQuestionFile').click( function () { 
+        	$('#hitGenerationForm').data("submitFunction", createDownloadHandler('survey.question')); 
+        });
+        
+        $('#generatedContent').slideUp();
+        
+        // submitting the form calls whatever function has been set
+        $('#hitGenerationForm').submit(function () { 
+          var subFunc = $('#hitGenerationForm').data("submitFunction");
+          if (typeof subFunc === 'function') {
+          	subFunc();
+          }
+          $('#hitGenerationForm').removeData("submitFunction");      
+            	
+          return false; 
+        });
+    });
+	
+</script>
   
 <!-- Import the footer -->
 <?php require_once($basePath . 'includes/footer.php'); ?>

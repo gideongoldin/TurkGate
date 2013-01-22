@@ -22,10 +22,10 @@ if (!include_once('config.php')) {
       . 'Please report this error to the HIT requester.');
 }
 
-require_once 'lib/accesscontrol.php';
+require_once 'lib/databaseobject.php';
 require_once 'lib/tempstorage.php';
 
-$accessController = new accessControl();
+$accessController = new DatabaseObject();
 
 
 $workerId = null;
