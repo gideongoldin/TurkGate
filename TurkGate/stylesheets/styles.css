@@ -74,14 +74,28 @@ dd {
 	margin-left: 15px;
 }
 
-header a, header a {
+header a {
 	color: #181818;
 	text-decoration:none;
 }
-
 header a:hover {
 	color: #181818;
 	text-decoration:underline;
+}
+header nav a, header nav a:visited {
+	color: #555555;
+}
+header {
+	margin-top: 1em;
+	position: relative;
+}
+header nav {
+	position: absolute;
+	bottom: 0;
+	float: right;
+}
+header nav ul {
+	float:right;
 }
 
 .comment {
@@ -122,11 +136,7 @@ th {
 	background: green;
 }
 
-/* Header h1 */
-header > h1 {
-	margin-top: 40px;
-	padding-bottom: 10px;
-}
+
 
 /* Tabs */
 ul.tabs {
@@ -198,14 +208,7 @@ input.adjacent + input.adjacent {
 	margin-left: 2em;
 }
 
-header {
-	position: relative;
-}
 
-header nav {
-	position: absolute;
-	bottom: 0;
-}
 
 nav ul li {
 	float:left;
@@ -218,9 +221,7 @@ nav ul li {
 	border-right: 1px solid #ccc;
 }
 
-header nav a, header nav a:visited {
-	color: #555555;
-}
+
 
 nav ul li:last-child {
 	float:right;
@@ -234,9 +235,7 @@ nav ul li:last-child {
     cursor: default;
 }
 
-header {
-	margin-top: 1em;
-}
+
 
 /* Autocomplete box in index.php */
 
