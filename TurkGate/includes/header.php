@@ -54,6 +54,7 @@
 		  	  	<li id="nav_generate"><a href="<?php echo $basePath ?>index.php">Generate a HIT</a></li>
 		  		<li id="nav_verify"><a href="<?php echo $basePath ?>codes/verify.php">Verify Codes</a></li>
 		  		<li id="nav_admin"><a href="<?php echo $basePath ?>admin/index.php">Administration</a></li>
+		  		<li id="nav_about"><a href="http://gideongoldin.github.com/TurkGate/" target="_blank">About</a></li>
 		  	  </ul>		  			
 		  	</nav>
 		  </div>

@@ -214,8 +214,8 @@ nav ul li {
 	float:left;
 	font-weight: bold;
 	font-size: 1.125em;
-	padding-left: 1em;
-	padding-right: 1em;
+	padding-left: 0.75em;
+	padding-right: 0.75em;
 	padding-bottom: 0.25em;
 	margin: 0;
 	border-right: 1px solid #ccc;
