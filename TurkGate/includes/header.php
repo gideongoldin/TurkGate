@@ -8,7 +8,7 @@
 	<!-- Basic Page Needs
   ================================================== -->
 	<meta charset="utf-8">
-	<title><?php echo $title ?></title>
+	<title>TurkGate - <?php echo $title ?></title>
 	<meta name="description" content="<?php echo $description ?>">
 	<meta name="author" content="">
 
@@ -39,6 +39,20 @@
 	
 </head>
 
-<body>
+<body id="<?php echo $pageID ?>">
 	
   <div class="container"> <!-- Container -->
+  	<div class="sixteen columns">
+	  <header class="clearfix">
+		<h2 class="remove-bottom eight columns alpha"><a href="../index.php">TurkGate</a>: <?php echo $title ?></h2>
+	  	<nav class="eight columns omega">
+	  	  <ul class="remove-bottom" style="float: right">
+	  	  	<li id="nav_generate"><a href="<?php echo $basePath ?>index.php">Generate a HIT</a></li>
+	  		<li id="nav_verify"><a href="<?php echo $basePath ?>codes/verify.php">Verify Codes</a></li>
+	  		<li id="nav_admin"><a href="<?php echo $basePath ?>admin/index.php">Administration</a></li>
+	  	  </ul>		  		
+		<div style="clear: both;"></div> <!-- clear float -->  		
+	  	</nav>
+	  </header>
+	</div>
+

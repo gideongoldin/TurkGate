@@ -31,12 +31,12 @@ dd {
 	margin-left: 15px;
 }
 
-header h1 a {
+header a, header a {
 	color: #181818;
 	text-decoration:none;
 }
 
-header h1 a:hover {
+header a:hover {
 	color: #181818;
 	text-decoration:underline;
 }
@@ -154,4 +154,53 @@ input.adjacent {
 
 input.adjacent + input.adjacent {
 	margin-left: 2em;
+}
+
+header {
+	position: relative;
+}
+
+header nav {
+	position: absolute;
+	bottom: 0;
+}
+/*
+header nav ul {
+    position: absolute; 
+    bottom: 0px; 
+    right: 0px;
+    display: inline-block;
+}
+*/
+
+
+nav ul li {
+	float:left;
+	font-weight: bold;
+	font-size: 1.125em;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-bottom: 0.25em;
+	margin: 0;
+	border-right: 1px solid #ccc;
+}
+
+header nav a, header nav a:visited {
+	color: #555555;
+}
+
+nav ul li:last-child {
+	float:right;
+	border-right: 0;
+}
+
+#generate #nav_generate a, #verify #nav_verify a, #admin #nav_admin a,
+#generate #nav_generate a:hover, #verify #nav_verify a:hover, #admin #nav_admin a:hover {
+	color: #181818;
+    pointer-events: none;
+    cursor: default;
+}
+
+header {
+	margin-top: 1em;
 }

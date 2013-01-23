@@ -22,9 +22,10 @@
 
 <!-- Import the header -->
 <?php 
-    $title = 'TurkGate Central';
-    $description = 'TurkGate tools for researchers.';
+    $title = 'Generate a HIT';
+    $description = 'Creating a TurkGate HIT.';
     $basePath = '';
+	$pageID = 'generate';
     require_once($basePath . 'includes/header.php'); 
 ?>
 <script src="lib/fixhttp.lib.js"></script>
@@ -114,12 +115,6 @@
 	
 </script>
 		
-<div class="sixteen columns">
-  <header>
-	<h1 class="remove-bottom"><a href="index.php">TurkGate</a></h1>
-  </header>
-</div>		
-
 	<div class="sixteen columns clearfix" style="border-top: 1px solid #ccc; padding-top:10px;"> <!-- sixteen columns clearfix -->
 		<form method="post" id="hitGenerationForm" name="hitGenerationForm">
 		<h3>Generate a HIT</h3>

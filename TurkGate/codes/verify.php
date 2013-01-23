@@ -50,16 +50,12 @@ THE SOFTWARE.
 
 <!-- Import the header -->
 <?php 
-    $title = 'TurkGate Administration';
+    $title = 'Verify Codes';
     $description = 'TurkGate tools for the administrator.';
     $basePath = '../';
+	$pageID = 'verify';
     require_once($basePath . 'includes/header.php'); 
 ?>
-<div class="sixteen columns">
-  <header>
-	<h1 class="remove-bottom"><a href="../index.php">TurkGate</a> Code Verification</h1>
-  </header>
-</div>
 <div class="sixteen columns clearfix" style="border-top: 1px solid #ccc; padding-top:10px;"> <!-- sixteen columns clearfix -->
 
   <?php

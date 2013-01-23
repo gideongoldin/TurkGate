@@ -15,9 +15,10 @@ limitations under the License.
 -->
 <!-- Import the header -->
 <?php 
-    $title = 'TurkGate Installation';
+    $title = 'Installation';
     $description = 'TurkGate installation and uninstallation page.';
     $basePath = '../';
+	$pageID = 'install';
     require_once($basePath . 'includes/header.php'); 
 ?>
 
@@ -32,11 +33,6 @@ limitations under the License.
 		$databasePassword = isset($_POST['databasePassword']) ? $_POST['databasePassword'] : "";
 		$baseURL = isset($_POST['turkGateURL']) ? $_POST['turkGateURL'] : "";
 		
-		echo '<div class="sixteen columns">';
-		echo '<header>';
-		echo '<h1 class="remove-bottom"><a href="../index.php">TurkGate</a> Installation/Uninstallation</h1>';
-		echo '</header>';
-		echo '</div>';
 		echo '<div class="sixteen columns clearfix" style="border-top: 1px solid #ccc; padding-top:10px;">';
 		
 		// Validate entries that are relevant to both install and uninstall forms
@@ -152,11 +148,6 @@ limitations under the License.
   });
 </script>
 
-<div class="sixteen columns">
-  <header>
-	<h1 class="remove-bottom"><a href="index.php">TurkGate</a> Installation/Uninstallation</h1>
-  </header>
-</div>
 <div class="sixteen columns clearfix" style="border-top: 1px solid #ccc; padding-top:10px;"> <!-- sixteen columns clearfix -->
 	<div><!-- Tabs -->
 		<!-- Tab headers -->
