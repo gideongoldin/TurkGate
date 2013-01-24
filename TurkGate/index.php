@@ -38,14 +38,16 @@
 					From here you may generate the HTML code for your Web Interface HIT, or download files for use with the Command Line Tool.
 				</p>
 				<p>
-					<label for="HITType">HIT Type:</label>
+					<label for="HITType" class="adjacent">HIT Type:</label>
+					<span class="ui-icon ui-icon-help adjacent help" title="How are you creating your HIT, online or with the Command Line Tools?"></span>
 					<select name="HITType" id="HITType">
 	  					<option value="WebInterface">Web Interface</option>
 	  					<option value="CLT">Command Line Tools</option>
 					</select>
 				</p>
 				<p>
-					<label for="surveySites">External Survey Site:</label>
+					<label for="surveySites" class="adjacent">External Survey Site:</label>
+					<span class="ui-icon ui-icon-help adjacent help" title="Where did you create your survey?"></span>
 					<select name="surveySites" id="surveySites">
 	  					<option value="LimeSurvey">LimeSurvey</option>
 	  					<option value="Qualtrics" selected>Qualtrics</option>

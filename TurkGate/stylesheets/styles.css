@@ -199,16 +199,22 @@ ul.tabs li.active{
 	color: white;	
 }
 
-input.adjacent {
-	display: inline;
+.adjacent, input.adjacent {
+	display: inline-block;
 	vertical-align: bottom;
 }
 
-input.adjacent + input.adjacent {
+.adjacent + input.adjacent {
 	margin-left: 2em;
 }
 
+.help {
+	padding-bottom: 0.25em;
+}
 
+.help:hover {
+	cursor: help;
+}
 
 nav ul li {
 	float:left;
