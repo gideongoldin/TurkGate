@@ -89,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	    <p>
 	      	<input type="submit" name="submitTestPreview" value="Test Preview HIT">
 	      	<input type="submit" name="submitTestAccept" value="Test Accept HIT">
+	      	<span class="comment">(Testing, like normal access requests, adds an entry to the database)</span>
 	    </p>
     </form>
 </div>
