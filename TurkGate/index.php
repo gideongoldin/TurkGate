@@ -32,20 +32,18 @@
 		
 	<div class="sixteen columns clearfix" id="containerMain"> <!-- sixteen columns clearfix -->
 		<div class="eight columns alpha" id="leftColumnMain">
+
+			<p>From here you may generate the HTML code for your Web Interface HIT, or download files for use with the Command Line Tool.</p>
+
 			<form method="post" id="hitGenerationForm" name="hitGenerationForm">
-				<h3>Generate a HIT</h3>
-				<p>
-					From here you may generate the HTML code for your Web Interface HIT, or download files for use with the Command Line Tool.
-				</p>
-				<p>
+			
 					<label for="HITType" class="adjacent">HIT Type:</label>
 					<span class="ui-icon ui-icon-help adjacent help" title="How are you creating your HIT, online or with the Command Line Tools?"></span>
 					<select name="HITType" id="HITType">
 	  					<option value="WebInterface">Web Interface</option>
 	  					<option value="CLT">Command Line Tools</option>
 					</select>
-				</p>
-				<p>
+				
 					<label for="surveySites" class="adjacent">External Survey Site:</label>
 					<span class="ui-icon ui-icon-help adjacent help" title="Where did you create your survey?"></span>
 					<select name="surveySites" id="surveySites">
@@ -53,68 +51,65 @@
 	  					<option value="Qualtrics" selected>Qualtrics</option>
 	  					<option value="Other">Other Sites / Custom</option>
 					</select>
-				</p>
-				<p>
+				
 					<label for="externalSurveyURL">External Survey URL:</label>
-					<input type="text" required name="externalSurveyURL" id="externalSurveyURL" value='' size="40" placeholder="http://surveysite.com/surveyid" autofocus="">
-				</p>
-				<p>
+					<input type="text"  name="externalSurveyURL" id="externalSurveyURL" value='' size="40" placeholder="http://surveysite.com/surveyid" autofocus="">
+				
 					<label for="groupName">Group Name:</label>
 					<span class="comment">Previously created group names will appear below</span>
-					<input type="text" required name="groupName" id="groupName" value='' size="40" placeholder="Test group name" class="adjacent">				
-				</p>
-				<p>
+					<input type="text"  name="groupName" id="groupName" value='' size="40" placeholder="Test group name" class="adjacent">				
+				
+				
 					<label for="associatedURLs">Survey URLs in Group:</label>
 					<textarea disabled id="associatedURLs"></textarea>
-				</p>
-				<p>
-					<input type="submit" name="submitForm" id="submitForm" value="Generate HIT">
-				</p>
+					
+					<input type="submit" name="submitForm" id="submitForm" value="Generate HIT" />
+
 			</form>
 		</div>	
 	
 		<div class="eight columns omega" id="rightColumnMain"> <!-- columns omega -->
-
-			<div id="WebHITContent" style="display:none;">
-				<p>
-					Generate the HTML code to paste into your HIT. Full instructions are on the <a href="http://gideongoldin.github.com/TurkGate/" target="blank">TurkGate Wiki</a>.
-				</p>
-						
-				<?php
-						$textAreaId = 'generatedHTMLCode';								
-						require_once 'lib/autoselect.php';
-	            ?>								
-				<div id="generatedContent">
-					<em><small>Copy and paste the code below into the source code for your HIT:</small></em>
-					<textarea rows="8" style="height:80;" id="<?php echo $textAreaId; ?>"></textarea>
+			<div id="rightColumnContainer">
+				<div id="WebHITContent" style="display:none;">
+					<p>
+						Copy the HTML code below into your HIT. Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Web-Interface-HIT-Creation" target="blank">TurkGate Wiki</a>.
+					</p>
+							
+					<?php
+							$textAreaId = 'generatedHTMLCode';								
+							require_once 'lib/autoselect.php';
+		            ?>								
+					<div id="generatedContent">
+						<textarea id="<?php echo $textAreaId; ?>"></textarea>
+					</div>
 				</div>
-			</div>
 
-			<div id="CLTHITContent" style="display:none;">
+				<div id="CLTHITContent" style="display:none;">
 
-				<p>
-					Download the files for creating your HIT. Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Command-Line-Tools" target="blank">TurkGate Wiki</a>.
-				</p>
-				<em><small>Download:</small></em>
-				
-				<button id="downloadCLTInputFile">survey.input</button>
-				<button id="downloadCLTPropertiesFile">survey.properties</button>
-				<button id="downloadCLTQuestionFile">survey.question</button>
+					<p>
+						Download the files for creating your HIT. Full instructions are on the <a href="https://github.com/gideongoldin/TurkGate/wiki/Command-Line-Tools-HIT-Creation" target="blank">TurkGate Wiki</a>.
+					</p>
+					
+					<p>
+						<button id="downloadCLTInputFile">survey.input</button>
+						<button id="downloadCLTPropertiesFile">survey.properties</button>
+						<button id="downloadCLTQuestionFile">survey.question</button>
+					</p>
+				</div>
 
-			</div>
+				<div id="CompletionContent" style="display:none;">
+					<p >
+						<span class="section-begin">Provide completion codes</span> to your participants at the end of your survey by sending them to the following URL:
+					</p>
 
-			<div id="CompletionContent" style="display:none;">
-				<p class="new-section">
-					<span class="section-begin">Provide completion codes</span> to your participants at the end of your survey by sending them to the following URL:
-				</p>
+					<p>
+						<a href="#" target="_blank" id="completionLink"></a>
+					</p>
 
-				<p>
-					<a href="#" target="_blank" id="completionLink"></a>
-				</p>
-
-				<p>
-					<span class="section-begin">Verify completion codes</span> at <a href="codes/verify.php">the verification page</a>.
-				</p>
+					<p>
+						<span class="section-begin">Verify completion codes</span> at <a href="codes/verify.php">the verification page</a>.
+					</p>
+				</div>
 			</div>
 		</div> <!-- columns omega -->
 		
@@ -130,17 +125,8 @@
 
 	$(document).ready(function(){ 
 
-		// Setup tabs
-		$(".tab_content").hide();
-		$(".tab_content:first").show(); 
-
-		$("ul.tabs li").click(function() {
-			$("ul.tabs li").removeClass("active");
-			$(this).addClass("active");
-			$(".tab_content").hide();
-			var activeTab = $(this).attr("rel"); 
-			$("#"+activeTab).show(); 
-		});
+		// Setup tooltips
+		$(document).tooltip();
 
 		// Setup autocomplete for group name
 		$("#groupName").focus(function() {

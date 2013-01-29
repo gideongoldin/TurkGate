@@ -2,7 +2,7 @@
 			<div class="sixteen columns clearfix" id="footerDiv">
 				<div class="eight columns alpha">
 					<h6>
-					  Powered by <a href='http://gideongoldin.github.com/TurkGate/'>TurkGate</a> (version 0.3.2)
+					  Powered by <a href='http://gideongoldin.github.com/TurkGate/' target="_blank">TurkGate</a> (version 0.3.2)
 					</h6>	
 				</div>
 				<div class="eight columns omega">

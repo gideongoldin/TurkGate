@@ -1,78 +1,6 @@
-#leftColumnMain {
-	position:relative;
-	background: white;
-	//border:1px solid #000000;
-	z-index: 1;
-	-webkit-box-shadow: 5px 0px 5px -2px #888 ;
-	box-shadow: 5px 0px 5px -2px #888 ;
-	top:0;
-	bottom:0;
-}
-
-#rightColumnMain {
-	position:absolute;
-	left:-10px;
-	padding-left:20px;
-	background:#eeeeee;
-	z-index: 0;
-	border:1px solid #bbbbbb;
-	//border-bottom-right-radius: 10px;
-	//border-top-right-radius: 10px;
-	top:10px;
-	bottom:10px;
-	-webkit-box-shadow: 2px 2px 5px -2px #888;
-	box-shadow: 2px 2px 5px -2px #888;
-}
-
-#containerMain {
-	border-top: 1px solid #ccc; 
-	padding-top:0px;
-	position:relative;
-}
-
-#footerDiv {
-	border-top: 1px solid #DDD;
-	padding-top:10px;
-}
-
-textarea#associatedURLs {
-	width: 75%;
-	margin:0;
-	padding:0;
-}
-
-.new-section .section-begin {
-	font-size: 110%;
-	font-weight: bold;
-}
-
-.new-section {
-	margin: 10px 0 5px 0;
-}
-
-textarea {
-	width: 100%;
-	font-family: monospace;
-}
-
-textarea#code {
-	text-align:center; 
-	font-weight:bold;
-	color: darkgreen;
-	min-height: 0;
-	font-size: 120%;
-	background: none;
-	resize: none;
-}
-
-dt {
-	font-weight: bold;
-	margin-top: 10px;
-}
-
-dd {
-	margin-left: 15px;
-}
+/**
+ * LAYOUT
+ */
 
 header a {
 	color: #181818;
@@ -89,13 +17,110 @@ header {
 	margin-top: 1em;
 	position: relative;
 }
-header nav {
-	position: absolute;
-	bottom: 0;
-	float: right;
-}
-header nav ul {
+
+nav > ul > li {
 	float:right;
+	font-weight: bold;
+	font-size: 1.125em;
+	padding-left: 0.75em;
+	padding-right: 0.75em;
+	border-right: 1px solid #cccccc;
+	margin:0;
+	padding-bottom:0.30em;
+}
+
+nav > ul > li:first-child {
+	border-right:none;
+	padding-right:0.1em;
+}
+
+#containerMain {
+	border-top: 1px solid #ccc; 
+	padding-top:0;
+	position:relative;
+}
+
+#leftColumnMain {
+	position:relative;
+	background: white;
+	z-index: 1;
+	-webkit-box-shadow: 5px 0px 5px -2px #888 ;
+	box-shadow: 5px 0px 5px -2px #888 ;
+	top:0;
+	bottom:0;
+	padding-top:2em;
+}
+
+#rightColumnMain {
+	position:absolute;
+	left:-10px;
+	padding-left:20px;
+	background:#eeeeee;
+	z-index: 0;
+	border:0.1em solid #bbbbbb;
+	top:1em;
+	bottom:1em;
+	-webkit-box-shadow: 2px 2px 5px -2px #888;
+	box-shadow: 2px 2px 5px -2px #888;
+	padding-top:0.9em;
+}
+
+#rightColumnContainer {
+	margin-right:30px;
+}
+
+#footerDiv {
+	border-top: 1px solid #DDD;
+	padding-top:10px;
+}
+
+/**
+ * ...
+ */
+
+
+textarea {
+	width: 100%;
+	font-family: monospace;
+}
+
+textarea#code {
+	text-align:center; 
+	font-weight:bold;
+	color: darkgreen;
+	min-height: 0;
+	font-size: 120%;
+	background: none;
+	resize: none;
+}
+
+textarea#associatedURLs {
+	width:92%;
+}
+
+
+textarea#generatedHTMLCode {
+	font-family: monospace;
+	resize:none;
+	height:15em;
+}
+
+/**
+ * ...
+ */
+
+.section-begin {
+	font-size: 110%;
+	font-weight: bold;
+}
+
+dt {
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+dd {
+	margin-left: 15px;
 }
 
 .comment {
@@ -103,6 +128,7 @@ header nav ul {
 	font-size: small;
 	font-style: italic;
 	margin-bottom: 20px;
+
 }
 
 .short {
@@ -220,23 +246,7 @@ ul.tabs li.active{
 	cursor: help;
 }
 
-nav ul li {
-	float:left;
-	font-weight: bold;
-	font-size: 1.125em;
-	padding-left: 0.75em;
-	padding-right: 0.75em;
-	padding-bottom: 0.25em;
-	margin: 0;
-	border-right: 1px solid #ccc;
-}
 
-
-
-nav ul li:last-child {
-	float:right;
-	border-right: 0;
-}
 
 #generate #nav_generate a, #verify #nav_verify a, #admin #nav_admin a,
 #generate #nav_generate a:hover, #verify #nav_verify a:hover, #admin #nav_admin a:hover {

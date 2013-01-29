@@ -73,8 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <input type="text" name="groupName" value="test group" />
         
 	      <label for="surveyURL">Survey URL:</label>
-          <input class="remove-bottom" type="text" name="surveyURL" value="test" />
-          <span class="comment">(Default value sends you to a TurkGate test page.)</span>
+          <input class="adjacent" type="text" name="surveyURL" value="test" />
+          <span class="comment adjacent">(Default value sends you to a TurkGate test page.)</span>
         </p>
 	    <p>
 	      	You must also specify what kind of HIT you want to test. This changes 

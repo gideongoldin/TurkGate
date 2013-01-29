@@ -148,7 +148,7 @@ THE SOFTWARE.
 	  </p>
 	  <form method="post" action="verify.php">
 	    <div>
-	      <textarea name="results" rows="20" wrap="off"></textarea>
+	      <textarea name="results" rows="20" wrap="off" id="resultsTextArea"></textarea>
 	    </div>
 	    <div>
 	      <input type="submit" value="Verify codes" name="submit">
