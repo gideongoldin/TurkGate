@@ -53,11 +53,11 @@
 					</select>
 				
 					<label for="externalSurveyURL">External Survey URL:</label>
-					<input type="text"  name="externalSurveyURL" id="externalSurveyURL" value='' size="40" placeholder="http://surveysite.com/surveyid" autofocus="">
+					<input type="text" required name="externalSurveyURL" id="externalSurveyURL" value='' size="40" placeholder="http://surveysite.com/surveyid" autofocus="">
 				
 					<label for="groupName">Group Name:</label>
 					<span class="comment">Previously created group names will appear below</span>
-					<input type="text"  name="groupName" id="groupName" value='' size="40" placeholder="Test group name" class="adjacent">				
+					<input type="text" required name="groupName" id="groupName" value='' size="40" placeholder="Test group name" class="adjacent">				
 				
 				
 					<label for="associatedURLs">Survey URLs in Group:</label>
