@@ -47,13 +47,13 @@
 	
 	  	<div class="sixteen columns clearfix">
 	  		<header class="clearfix">
-			<h2 class="remove-bottom eight columns alpha"><a href="../index.php">TurkGate</a>: <?php echo $title ?></h2>
+			<h2 class="remove-bottom eight columns alpha"><a href="<?php echo $basePath ?>index.php">TurkGate</a>: <?php echo $title ?></h2>
 		  	<div class="eight columns omega clearfix">
 		  		<nav class="clearfix" style="float:right;">
 		  	  <ul class="remove-bottom clearfix">
 		  	  	<li id="nav_generate"><a href="<?php echo $basePath ?>index.php">Generate a HIT</a></li>
 		  		<li id="nav_verify"><a href="<?php echo $basePath ?>codes/verify.php">Verify Codes</a></li>
-		  		<li id="nav_admin"><a href="<?php echo $basePath ?>admin/index.php">Administration</a></li>
+		  		<li id="nav_admin"><a href="<?php echo $basePath ?>admin/index.php">Admin</a></li>
 		  		<li id="nav_about"><a href="http://gideongoldin.github.com/TurkGate/" target="_blank">About</a></li>
 		  	  </ul>		  			
 		  	</nav>

@@ -48,8 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   	<h3>Installation</h3>
   	<?php
   	    if ($installed) {
-  	        echo '<p>TurkGate has already been installed!';
-			echo '<br /><a href="install.php#uninstall">Uninstall TurkGate</a></p>';
+  	        echo '<p><span class="adjacent">TurkGate is installed.</span><a href="install.php#uninstall" class="adjacent">Uninstall</a></p>';
   	    } else {
   	        echo '<p>TurkGate is not yet installed.';
 			echo '<br /><a href="install.php#install">Install TurkGate</a></p>'; 

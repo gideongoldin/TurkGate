@@ -208,6 +208,10 @@ ul.tabs li.active{
 	margin-left: 2em;
 }
 
+.adjacent + a.adjacent {
+	margin-left: 1em;
+}
+
 .help {
 	padding-bottom: 0.25em;
 }
