@@ -15,6 +15,3 @@
 				
 			</div> <!-- sixteen columns clearfix -->
 			</footer>
-		</div> <!-- container -->
-	</body>
-</html>

@@ -48,14 +48,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
 
-<!-- Import the header -->
-<?php 
-    $title = 'Verify Codes';
-    $description = 'TurkGate tools for the administrator.';
-    $basePath = '../';
-	$pageID = 'verify';
-    require_once($basePath . 'includes/header.php'); 
-?>
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>TurkGate - Verify</title>
+	<meta name="description" content="Verify TurkGate completion codes.">
+	<meta name="author" content="">
+	
+	<!-- Add the imports -->
+	<?php 
+	    $basePath = '../';
+	    require_once($basePath . 'includes/imports.php'); 
+	?>
+	
+</head>
+
+<body id="verify">
+	
+  <div class="container"> <!-- Container -->
+	
+	<!-- Add the header -->
+	<?php 
+	    $title = 'Verify Codes';
+	    require_once($basePath . 'includes/header.php'); 
+	?>
 <div class="sixteen columns clearfix" style="border-top: 1px solid #ccc; padding-top:10px;"> <!-- sixteen columns clearfix -->
 
   <?php
@@ -160,5 +183,9 @@ THE SOFTWARE.
   ?>
 	</div>
 
-<!-- Import the footer -->
-<?php require_once($basePath . 'includes/footer.php'); ?>
+	<!-- Import the footer -->
+	<?php require_once($basePath . 'includes/footer.php'); ?>
+
+  </div> <!-- Container -->
+</body>
+</html>

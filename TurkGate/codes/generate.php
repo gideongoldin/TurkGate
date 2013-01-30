@@ -40,13 +40,59 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<!-- Import the header -->
-<?php 
-    $title = 'Completion Code';
-    $description = 'Generates a completion code that verifies a worker completed the survey.';
-    $basePath = '../';
-    require_once($basePath . 'includes/header.php'); 
-?>
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>Completion Code</title>
+	<meta name="description" content="Code that verifies completion of a survey.">
+	<meta name="author" content="">
+	
+	<!-- Add the imports -->
+	<?php 
+	    $basePath = '../';
+	    require_once($basePath . 'includes/imports.php'); 
+	?>
+	
+</head>
+
+<body>
+	
+  <div class="container"> <!-- Container -->
+	<?php
+	    // Add the Worker ID and the Group name to the input string
+	    $inputString = "w[$workerId]g[$groupName]";
+	
+	    // Add any key-value pairs from the GET array to the input string
+	    foreach ($_GET as $key => $value) {
+	        $inputString .= $key[0]."[$value]";
+	    }
+	
+	    // Construct the completion code
+	    $completionCode = $inputString . ':' . sha1($inputString . constant('KEY'));
+	?>
+	  <div class="sixteen columns">
+	    <header><h1>Completion Code</h1></header>
+	  </div>
+	  <div class="sixteen columns" style="border-top: 1px solid #DDD; padding-top:10px;"> <!-- sixteen columns clearfix -->
+	    <p>Please copy <em>all</em> of the text from the box below into Mechanical Turk:</p>
+		<?php
+				$textAreaId = 'code';	
+				$keepAllSelected = true;							
+				require_once '../lib/autoselect.php';
+	    ?>	
+		<div class="thirteen columns offset-by-one">
+	    	<textarea rows="4" id="<?php echo $textAreaId; ?>" readonly><?php echo $completionCode ?></textarea>
+		</div>
+	  </div>
+  </div> <!-- Container -->
+
 <script>
   function exit() {
     return "Please verify that you have saved the code on this page before leaving!";
@@ -54,32 +100,6 @@ limitations under the License.
 
   window.onbeforeunload = exit;
 </script>
-<?php
-    // Add the Worker ID and the Group name to the input string
-    $inputString = "w[$workerId]g[$groupName]";
-
-    // Add any key-value pairs from the GET array to the input string
-    foreach ($_GET as $key => $value) {
-        $inputString .= $key[0]."[$value]";
-    }
-
-    // Construct the completion code
-    $completionCode = $inputString . ':' . sha1($inputString . constant('KEY'));
-?>
-  <div class="sixteen columns">
-    <header><h1>Completion Code</h1></header>
-  </div>
-  <div class="sixteen columns" style="border-top: 1px solid #DDD; padding-top:10px;"> <!-- sixteen columns clearfix -->
-    <p>Please copy <em>all</em> of the text from the box below into Mechanical Turk:</p>
-	<?php
-			$textAreaId = 'code';	
-			$keepAllSelected = true;							
-			require_once '../lib/autoselect.php';
-    ?>	
-	<div class="thirteen columns offset-by-one">
-    	<textarea rows="4" id="<?php echo $textAreaId; ?>" readonly><?php echo $completionCode ?></textarea>
-	</div>
-  </div>
     
 </body>
 </html>

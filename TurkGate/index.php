@@ -20,15 +20,37 @@
     require_once('config.php');
 ?>
 
-<!-- Import the header -->
-<?php 
-    $title = 'Generate a HIT';
-    $description = 'Creating a TurkGate HIT.';
-    $basePath = '';
-	$pageID = 'generate';
-    require_once($basePath . 'includes/header.php'); 
-?>
-<script src="lib/fixhttp.lib.js"></script>
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>TurkGate - Generate a HIT</title>
+	<meta name="description" content="Creating a TurkGate HIT.">
+	<meta name="author" content="">
+	
+	<!-- Add the imports -->
+	<?php 
+	    $basePath = '';
+	    require_once($basePath . 'includes/imports.php'); 
+	?>
+	
+</head>
+
+<body id="generate">
+	
+  <div class="container"> <!-- Container -->
+	
+	<!-- Add the header -->
+	<?php 
+	    $title = 'Generate a HIT';
+	    require_once($basePath . 'includes/header.php'); 
+	?>
 		
 	<div class="sixteen columns clearfix" id="containerMain"> <!-- sixteen columns clearfix -->
 		<div class="eight columns alpha" id="leftColumnMain">
@@ -114,8 +136,15 @@
 		</div> <!-- columns omega -->
 		
 	</div> <!-- columns clearfix -->
+  
+	<!-- Import the footer -->
+	<?php require_once($basePath . 'includes/footer.php'); ?>
+
+  </div> <!-- container -->
 
 <!------------------------------------------ JAVASCRIPT ---------------------------------------->
+
+<script src="lib/fixhttp.lib.js"></script>
 
 <!-- Custom jQuery actions -->
 <script type="text/javascript">
@@ -305,6 +334,5 @@
 	}
 
 </script>
-  
-<!-- Import the footer -->
-<?php require_once($basePath . 'includes/footer.php'); ?>
+	</body>
+</html>

@@ -34,77 +34,103 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	exit();
 }
 ?>
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
 
-<!-- Import the header -->
-<?php 
-    $title = 'Administration';
-    $description = 'TurkGate tools for the administrator.';
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>TurkGate - Administration</title>
+	<meta name="description" content="TurkGate tools for the administrator.">
+	<meta name="author" content="">
+	
+	<!-- Add the imports -->
+	<?php 
     $basePath = '../';
-	$pageID = 'admin';
-    require_once($basePath . 'includes/header.php'); 
-?>
-		
-<div class="sixteen columns clearfix" style="border-top: 1px solid #ccc; padding-top:10px;"> <!-- sixteen columns clearfix -->
-  	<h3>Installation</h3>
-  	<?php
-  	    if ($installed) {
-  	        echo '<p><span class="adjacent">TurkGate is installed.</span><a href="install.php#uninstall" class="adjacent">Uninstall</a></p>';
-  	    } else {
-  	        echo '<p>TurkGate is not yet installed.';
-			echo '<br /><a href="install.php#install">Install TurkGate</a></p>'; 
-  	    }
-    ?>
-</div>
-<div class="sixteen columns" style="border-top: 1px solid #ccc; padding-top:10px;">	
-    <h3>Testing</h3>
-    <?php
-        if (!$installed) {
-        	echo '<br /><strong><p style="background:darkred; color:white; text-align:center;">NOTE: Testing is unlikely to work as TurkGate is not yet installed!</p></strong>';
-        }
+	    require_once($basePath . 'includes/imports.php'); 
 	?>
-    <p>To test the installation, enter a workerId and group name below and click Test.</p>
-    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-    	<p>
-	      <label for="workerID">Worker ID:</label>
-          <input type="text" name="workerID" id="workerID" class="adjacent" />
-          <input type="button" value="Random ID" id="randomID" class="adjacent" />
-        
-	      <label for="groupName">Group:</label>
-          <input type="text" name="groupName" value="test group" />
-        
-	      <label for="surveyURL">Survey URL:</label>
-          <input class="adjacent" type="text" name="surveyURL" value="test" />
-          <span class="comment adjacent">(Default value sends you to a TurkGate test page.)</span>
-        </p>
-	    <p>
-	      	You must also specify what kind of HIT you want to test. This changes 
-	      	whether TurkGate displays a link to the survey or redirects to it.
-	    </p>
-	    <p>
-	        <input type="radio" name="source" value="js">Web Interface HIT</input>
-			<br />
-			<input type="radio" name="source" value="ext" checked>Command Line Tools HIT</input> 
-	    </p>
-	    <p>
-	      	<input type="submit" name="submitTestPreview" value="Test Preview HIT">
-	      	<input type="submit" name="submitTestAccept" value="Test Accept HIT">
-	      	<span class="comment">(Testing, like normal access requests, adds an entry to the database)</span>
-	    </p>
-    </form>
-</div>
+	
+</head>
 
-<script>
-	function randomizeWorkerID() {
-		var randomID = "testID_" + Math.floor(Math.random()*Math.pow(10, 10)).toString(16);
-		$("#workerID").val(randomID);
-	}
+<body id="admin">
+	
+  <div class="container"> <!-- Container -->
+	
+	<!-- Add the header -->
+	<?php 
+    $title = 'Administration';
+	    require_once($basePath . 'includes/header.php'); 
+	?>
+			
+	<div class="sixteen columns clearfix" style="border-top: 1px solid #ccc; padding-top:10px;"> <!-- sixteen columns clearfix -->
+	  	<h3>Installation</h3>
+	  	<?php
+	  	    if ($installed) {
+	  	        echo '<p><span class="adjacent">TurkGate is installed.</span><a href="install.php#uninstall" class="adjacent">Uninstall</a></p>';
+	  	    } else {
+	  	        echo '<p>TurkGate is not yet installed.';
+				echo '<br /><a href="install.php#install">Install TurkGate</a></p>'; 
+	  	    }
+	    ?>
+	</div>
+	<div class="sixteen columns" style="border-top: 1px solid #ccc; padding-top:10px;">	
+	    <h3>Testing</h3>
+	    <?php
+	        if (!$installed) {
+	        	echo '<br /><strong><p class="danger" style="text-align:center;">NOTE: Testing is unlikely to work as TurkGate is not yet installed!</p></strong>';
+	        }
+		?>
+	    <p>To test the installation, enter a workerId and group name below and click Test.</p>
+	    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	    	<p>
+		      <label for="workerID">Worker ID:</label>
+	          <input type="text" name="workerID" id="workerID" class="adjacent" />
+	          <input type="button" value="Random ID" id="randomID" class="adjacent" />
+	        
+		      <label for="groupName">Group:</label>
+	          <input type="text" name="groupName" value="test group" />
+	        
+		      <label for="surveyURL">Survey URL:</label>
+	          <input class="adjacent" type="text" name="surveyURL" value="test" />
+	          <span class="comment adjacent">(Default value 'test' sends you to a TurkGate test page.)</span>
+	        </p>
+		    <p>
+		      	You must also specify what kind of HIT you want to test. This changes 
+		      	whether TurkGate displays a link to the survey or redirects to it.
+		    </p>
+		    <p>
+		        <input type="radio" name="source" value="js">Web Interface HIT</input>
+				<br />
+				<input type="radio" name="source" value="ext" checked>Command Line Tools HIT</input> 
+		    </p>
+		    <p>
+		      	<input type="submit" name="submitTestPreview" value="Test Preview HIT">
+		      	<input type="submit" name="submitTestAccept" value="Test Accept HIT">
+		      	<span class="comment">(Testing, like normal access requests, adds an entry to the database)</span>
+		    </p>
+	    </form>
+	</div>
+	    
+	<!-- Import the footer -->
+	<?php require_once($basePath . 'includes/footer.php'); ?>
+	
+	</div> <!-- Container -->
+	
+	<script>
+		function randomizeWorkerID() {
+			var randomID = "testID_" + Math.floor(Math.random()*Math.pow(10, 10)).toString(16);
+			$("#workerID").val(randomID);
+		}
+	
+		$(document).ready(function() {
+			randomizeWorkerID();
+			$("#randomID").click(randomizeWorkerID);
+		});
+	</script>
+</body>
+</html>
 
-	$(document).ready(function() {
-		randomizeWorkerID();
-		$("#randomID").click(randomizeWorkerID);
-	});
-</script>
-
-    
-<!-- Import the footer -->
-<?php require_once($basePath . 'includes/footer.php'); ?>
