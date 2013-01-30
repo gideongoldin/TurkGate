@@ -127,7 +127,7 @@ dd {
 	color: darkgrey;
 	font-size: small;
 	font-style: italic;
-	margin-bottom: 20px;
+/*	margin-bottom: 20px;*/
 
 }
 
@@ -227,7 +227,6 @@ ul.tabs li.active{
 
 .adjacent, input.adjacent {
 	display: inline-block;
-	vertical-align: bottom;
 }
 
 .adjacent + input.adjacent {
@@ -239,6 +238,7 @@ ul.tabs li.active{
 }
 
 .help {
+	vertical-align: bottom;
 	padding-bottom: 0.25em;
 }
 

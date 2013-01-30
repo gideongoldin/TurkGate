@@ -58,13 +58,6 @@
 			<p>From here you may generate the HTML code for your Web Interface HIT, or download files for use with the Command Line Tool.</p>
 
 			<form method="post" id="hitGenerationForm" name="hitGenerationForm">
-			
-					<label for="HITType" class="adjacent">HIT Type:</label>
-					<span class="ui-icon ui-icon-help adjacent help" title="How are you creating your HIT, online or with the Command Line Tools?"></span>
-					<select name="HITType" id="HITType">
-	  					<option value="WebInterface">Web Interface</option>
-	  					<option value="CLT">Command Line Tools</option>
-					</select>
 				
 					<label for="surveySites" class="adjacent">External Survey Site:</label>
 					<span class="ui-icon ui-icon-help adjacent help" title="Where did you create your survey?"></span>
@@ -74,16 +67,24 @@
 	  					<option value="Other">Other Sites / Custom</option>
 					</select>
 				
-					<label for="externalSurveyURL">External Survey URL:</label>
-					<input type="text" required name="externalSurveyURL" id="externalSurveyURL" value='' size="40" placeholder="http://surveysite.com/surveyid" autofocus="">
+					<label for="externalSurveyURL">Survey URL:</label>
+					<input type="text" required name="externalSurveyURL" id="externalSurveyURL" value='' size="40" placeholder="http://surveysite.com/surveyid" autofocus="" maxlength="128">
 				
-					<label for="groupName">Group Name:</label>
-					<span class="comment">Previously created group names will appear below</span>
-					<input type="text" required name="groupName" id="groupName" value='' size="40" placeholder="Test group name" class="adjacent">				
+					<label for="groupName" class="adjacent">Group Name:</label>
+					<span class="ui-icon ui-icon-help adjacent help" title="Workers will be prevented from participating in multiple studies from the same group."></span>
+					<div class="comment" class="adjacent">Previously created group names will appear below</div>
+					<input type="text" required name="groupName" id="groupName" value='' size="40" placeholder="Test group name" class="adjacent" maxlength="128">				
 				
 				
 					<label for="associatedURLs">Survey URLs in Group:</label>
 					<textarea disabled id="associatedURLs"></textarea>
+			
+					<label for="HITType" class="adjacent">HIT Type:</label>
+					<span class="ui-icon ui-icon-help adjacent help" title="How are you creating your HIT, online or with the Command Line Tools?"></span>
+					<select name="HITType" id="HITType">
+	  					<option value="WebInterface">Web Interface</option>
+	  					<option value="CLT">Command Line Tools</option>
+					</select>
 					
 					<input type="submit" name="submitForm" id="submitForm" value="Generate HIT" />
 
