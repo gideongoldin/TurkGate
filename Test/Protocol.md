@@ -21,5 +21,3 @@
 	3. Go back, and Test Accept HIT with the same information. Verify that you are provided a link to open the study, and fields for completion code and comments, and a Submit button. Verify that link opens testDestination.php in a new tab.
 	4. Go back, and Test Accept HIT again with the same information. Verify that you don't get a link to open the study, but do get a box for completion code and comments, as well as a Submit button.
 	5. Go back, and Test Preview HIT again with the same information. Verify that you get: "You have already accessed a survey in the test group group. Do NOT accept the HIT, because you will NOT be able to access the survey."
-
-... to be continued!
