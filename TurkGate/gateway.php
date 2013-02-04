@@ -27,17 +27,12 @@ if (!include_once('config.php')) {
 require_once 'lib/databaseobject.php';
 require_once 'lib/tempstorage.php';
 
-$accessController = new DatabaseObject();
-
-
+// Declare and initialize workerID variable
 $workerId = null;
 if (!empty($_GET['workerId'])) {
 	$workerId = htmlspecialchars($_GET['workerId']);
-} else if (!empty($_POST['checkid_id'])) {
-	$workerId = htmlspecialchars($_POST['checkid_id']);
 }
 	
-
 $groupName = urldecode($_GET['group']);
 
 $isExternalHIT = empty($_GET['source']) || $_GET['source'] == 'ext';
@@ -46,18 +41,15 @@ $isPreview = empty($_GET['assignmentId']) ||
 
 if ($isPreview) {
 	
-	if ($workerId == null) { ?>
+?>
 	  <p>Sorry, this study cannot be previewed. Please accept the HIT in order to view it.</p>
 	  <p>
 	  	You will only be able to view the survey if you have not accepted  
 	    any other HITs related in the '<?php echo $groupName; ?>' group. You can check your eligibility below (opens in a new window).
       </p>
 	  <p>
-	  	<form id='checkid_form' method='POST' target='_blank' action='gateway.php?group=<?php echo urlencode($groupName); ?>'> 
-	  	  Mechanical Turk Worker ID: 
-	  	  <input type="text" name="checkid_id" id="checkid_id" size="30" required="">
-		  <input type="submit" name="checkid_submit" id="checkid_submit" value="Check Eligibility">
-	  	</form>
+	  	You can check your eligibility at the link below:<br />
+	  	<a href="checkID.php?group=<?php echo $groupName; ?>" target="_blank">Check Eligibility</a>
 	  </p>
 	  <p>
 	  	If you have disabled browser cookies or if you restart your 
@@ -65,29 +57,14 @@ if ($isPreview) {
 	    to have any plug-ins required by the HIT installed before accepting it.
 	  </p>
 <?php
-	} else {
-	    $accessAllowed = $accessController->checkAccess($workerId, $groupName, false);
-	
-	    // Block previews of the HIT, but warn about possible exclusion based on
-	    // group name
-		if ($accessAllowed) {
-	        echo "<p>You have not done any surveys in the $groupName group.</p>";
-	        echo '<p>Once you accept the HIT, you will be able to access the survey.</p>';
-		} else {
-	        echo "<p>You have already accessed a survey in the $groupName group.</p>";
-	        echo '<p>Do NOT accept the HIT, because you will NOT be able to access the survey.</p>';
-		}
-		
-	}
+
 } else {
     // This worker has accepted the HIT, so we can continue
     $assignId = htmlspecialchars($_GET['assignmentId']);
 	
-
 	// parse survey identifier, first word is a code for finding the base URL, 
 	// second word is a survey-specific id
 	$surveyURL = urldecode($_GET['survey']);
-	
 	
 	if (strlen($surveyURL) == 0 || $surveyURL == 'test') {
 	    // If no survey URL was submitted, or if 'test' was entered, insert the
@@ -109,6 +86,8 @@ if ($isPreview) {
 	$htmlComments = '<p>Comments (optional): <br><textarea cols="60" rows="4" '  
 	  . 'id="comments" name="comments"></textarea></p>';
 	
+
+	$accessController = new DatabaseObject();
 
     //If access isn't granted, this worker has already done a survey in the group and will
     // be blocked from reaching the survey.

@@ -29,7 +29,8 @@ limitations under the License.
       
     if (preview) {  
       text += "In this case, please don't accept the HIT, because you'll have to return it. ";
-      text += "<a target='_blank' href='" + gateURL + "'>Click this link to check your eligibility.</a>";
+      text += "You can check your eligibility at the link below:<br />" +
+                "<a href='" + gateURL + "' target='_blank'>Check Eligibility</a>";
     }
       
     text += "</p>";
@@ -66,15 +67,17 @@ limitations under the License.
       return "<p>Please enable cookies in order to continue with this HIT.</p>"
     }
 
-    var phpArgs = "source=js&";
+    var phpArgs = "?source=js";
     phpArgs += "&group=" + encodeURIComponent(group);
-    phpArgs += "&workerId=" + urlVars["workerId"];
-    if (!preview) {
-        phpArgs += "survey=" + encodeURIComponent(surveyURL);
-        phpArgs += "&assignmentId=" + urlVars["assignmentId"];
-    }
 
-    return turkGateURL + '/gateway.php?' + phpArgs;
+    if (preview) {
+      return turkGateURL + 'checkID.php' + phpArgs;
+    } else {
+      phpArgs += "&workerId=" + urlVars["workerId"];
+      phpArgs += "&survey=" + encodeURIComponent(surveyURL);
+      phpArgs += "&assignmentId=" + urlVars["assignmentId"];
+      return turkGateURL + 'gateway.php' + phpArgs;
+    }  
   }
 
   // runs automatically when the page loads and fills in the dynamically
