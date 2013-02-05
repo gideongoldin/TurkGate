@@ -63,6 +63,7 @@ nav > ul > li:first-child {
 	-webkit-box-shadow: 2px 2px 5px -2px #888;
 	box-shadow: 2px 2px 5px -2px #888;
 	padding-top:0.9em;
+	word-wrap:break-word;
 }
 
 #rightColumnContainer {

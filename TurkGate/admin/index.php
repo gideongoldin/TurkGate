@@ -72,8 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	  	    if ($installed) {
 	  	        echo '<p><span class="adjacent">TurkGate is installed.</span><a href="install.php#uninstall" class="adjacent">Uninstall</a></p>';
 	  	    } else {
-	  	        echo '<p>TurkGate is not yet installed.';
-				echo '<br /><a href="install.php#install">Install TurkGate</a></p>'; 
+	  	    	echo '<p><span class="adjacent">TurkGate is not yet installed.</span><a href="install.php#install" class="adjacent">Install</a></p>';
 	  	    }
 	    ?>
 	</div>
