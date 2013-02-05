@@ -140,20 +140,22 @@ $installed = @include('../config.php');
 		}
 		
 		function testWebHIT(workerID, surveyURL, groupName, preview) {
-			var url = "testWebHIT.php?group="+groupName+"&survey="+surveyURL+"&source=ext";
+			var url = "testWebHIT.php?group="+encodeURIComponent(groupName)+
+						"&survey="+encodeURIComponent(surveyURL)+"&source=ext";
 			
 			if (!preview) {
-				url += "&assignmentId=test&workerId="+workerID
+				url += "&assignmentId=test&workerId="+encodeURIComponent(workerID);
 			}
 
     		window.open(url);
 		}
 		
 		function testCLTHIT(workerID, surveyURL, groupName, preview) {
-			var url = "../gateway.php?group="+groupName+"&survey="+surveyURL+"&source=ext";
+			var url = "../gateway.php?group="+encodeURIComponent(groupName)
+						+"&survey="+encodeURIComponent(surveyURL)+"&source=ext";
 			
 			if (!preview) {
-				url += "&assignmentId=test&workerId="+workerID
+				url += "&assignmentId=test&workerId="+encodeURIComponent(workerID);
 			}
 
     		window.open(url);
