@@ -69,12 +69,12 @@
 				
 					<label for="externalSurveyURL" class="adjacent">Survey URL:</label>
 					<span class="ui-icon ui-icon-help adjacent help" title="Link to your survey."></span>
-					<input type="text"  name="externalSurveyURL" id="externalSurveyURL" value='' size="40" placeholder="http://surveysite.com/surveyid" autofocus="" maxlength="128">
+					<input type="text" required name="externalSurveyURL" id="externalSurveyURL" value='' size="40" placeholder="http://surveysite.com/surveyid" autofocus="" maxlength="128">
 				
 					<label for="groupName" class="adjacent">Group Name:</label>
 					<span class="ui-icon ui-icon-help adjacent help" title="Workers will be prevented from participating in multiple studies from the same group."></span>
 					<div class="comment" class="adjacent">Previously created group names will appear below</div>
-					<input type="text"  name="groupName" id="groupName" value='' size="40" placeholder="Test group name" maxlength="128">				
+					<input type="text" required name="groupName" id="groupName" value='' size="40" placeholder="Test group name" maxlength="128">				
 				
 				
 					<label for="associatedURLs" class="adjacent">Survey URLs in Group:</label>
