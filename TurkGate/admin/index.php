@@ -68,20 +68,25 @@ $installed = @include('../config.php');
 	        	echo '<br /><strong><p class="danger" style="text-align:center;">NOTE: Testing is unlikely to work as TurkGate is not yet installed!</p></strong>';
 	        }
 		?>
-	    <p>To test the installation, enter a workerId and group name below and click Test.</p>
+	    <p>
+	    	To test the installation, enter a Worker ID and Group Name below and click Test.
+	    	Testing simulates a worker accepting a HIT, recording the access request.
+	    	Further tests with the same Worker ID and Group Name should result in denied access.
+	    </p>
 	    <form name="testForm" id="testForm">
 	    	<p>
-		      <label for="workerID">Worker ID:</label>
+		      <label class="adjacent" for="workerID">Worker ID:</label>
+		      <span class="ui-icon ui-icon-help adjacent help" title="Testing actual Mechanical Turk worker IDs will affect workers' access!"></span><br />
 	          <input type="text" name="workerID" id="workerID" class="adjacent" />
-	          <input type="button" value="Random ID" id="randomID" class="adjacent" />
+	          <input type="button" value="Random ID" id="randomID" class="adjacent" /><br />
 	        
-		      <label for="groupName">Group:</label>
+		      <label class="adjacent" for="groupName">Group Name:</label>
+		      <span class="ui-icon ui-icon-help adjacent help" title="Workers will be prevented from participating in multiple studies from the same group."></span>
 	          <input type="text" name="groupName" id="groupName" value="test group" />
 	        
-		      <label for="surveyURL">Survey URL:</label>
-	          <input class="adjacent" type="text" name="surveyURL" id="surveyURL" value="test" />
-	          <span class="comment adjacent">(Default value 'test' sends you to a TurkGate test page.)</span>
-	          <br />
+		      <label class="adjacent" for="surveyURL">Survey URL:</label>
+		      <span class="ui-icon ui-icon-help adjacent help" title="Link to your survey. Default value 'test' sends you to a TurkGate test page."></span>
+	          <input type="text" name="surveyURL" id="surveyURL" value="test" />
 	          
 				<label for="HITType" class="adjacent">HIT Type:</label>
 				<span class="ui-icon ui-icon-help adjacent help" title="Test as if the HIT was created online or with the Command Line Tools?"></span>
@@ -90,11 +95,14 @@ $installed = @include('../config.php');
   					<option value="CLT">Command Line Tools</option>
 				</select>
 	          
-				<input type="checkbox" name="previewCheckbox" id="previewCheckbox" value="preview">Test previewing only, not accepting the HIT.	    
+	          	
+	          	
+				<input type="checkbox" name="previewCheckbox" class="adjacent" id="previewCheckbox" value="preview">
+				<label for="previewCheckBox" class="adjacent">Preview Only</label>
+				<span class="ui-icon ui-icon-help adjacent help" title="If checked, testing simulates a worker previewing a HIT rather than accepting it. No access request will be recorded."></span>
 			</p>
 		    <p>
-		      	<input type="submit" name="submitTest" id="submitTest" value="Test HIT">
-		      	<span class="comment">(Testing, like normal access requests, adds an entry to the database)</span>
+		      	<input type="submit" name="submitTest" id="submitTest" value="Test">
 		    </p>
 	    </form>
 	</div>
@@ -152,6 +160,10 @@ $installed = @include('../config.php');
 		}
 	
 		$(document).ready(function() {
+			
+			// Setup tooltips
+			$(document).tooltip();
+
 			randomizeWorkerID();
 			$("#randomID").click(randomizeWorkerID);
 			
