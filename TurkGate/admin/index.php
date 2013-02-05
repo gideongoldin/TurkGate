@@ -18,21 +18,6 @@ limitations under the License.
 
 // Get TurkGate's database configuration
 $installed = @include('../config.php');
-
-// If the form was submitted, test survey access
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	
-	// only add an assignment ID if testing as an accepted HIT, not a preview
-	$acceptString = isset($_POST['submitTestAccept']) ? 'assignmentId=test&' : '';
-	
-    $workerID = urlencode($_POST['workerID']);
-    $groupName = urlencode($_POST['groupName']);
-	$surveyURL = urlencode($_POST['surveyURL']);
-	$source = urlencode($_POST['source']);
-	
-    header("Location: ../gateway.php?".$acceptString."workerId=$workerID&group=$groupName&survey=$surveyURL&source=$source");
-	exit();
-}
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
@@ -84,31 +69,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	        }
 		?>
 	    <p>To test the installation, enter a workerId and group name below and click Test.</p>
-	    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	    <form name="testForm" id="testForm">
 	    	<p>
 		      <label for="workerID">Worker ID:</label>
 	          <input type="text" name="workerID" id="workerID" class="adjacent" />
 	          <input type="button" value="Random ID" id="randomID" class="adjacent" />
 	        
 		      <label for="groupName">Group:</label>
-	          <input type="text" name="groupName" value="test group" />
+	          <input type="text" name="groupName" id="groupName" value="test group" />
 	        
 		      <label for="surveyURL">Survey URL:</label>
-	          <input class="adjacent" type="text" name="surveyURL" value="test" />
+	          <input class="adjacent" type="text" name="surveyURL" id="surveyURL" value="test" />
 	          <span class="comment adjacent">(Default value 'test' sends you to a TurkGate test page.)</span>
-	        </p>
+	          <br />
+	          
+				<label for="HITType" class="adjacent">HIT Type:</label>
+				<span class="ui-icon ui-icon-help adjacent help" title="Test as if the HIT was created online or with the Command Line Tools?"></span>
+				<select name="HITType" id="HITType">
+  					<option value="WebInterface">Web Interface</option>
+  					<option value="CLT">Command Line Tools</option>
+				</select>
+	          
+				<input type="checkbox" name="previewCheckbox" id="previewCheckbox" value="preview">Test previewing only, not accepting the HIT.	    
+			</p>
 		    <p>
-		      	You must also specify what kind of HIT you want to test. This changes 
-		      	whether TurkGate displays a link to the survey or redirects to it.
-		    </p>
-		    <p>
-		        <input type="radio" name="source" value="js">Web Interface HIT</input>
-				<br />
-				<input type="radio" name="source" value="ext" checked>Command Line Tools HIT</input> 
-		    </p>
-		    <p>
-		      	<input type="submit" name="submitTestPreview" value="Test Preview HIT">
-		      	<input type="submit" name="submitTestAccept" value="Test Accept HIT">
+		      	<input type="submit" name="submitTest" id="submitTest" value="Test HIT">
 		      	<span class="comment">(Testing, like normal access requests, adds an entry to the database)</span>
 		    </p>
 	    </form>
@@ -124,10 +109,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			var randomID = "testID_" + Math.floor(Math.random()*Math.pow(10, 10)).toString(16);
 			$("#workerID").val(randomID);
 		}
+		
+		function runTest() {
+			var workerID = $("#workerID").val();
+			var groupName = $("#groupName").val();
+			var surveyURL = $("#surveyURL").val();
+			var preview = $("#previewCheckbox").attr("checked");
+			
+	    	switch ($("#HITType").val()) {
+	    		case "WebInterface":
+	    			testWebHIT(workerID, surveyURL, groupName, preview);
+	    			break;
+	    		case "CLT":
+	    			testCLTHIT(workerID, surveyURL, groupName, preview);
+	    			break;
+	    		default:
+	    			alert("ERROR: Invalid HIT Type.");
+	    			return false;
+ 		   	}
+ 		   	
+ 		   	return false;
+		}
+		
+		function testWebHIT(workerID, surveyURL, groupName, preview) {
+			var url = "testWebHIT.php?group="+groupName+"&survey="+surveyURL+"&source=ext";
+			
+			if (!preview) {
+				url += "&assignmentId=test&workerId="+workerID
+			}
+
+    		window.open(url);
+		}
+		
+		function testCLTHIT(workerID, surveyURL, groupName, preview) {
+			var url = "../gateway.php?group="+groupName+"&survey="+surveyURL+"&source=ext";
+			
+			if (!preview) {
+				url += "&assignmentId=test&workerId="+workerID
+			}
+
+    		window.open(url);
+		}
 	
 		$(document).ready(function() {
 			randomizeWorkerID();
 			$("#randomID").click(randomizeWorkerID);
+			
+			$("#testForm").submit(runTest);
 		});
 	</script>
 </body>

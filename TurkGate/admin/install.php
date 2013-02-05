@@ -290,7 +290,7 @@ limitations under the License.
 	<script type="text/javascript">
 	  $(document).ready(function() {
 	    $('#turkGateURL').blur(function() {
-	      $('#turkGateURL').val(fix_http($('#turkGateURL').val()));
+	      $('#turkGateURL').val(fix_http($('#turkGateURL').val(), true));
 	    });
 	  });
 	</script>
