@@ -122,12 +122,12 @@ limitations under the License.
 
 						// Write (to) the TurkGate configuration file
 						$configFileString = "<?php
-					define('DATABASE_HOST', '" . $databaseHost . "');
-					define('DATABASE_NAME', '" . $databaseName . "');
-					define('DATABASE_USERNAME', '" . $databaseUsername . "');
-					define('DATABASE_PASSWORD', '" . $databasePassword . "');
-					define('BASE_URL', '" . $baseURL . "');
-					define('KEY', '" . $key . "');
+							define('DATABASE_HOST', '" . $databaseHost . "');
+							define('DATABASE_NAME', '" . $databaseName . "');
+							define('DATABASE_USERNAME', '" . $databaseUsername . "');
+							define('DATABASE_PASSWORD', '" . $databasePassword . "');
+							define('BASE_URL', '" . $baseURL . "');
+							define('KEY', '" . $key . "');
 						?>";
 
 						fwrite($configFileHandle, $configFileString);
@@ -135,14 +135,14 @@ limitations under the License.
 
 						// Create the table
 						$sql = "CREATE TABLE IF NOT EXISTS SurveyRequest 
-					(
-						requestID INT NOT NULL AUTO_INCREMENT,
-						PRIMARY KEY(requestID),
-						workerID VARCHAR(256),
-						URL VARCHAR(256),
-						groupName VARCHAR(256),
-						time DATETIME
-					)";
+						(
+							requestID INT NOT NULL AUTO_INCREMENT,
+							PRIMARY KEY(requestID),
+							workerID VARCHAR(256),
+							URL VARCHAR(256),
+							groupName VARCHAR(256),
+							time DATETIME
+						)";
 
 						mysql_query($sql, $connection) or die('<p>Error creating table: ' . mysql_error() . '</p><p><a href="index.php">Admin home</a></p>');
 						mysql_close($connection);
