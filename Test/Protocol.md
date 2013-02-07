@@ -55,7 +55,27 @@
 	13. Click "check eligibility". Verify that you are NOT eligible.
 	14. Accept the HIT and click the link to the study. Verify that you are blocked from reaching the study.
 4. Test Command Line Tools HIT
-	1.
+	1. Create a new CLT survey folder per instructions in the wiki.
+	2. Go to Generate a HIT page. Fill in survey URL and create a new group name.
+	3. Choose HIT Type Command Line Tools and generate the HIT. Verify that you get three files to download and a completion code.
+	4. Download the files and put them in the new survey folder, replacing existing files.
+	5. Change the survey title in survey.properties to a new title.
+	6. Run the run script to create the HIT. If your CLT doesn't use the sandbox by default, make sure to add the -sandbox parameter.
+	7. Change the survey title again to a new title and run the run script again to create a second HIT with the same group name.
+	8. Find the first HIT and open it. Verify that the study can't be previewed and that there is a link to check eligibility.
+	9. Repeat steps 3.8-3.11
+	10. Open the other HIT.
+	11. Check eligibility and verify that you are not eligible.
+	12. Accept the HIT and verify there is no link to the survey.
+
+## Test verifying completion codes
+	1. Download results for first Web HIT batch.
+	2. Future issue: Add various manipulations of the existing completion code.
+	3. Copy contents into Verify page.
+	4. Make sure correct completion code gets valid result (unless you've added duplicates) and all others get invalid results.
+
+	
+	
 	
 	
 	
