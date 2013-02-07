@@ -133,7 +133,7 @@
 					</p>
 
 					<p>
-						<span class="section-begin">Verify completion codes</span> at <a href="codes/verify.php">the verification page</a>.
+						<span class="section-begin">Verify completion codes</span> at <a href="/codes/verify.php">the verification page</a>.
 					</p>
 				</div>
 			</div>
@@ -250,7 +250,7 @@
 
     	// Generate completion link
     	var numDigits = 6;
-    	var completionLink = "<?php echo constant('BASE_URL') ?>codes/generate.php?stamp=" + Math.floor(Math.random() * Math.pow(10, numDigits) + Math.pow(10, numDigits + 1)); 
+    	var completionLink = "<?php echo constant('BASE_URL') ?>/codes/generate.php?stamp=" + Math.floor(Math.random() * Math.pow(10, numDigits) + Math.pow(10, numDigits + 1)); 
     	switch($("#surveySites").val()) {
     		case "LimeSurvey":
     			completionLink += "&user={SAVEDID}&survey={SID}";
