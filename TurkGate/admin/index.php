@@ -141,7 +141,7 @@ $installed = @include('../config.php');
 		
 		function testWebHIT(workerID, surveyURL, groupName, preview) {
 			var url = "testWebHIT.php?group="+encodeURIComponent(groupName)+
-						"&survey="+encodeURIComponent(surveyURL)+"&source=ext";
+						"&survey="+encodeURIComponent(surveyURL)+"&source=js";
 			
 			if (!preview) {
 				url += "&assignmentId=test&workerId="+encodeURIComponent(workerID);

@@ -216,20 +216,35 @@ limitations under the License.
 					<p>
 						Uninstalling TurkGate will remove all TurkGate-generated files and database tables. All of the access records for your groups will be lost. It will not remove TurkGate source files.
 					</p>
+
+					<?php 
+						// Auto-fill uninstall form
+						$installed = @include('../config.php');
+						$databaseHost = "localhost";
+						$databaseName = "";
+						$databaseUsername = "";
+
+						if($installed) {
+							$databaseHost = constant('DATABASE_HOST');
+							$databaseName = constant('DATABASE_NAME');
+							$databaseUsername = constant('DATABASE_USERNAME');
+						}
+					?>
+
 					<form method="post" action="install.php" onsubmit="if(!confirm('Are you sure you want to uninstall TurkGate?')) { return false; }">
 						<p>
 							<label for="databaseHost">Database Host:</label>
-							<input type="text" class="remove-bottom" name="databaseHost" value="localhost" required="required">
+							<input type="text" class="remove-bottom" name="databaseHost" value="<?php echo $databaseHost; ?>" required="required">
 							<span class="comment">(This value is usually 'localhost')</span>
 						</p>
 						<p>
 							<label for="databaseName">Database Name:</label>
-							<input type="text" class="remove-bottom" name="databaseName" required="required" autofocus="autofocus">
+							<input type="text" class="remove-bottom" name="databaseName" value="<?php echo $databaseName; ?>" required="required" autofocus="autofocus">
 							<span class="comment">(E.g., 'TurkGate')</span>
 						</p>
 						<p>
 							<label for="databaseUsername">Database Username:</label>
-							<input type="text" name="databaseUsername" required="required">
+							<input type="text" name="databaseUsername" value="<?php echo $databaseUsername; ?>" required="required">
 						</p>
 						<p>
 							<label for="databasePassword">Database Password:</label>

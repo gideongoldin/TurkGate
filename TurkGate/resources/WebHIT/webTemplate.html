@@ -71,7 +71,7 @@ limitations under the License.
     phpArgs += "&group=" + encodeURIComponent(group);
 
     if (preview) {
-      return turkGateURL + 'checkID.php' + phpArgs;
+      return turkGateURL + '/checkID.php' + phpArgs;
     } else {
       phpArgs += "&workerId=" + urlVars["workerId"];
       phpArgs += "&survey=" + encodeURIComponent(surveyURL);
