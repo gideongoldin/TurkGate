@@ -183,6 +183,27 @@ footer {
   bottom:50px;
 }
 
+ul#screens {
+	list-style-type: none;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+ul#screens li {
+	float: left;
+	margin-left: 1em;
+}
+
+.screen_links img {
+	width: 10em;
+}
+
+.screen_links h1, .screen_links h2, .screen_links h3, .screen_links h4, .screen_links h5, .screen_links h6 {	
+	text-align: center;
+	margin-bottom: 0.5em;
+}
+
+
 @media print, screen and (max-width: 960px) {
   
   div.wrapper {

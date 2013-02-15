@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="stylesheets/jquery.lightbox-0.5.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -67,6 +68,58 @@ external site. TurkGate was created for the purpose of conducting
 psychological experiments. As such, it provides easy-to-use, 
 research-oriented features not included with Amazon Mechanical Turk.</p>
 
+<h2>What TurkGate looks like for&hellip;</h2>
+<p>
+	<ul id="screens">
+		<li>
+			<div class="screen_links">
+				<h3>Participants</h3>
+				<a href="https://raw.github.com/wiki/gideongoldin/TurkGate/screens/preview.jpg"
+					title="Workers can check eligibility when previewing the HIT." >
+					<img src="https://raw.github.com/wiki/gideongoldin/TurkGate/screens/preview_thumb.jpg"/>			
+				</a>
+				<a href="https://raw.github.com/wiki/gideongoldin/TurkGate/screens/accept.jpg"
+					title="After accepting the HIT, workers get a link that only takes them to the survey if they are eligible." >
+				</a>
+				<a href="https://raw.github.com/wiki/gideongoldin/TurkGate/screens/completion.jpg"
+					title="After completing the surveys, workers get a secure completion code." >
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="screen_links">
+				<h3>Researchers</h3>
+				<a href="https://raw.github.com/wiki/gideongoldin/TurkGate/screens/generate.jpg"
+					title="Researchers fill in a simple form to generate the HTML code for TurkGate HITs." >
+					<img src="https://raw.github.com/wiki/gideongoldin/TurkGate/screens/generate_thumb.jpg"/>			
+				</a>
+				<a href="https://raw.github.com/wiki/gideongoldin/TurkGate/screens/create_HIT.jpg"
+					title="Researchers paste the generated code into the HITs they create on Amazon Mechanical Turk." >
+				</a>
+				<a href="https://raw.github.com/wiki/gideongoldin/TurkGate/screens/verify.jpg"
+					title="After running the study, researchers can verify the validity of the completion codes that workers submitted." >
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="screen_links">
+				<h3>Administrators</h3>
+				<a href="https://raw.github.com/wiki/gideongoldin/TurkGate/screens/test.jpg"
+					title="Administrators can easily test their TurkGate installation." >
+					<img src="https://raw.github.com/wiki/gideongoldin/TurkGate/screens/test_thumb.jpg"/>			
+				</a>
+				<a href="https://raw.github.com/wiki/gideongoldin/TurkGate/screens/install.jpg"
+					title="Installing and uninstalling TurkGate are also simple procedures." >
+				</a>
+				<a href="https://raw.github.com/wiki/gideongoldin/TurkGate/screens/uninstall.jpg"
+					title="But we don't recommend doing it often." >
+				</a>
+			</div>
+		</li>
+	</ul>
+	<div style="clear:both;"> </div>
+</p>
+
 <h2>What does TurkGate do?</h2>
 
 <p>TurkGate serves three major functions:</p>
@@ -113,6 +166,14 @@ completion codes, and verifying those completion codes. </p>
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
+	  <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="javascripts/jquery.lightbox-0.5.js"></script>
+    <script type="text/javascript">
+			$(function() {
+				// Enable lightbox
+				$('.screen_links a').lightBox({ maxHeight: 450, maxWidth: 450 }); // Select all links to screenshots
+   		});
+    </script>
     
   </body>
 </html>
