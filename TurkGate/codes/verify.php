@@ -87,10 +87,12 @@ THE SOFTWARE.
       // Parse the user-submitted results
       if (isset($_POST['submit'])) {
   	      $results = stripslashes($_POST["results"]);
+//  	      $results = $_POST["results"];
 
-	      // Add a blank new line in case one was not included
+	      // Removing all blank lines
 	      // This is required for proper CSV parsing
-	      $results .= "\n"; 
+		  $results = preg_replace('/^\n+|^[\t\s]*\n+/m', "", $results);
+		  $results .= "\n";
 	
 	      if (!include('../lib/parsecsv.lib.php')) {
               echo '<p>TurkGate has encountered a configuration error. Please ' 
@@ -100,8 +102,16 @@ THE SOFTWARE.
           }
 	
 	      $csv = new parseCSV();
+		  $delim = $csv->auto($results, true, 1, ",\t");
 	      $csv->delimiter = ",";
 	      $csv->parse($results);
+		  
+		  // Check for proper parsing, and if not try tab delimited to support copying from Excel
+		  // parseCSV has auto parsing
+		  if (count($csv->titles) <= 1) {
+	        $csv->delimiter = "\t";
+	        $csv->parse($results);
+		  }
   ?>
 
   <table>
@@ -117,7 +127,7 @@ THE SOFTWARE.
           // For each row of the parsed CSV data, note key/value(row) pairs
           foreach ($csv->data as $key => $row) :
               // If there exists a completion code...
-		      if(strlen($row['Answer.completionCode']) > 0) {
+		      if(!empty($row['Answer.completionCode'])) {
 		
 			      // Display some basic information
 	              // NOTE: Mechanical Turk HIT template's completion code input box must
@@ -136,22 +146,61 @@ THE SOFTWARE.
 	                  echo '<span class="invalid">INVALID HASHING</span>';
 	                  $codeIsValid = false;
 	              }
+				  
+				  // check if the workerID in the code matches the actual workerID
+				  if (preg_match('/w\[(\w*)\]/', $row['Answer.completionCode'], $matches) == 0) {
+			      	
+					if (!$codeIsValid) {
+						echo '<br>';
+					}
+			      	$codeIsValid = false;
+	                echo '<span class="invalid">MISSING WORKERID</span>';				  	
+				  } elseif (strcmp($matches[1], $row['WorkerId']) != 0 ) {
+					if (!$codeIsValid) {
+						echo '<br>';
+					}
+			      	$codeIsValid = false;
+					$actualId = $row['WorkerId'];
+					$codeId = $matches[1];
+	                echo "<span class='invalid'>WORKERID MISMATCH: ACTUAL=$actualId, IN CODE=$codeId</span>";				  	
+					  
+				  }
 
-	              // Search for duplicate codes
-	              $codeIsUnique = true;
+	              // Search for duplicate codes and save the row numbers
 	              foreach ($csv->data as $keyInner => $rowInner) {
-	                  if ($rowInner['Answer.completionCode'] == $row['Answer.completionCode'] 
+	                  if (!empty($rowInner['Answer.completionCode']) 
+	                      && $rowInner['Answer.completionCode'] == $row['Answer.completionCode'] 
 	                      && $key != $keyInner) {
-		
-					      // Only show one duplicate tag per record
-					      if($codeIsUnique) {
-		                      echo '<span class="invalid">DUPLICATE(S) FOUND</span>';
-		                      $codeIsUnique = false;
-					      }
+
+						  $duplicateRows[] = $keyInner;
 	                  }
 	              }
 
-	              if ($codeIsValid && $codeIsUnique) {
+			      // Only show one duplicate tag per record
+			      if(!empty($duplicateRows)) {
+			      	
+					if (!$codeIsValid) {
+						echo '<br>';
+					}
+			      	$codeIsValid = false;
+					  
+			      	echo '<span class="invalid">';
+                    if (count($duplicateRows) == 1) {
+                      	echo "DUPLICATE FOUND IN ROW $duplicateRows[0]";
+				  	} else {
+					  echo 'DUPLICATES FOUND IN ROWS: ';
+                      foreach ($duplicateRows as $key => $value) {
+                          if ($key > 0) {
+                          	echo ', ';
+                          }
+						  echo $value + 1;
+                      }
+					}
+                    echo '</span>';
+					unset($duplicateRows);
+ 			      }
+
+	              if ($codeIsValid) {
 	                  echo '<span class="valid">VALID</span>';
 	              }
 	              echo '</td>';
