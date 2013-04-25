@@ -65,11 +65,23 @@ if ($isPreview) {
 	// parse survey identifier, first word is a code for finding the base URL, 
 	// second word is a survey-specific id
 	$surveyURL = urldecode($_GET['survey']);
-	
+		
 	if (strlen($surveyURL) == 0 || $surveyURL == 'test') {
 	    // If no survey URL was submitted, or if 'test' was entered, insert the
 	    // testDestination.php page.
 	    $surveyURL = 'admin/testDestination.php';
+	}
+
+	// add the MTurk worker ID to the URL if the appropriate option is set.
+	if (defined('SEND_ID_TO_SURVEY') && constant('SEND_ID_TO_SURVEY')) {
+		// first character depends on whether there are other variables
+		if (strchr($surveyURL, '?')) {
+			$surveyURL .= '&';
+		} else {
+			$surveyURL .= '?';
+		}
+		
+		$surveyURL .= "workerId=$workerId";
 	}
 		
 	// This is the form for submitting the completion codes and comments for an
