@@ -75,8 +75,11 @@ if ($isPreview) {
 	// add the MTurk worker ID to the URL if the appropriate option is set.
 	if (defined('SEND_ID_TO_SURVEY') && constant('SEND_ID_TO_SURVEY')) {
 		// first character depends on whether there are other variables
-		if (strchr($surveyURL, '?')) {
-			$surveyURL .= '&';
+		$varsBegin = strrchr($surveyURL, '?');
+		if ($varsBegin) {
+			if (strlen($varsBegin) > 1) {
+				$surveyURL .= '&';
+			}
 		} else {
 			$surveyURL .= '?';
 		}
