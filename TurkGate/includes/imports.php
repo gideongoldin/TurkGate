@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="<?php echo $basePath ?>stylesheets/base.css">
 	<link rel="stylesheet" href="<?php echo $basePath ?>stylesheets/skeleton.css">
 	<link rel="stylesheet" href="<?php echo $basePath ?>stylesheets/layout.css">
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" /> <!-- jQuery UI theme -->
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/base/jquery.ui.all.css" /> <!-- jQuery UI theme -->
 	<link rel="stylesheet" href="<?php echo $basePath ?>stylesheets/styles.css"> <!-- TurkGate-specific styling -->
 
 	<!--[if lt IE 9]>
@@ -20,5 +20,5 @@
 	
 	<!-- Libraries needed by TurkGate
 	================================================== -->
-	<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
