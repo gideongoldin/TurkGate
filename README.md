@@ -12,6 +12,8 @@ external site. TurkGate was created for the purpose of conducting
 psychological experiments. As such, it provides easy-to-use, 
 research-oriented features not included with Amazon Mechanical Turk.
 
+![TurkGate Screenshot](https://raw.github.com/wiki/gideongoldin/TurkGate/screens/generate.jpg)
+
 ## What does TurkGate do?
 
 TurkGate serves three major functions:
