@@ -82,6 +82,10 @@ limitations under the License.
 	  </div>
 	  <div class="sixteen columns" style="border-top: 1px solid #DDD; padding-top:10px;"> <!-- sixteen columns clearfix -->
 	    <p>Please copy <em>all</em> of the text from the box below into Mechanical Turk:</p>
+		
+		<!-- Auto-selection has been disabled because will not work on iDevices -->
+		
+		<!--
 		<?php
 				$textAreaId = 'code';	
 				$keepAllSelected = true;							
@@ -89,6 +93,11 @@ limitations under the License.
 	    ?>	
 		<div class="thirteen columns offset-by-one">
 	    	<textarea rows="4" id="<?php echo $textAreaId; ?>" readonly><?php echo $completionCode ?></textarea>
+		</div>
+		-->
+		
+		<div class="thirteen columns">
+	    	<span style="color:red; font-weight:bold; font-family:courier; word-wrap:break-word;"><?php echo $completionCode ?></span>
 		</div>
 	  </div>
   </div> <!-- Container -->
