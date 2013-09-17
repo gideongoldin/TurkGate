@@ -133,7 +133,7 @@
 					</p>
 
 					<p>
-						<span class="section-begin">Verify completion codes</span> at <a href="/codes/verify.php">the verification page</a>.
+						<span class="section-begin">Verify completion codes</span> at <a href="<?php echo constant('BASE_URL')?>/codes/verify.php">the verification page</a>.
 					</p>
 				</div>
 			</div>
