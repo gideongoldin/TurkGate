@@ -81,7 +81,7 @@ limitations under the License.
 	    <header><h1>Completion Code</h1></header>
 	  </div>
 	  <div class="sixteen columns" style="border-top: 1px solid #DDD; padding-top:10px;"> <!-- sixteen columns clearfix -->
-	    <p>Please copy <em>all</em> of the text from the box below into Mechanical Turk:</p>
+	    <p>Please copy <em>the entire</em> code below into Mechanical Turk:</p>
 		
 		<!-- Auto-selection has been disabled because will not work on iDevices -->
 		
