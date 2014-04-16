@@ -1,28 +1,28 @@
 <?php 
-    session_start(); 
+session_start(); 
 
-    if (!include_once('../config.php')) {
-        die('A configuration error occurred. ' 
-          . 'Please report this error to the HIT requester.');
-    }
-	
-	require_once('../lib/tempstorage.php');
-	
-	$store = new tempStorage();
-	  
-	$workerId = $store->retreive('Worker_ID');
-	if ($workerId == null) {
-		$workerId = '';
-	} else {
-		$store->clear('Worker_ID');
-	}
-	
-	$groupName = $store->retreive('Group_Name');
-	if ($groupName == null) {
-		$groupName = '';
-	} else {
-		$store->clear('Group_Name');
-	}
+if (!include_once('../config.php')) {
+    die('A configuration error occurred. ' 
+        . 'Please report this error to the HIT requester.');
+}
+
+require_once('../lib/tempstorage.php');
+
+$store = new tempStorage();
+
+$workerId = $store->retreive('Worker_ID');
+if ($workerId == null) {
+    $workerId = '';
+} else {
+    $store->clear('Worker_ID');
+}
+
+$groupName = $store->retreive('Group_Name');
+if ($groupName == null) {
+    $groupName = '';
+} else {
+    $store->clear('Group_Name');
+}
 ?>
 
 <!--
@@ -47,68 +47,76 @@ limitations under the License.
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 
-	<!-- Basic Page Needs
-  ================================================== -->
-	<meta charset="utf-8">
-	<title>Completion Code</title>
-	<meta name="description" content="Code that verifies completion of a survey.">
-	<meta name="author" content="">
-	
-	<!-- Add the imports -->
-	<?php 
-	    $basePath = '../';
-	    require_once($basePath . 'includes/imports.php'); 
-	?>
-	
+    <!-- Basic Page Needs
+================================================== -->
+    <meta charset="utf-8">
+    <title>Completion Code</title>
+    <meta name="description" content="Code that verifies completion of a survey.">
+    <meta name="author" content="">
+
+    <!-- Add the imports -->
+    <?php 
+$basePath = '../';
+require_once($basePath . 'includes/imports.php'); 
+    ?>
+
+    <script>
+        $(document).ready(function(){
+            $(window).bind('beforeunload', function() {
+                return 'WARNING: Please verify you have copied the code before leaving!';
+            }); 
+        });
+    </script>
+
 </head>
 
 <body>
-	
-  <div class="container"> <!-- Container -->
-	<?php
-	    // Add the Worker ID and the Group name to the input string
-	    $inputString = "w[$workerId]g[$groupName]";
-	
-	    // Add any key-value pairs from the GET array to the input string
-	    foreach ($_GET as $key => $value) {
-	        $inputString .= $key[0]."[$value]";
-	    }
-	
-	    // Construct the completion code
-	    $completionCode = $inputString . ':' . sha1($inputString . constant('KEY'));
-	?>
-	  <div class="sixteen columns">
-	    <header><h1>Completion Code</h1></header>
-	  </div>
-	  <div class="sixteen columns" style="border-top: 1px solid #DDD; padding-top:10px;"> <!-- sixteen columns clearfix -->
-	    <p>Please copy <em>the entire</em> code below into Mechanical Turk:</p>
-		
-		<!-- Auto-selection has been disabled because will not work on iDevices -->
-		
-		<!--
-		<?php
-				$textAreaId = 'code';	
-				$keepAllSelected = true;							
-				require_once '../lib/autoselect.php';
-	    ?>	
-		<div class="thirteen columns offset-by-one">
-	    	<textarea rows="4" id="<?php echo $textAreaId; ?>" readonly><?php echo $completionCode ?></textarea>
-		</div>
-		-->
-		
-		<div class="thirteen columns">
-	    	<span style="color:red; font-weight:bold; font-family:courier; word-wrap:break-word;"><?php echo $completionCode ?></span>
-		</div>
-	  </div>
-  </div> <!-- Container -->
+    <div class="container"> <!-- Container -->
+        <?php
+// Add the Worker ID and the Group name to the input string
+$inputString = "w[$workerId]g[$groupName]";
 
-<script>
-  function exit() {
-    return "Please verify that you have saved the code on this page before leaving!";
-  }
+// Add any key-value pairs from the GET array to the input string
+foreach ($_GET as $key => $value) {
+    $inputString .= $key[0]."[$value]";
+}
 
-  window.onbeforeunload = exit;
-</script>
-    
+// Construct the completion code
+$completionCode = $inputString . ':' . sha1($inputString . constant('KEY'));
+        ?>
+        <div class="sixteen columns">
+            <header><h1>Completion Code</h1></header>
+        </div>
+        <div class="sixteen columns" style="border-top: 1px solid #DDD; padding-top:10px;"> <!-- sixteen columns clearfix -->
+            <p>Please copy <em><span style="font-weight: bold;">all</span> of the code in the red box below</em> into Mechanical Turk:</p>
+
+            <!-- Auto-selection has been disabled because will not work on iDevices -->
+
+            <!--
+<?php
+$textAreaId = 'code';	
+$keepAllSelected = true;							
+require_once '../lib/autoselect.php';
+?>	
+<div class="thirteen columns offset-by-one">
+<textarea rows="4" id="<?php echo $textAreaId; ?>" readonly><?php echo $completionCode ?></textarea>
+</div>
+-->
+        </div>
+        
+        <div class="thirteen columns" style="background:red; padding:10px;">
+            <span style="color: white; font-weight:bold; font-family:courier; word-wrap:break-word;"><?php echo $completionCode ?></span>
+        </div>
+
+        <div class="thirteen columns" style="padding-top:10px;">
+            <p>Please verify you copied ALL of the text in the box above. You will not be able to access this code after leaving or reloading this page!</p>
+        </div>
+
+
+
+    </div> <!-- Container -->
+
+
+
 </body>
 </html>
