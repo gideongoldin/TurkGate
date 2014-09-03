@@ -51,4 +51,4 @@ completion codes, and verifying those completion codes.
 
 ## Dependencies
 
-TurkGate requires the ![mcrypt library](http://php.net/manual/en/intro.mcrypt.php).
+TurkGate requires the [mcrypt library](http://php.net/manual/en/intro.mcrypt.php).
