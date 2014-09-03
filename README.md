@@ -48,3 +48,7 @@ of coordinated researchers can share one such installation. The
 researchers get easy to use web-based tools for creating HITs with 
 TurkGate access  control, providing workers with dynamic, secure 
 completion codes, and verifying those completion codes. 
+
+## Dependencies
+
+TurkGate requires the ![mcrypt library](http://php.net/manual/en/intro.mcrypt.php).
