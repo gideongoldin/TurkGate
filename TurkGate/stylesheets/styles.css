@@ -107,6 +107,15 @@ textarea#generatedHTMLCode {
 	height:15em;
 }
 
+button[disabled], button[disabled]:hover, button[disabled]:active,
+input[type=submit][disabled], input[type=submit][disabled]:hover, input[type=submit][disabled]:active {
+    background: #ddd;
+    border-color: #ddd;
+    color: #777;
+    text-shadow: none;
+    cursor: default;
+}
+
 /**
  * ...
  */
@@ -257,7 +266,14 @@ ul.tabs li.active{
     cursor: default;
 }
 
+.install-tab.disabled label, .install-tab.disabled p {
+	color: #777;
+}
 
+.install-tab .modules {
+	padding-bottom: 10px;
+	text-transform: uppercase;
+}
 
 /* Autocomplete box in index.php */
 

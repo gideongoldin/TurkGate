@@ -29,8 +29,15 @@ limitations under the License.
 	
 	<!-- Add the imports -->
 	<?php 
-    $basePath = '../';
-	    require_once($basePath . 'includes/imports.php'); 
+    	$basePath = '../';
+		require_once($basePath . 'includes/imports.php'); 
+		
+		// If you add or change any dependencies, update them here
+		$modules = array('json', 'mcrypt', 'mysql', 'pcre');
+		$missingModules = '';
+		foreach ($modules as $module) {
+			extension_loaded($module) or $missingModules .= " $module";
+		}
 	?>
 	
 </head>
@@ -174,12 +181,23 @@ limitations under the License.
 			</ul>
 			
 			<div class="tab_container">
-				<div id="tab1" class="tab_content">
+				<?php
+					$disabled = '';
+					if ($missingModules) {
+						$disabled = 'disabled';
+					}
+				?>
+				<div id="tab1" class="tab_content install-tab <?php echo $disabled; ?>">
+					<?php
+						if ($missingModules) {
+							echo "<h3 class='warning'>Install the following PHP modules before installing TurkGate:</h3><h3 class='modules'>$missingModules</h3>";
+						}
+					?>
 					<p>To install, first enter the URL of your TurkGate folder.</p>
 					<form method="post" action="install.php">
 						<p>
 							<label for="turkGateURL">TurkGate URL:</label>
-							<input type="text" class="remove-bottom" name="turkGateURL" id="turkGateURL" required="required" >
+							<input type="text" class="remove-bottom" name="turkGateURL" id="turkGateURL" required="required" <?php echo $disabled; ?> >
 							<span class="comment">(The URL of the directory you pasted TurkGate into. E.g., http://yourdomain.edu/TurkGate)</span>
 						</p>
 						<p>
@@ -188,29 +206,29 @@ limitations under the License.
 						</p>
 			            <p>
 							<label for="databaseHost">Database Host:</label>
-							<input type="text" class="remove-bottom" name="databaseHost" value="localhost" required="required">
+							<input type="text" class="remove-bottom" name="databaseHost" value="localhost" required="required" <?php echo $disabled; ?> >
 							<span class="comment">(This value is usually 'localhost')</span>
 						</p>
 						<p>
 							<label for="databaseName">Database Name:</label>
-							<input type="text" class="remove-bottom" name="databaseName" required="required" autofocus="autofocus">
+							<input type="text" class="remove-bottom" name="databaseName" required="required" autofocus="autofocus" <?php echo $disabled; ?> >
 							<span class="comment">(E.g., 'TurkGate')</span>
 						</p>
 						<p>
 							<label for="databaseUsername">Database Username:</label>
-							<input type="text" name="databaseUsername" required="required">
+							<input type="text" name="databaseUsername" required="required" <?php echo $disabled; ?> >
 						</p>
 						<p>
 							<label for="databasePassword">Database Password:</label>
-							<input type="password" name="databasePassword" required="required">
+							<input type="password" name="databasePassword" required="required" <?php echo $disabled; ?> >
 						</p>
 						<p>
-							<input type="submit" name="installSubmit" value="Install TurkGate">
+							<input type="submit" name="installSubmit" value="Install TurkGate" <?php echo $disabled; ?> >
 						</p>
 					</form>
 				</div><!-- Tab 1 -->
 				
-				<div id="tab2" class="tab_content danger">
+				<div id="tab2" class="tab_content danger uninstall-tab">
 					<p>To uninstall please enter your database (e.g., MySQL) login information below.
 					</p>
 					<p>
