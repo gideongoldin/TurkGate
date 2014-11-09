@@ -84,7 +84,7 @@ if ($isPreview) {
 			$surveyURL .= '?';
 		}
 		
-		$surveyURL .= "workerId=$workerId";
+		$surveyURL .= "workerID=$workerId&assignmentID=$assignId";
 	}
 		
 	// This is the form for submitting the completion codes and comments for an
