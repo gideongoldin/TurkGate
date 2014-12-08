@@ -88,6 +88,13 @@
 	  					<option value="CLT">Command Line Tools</option>
 					</select>
 					
+					<label for="includeWID" class="adjacent">Pass Worker ID:</label>
+					<input type="checkbox" name="includeWID" id="includeWID">
+					<span class="ui-icon ui-icon-help adjacent help" title="Pass the worker ID to the survey"></span>
+
+					<br>
+					<br>		
+
 					<input type="submit" name="submitForm" id="submitForm" value="Generate HIT" />
 
 			</form>
@@ -228,8 +235,12 @@
 	}
 
 	function populateHITContent() {
-		var surveyURL = fix_http($('#externalSurveyURL').val());
+		var surveyURL = fix_http($('#externalSurveyURL').val())+"?";
 		var groupName = $('#groupName').val();
+
+		if ($('#includeWID').is(":checked")) {
+			surveyURL += 'workerid=[[[Worker ID]]]';
+		}
 
     	switch ($("#HITType").val()) {
     		case "WebInterface":

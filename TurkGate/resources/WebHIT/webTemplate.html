@@ -88,6 +88,8 @@ limitations under the License.
   	  	  
     var preview = (urlVars["assignmentId"] == undefined 
         || urlVars["assignmentId"] == "ASSIGNMENT_ID_NOT_AVAILABLE");
+
+    surveyURL = surveyURL.replace('[[[Worker ID]]]', urlVars["workerId"]);
             
     var link = createSurveyAccessLink(urlVars, preview);
 
