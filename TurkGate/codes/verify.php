@@ -67,7 +67,29 @@ THE SOFTWARE.
 	    $basePath = '../';
 	    require_once($basePath . 'includes/imports.php'); 
 	?>
-	
+    
+    <script type="text/javascript">
+        // Drag and Drog code
+        // http://stackoverflow.com/questions/11313414/html5-drag-and-drop-load-text-file-in-a-textbox-with-js
+        $(document).ready(function(){
+            var holder = document.getElementById('resultsTextArea');
+
+            holder.ondrop = function(e) {
+                e.preventDefault();
+
+                var file = e.dataTransfer.files[0],
+                reader = new FileReader();
+                reader.onload = function(event) {
+                    console.log(event.target);
+                    holder.value = event.target.result;
+                };
+                console.log(file);
+                reader.readAsText(file);
+
+                return false;
+            };
+        });
+    </script>
 </head>
 
 <body id="verify">
@@ -116,6 +138,7 @@ THE SOFTWARE.
 
   <table>
     <tr>
+      <th>Worker ID</td>
       <th>Completion Code</th>
       <th>Elapsed Time</th>
       <th>Submit Time</th>
@@ -133,6 +156,7 @@ THE SOFTWARE.
 	              // NOTE: Mechanical Turk HIT template's completion code input box must
 	              // be named 'completionCode'
  			      echo '<tr>';
+                  echo '<td>' . $row['WorkerId'] . '</td>';
 	              echo '<td>' . $row['Answer.completionCode'] . '</td>';
 	              echo '</td><td>' . floor($row['WorkTimeInSeconds'] / 60) . 'min ' 
 	                  . ($row['WorkTimeInSeconds'] % 60) . 's' . '</td>';
@@ -156,7 +180,7 @@ THE SOFTWARE.
 			      	$codeIsValid = false;
 	                echo '<span class="invalid">MISSING WORKERID</span>';				  	
 				  } elseif (strcmp($matches[1], $row['WorkerId']) != 0 ) {
-					if (!$codeIsValid) {
+                    if (!$codeIsValid) {
 						echo '<br>';
 					}
 			      	$codeIsValid = false;
@@ -164,7 +188,7 @@ THE SOFTWARE.
 					$codeId = $matches[1];
 	                echo "<span class='invalid'>WORKERID MISMATCH: ACTUAL=$actualId, IN CODE=$codeId</span>";				  	
 					  
-				  }
+                    }
 
 	              // Search for duplicate codes and save the row numbers
 	              foreach ($csv->data as $keyInner => $rowInner) {
@@ -172,13 +196,13 @@ THE SOFTWARE.
 	                      && $rowInner['Answer.completionCode'] == $row['Answer.completionCode'] 
 	                      && $key != $keyInner) {
 
-						  $duplicateRows[] = $keyInner;
+						  $duplicateRows[] = $rowInner['WorkerId'];
 	                  }
 	              }
 
 			      // Only show one duplicate tag per record
 			      if(!empty($duplicateRows)) {
-			      	
+			      
 					if (!$codeIsValid) {
 						echo '<br>';
 					}
@@ -186,14 +210,14 @@ THE SOFTWARE.
 					  
 			      	echo '<span class="invalid">';
                     if (count($duplicateRows) == 1) {
-                      	echo "DUPLICATE FOUND IN ROW $duplicateRows[0]";
+                      	echo "DUPLICATE FOUND IN WORKER ID $duplicateRows[0]";
 				  	} else {
-					  echo 'DUPLICATES FOUND IN ROWS: ';
+					  echo 'DUPLICATES FOUND IN WORKER IDs: ';
                       foreach ($duplicateRows as $key => $value) {
                           if ($key > 0) {
                           	echo ', ';
                           }
-						  echo $value + 1;
+						  echo $value;
                       }
 					}
                     echo '</span>';
@@ -216,7 +240,7 @@ THE SOFTWARE.
 
   	<p>
 	    Copy and paste the entire contents of your downloaded Mechanical Turk 
-	    batch results file into the text area below:
+	    batch results file into the text area below,<br> <span style="font-weight: bold;">or</span> drag and drop the file into the text area:
 	  </p>
 	  <form method="post" action="verify.php">
 	    <div>

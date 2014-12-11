@@ -90,7 +90,9 @@
 					
 					<label for="includeWID" class="adjacent">Pass Worker ID:</label>
 					<input type="checkbox" name="includeWID" id="includeWID">
-					<span class="ui-icon ui-icon-help adjacent help" title="Pass the worker ID to the survey"></span>
+					<span class="ui-icon ui-icon-help adjacent help" title="Pass the Mechanical Turk worker ID to the survey."></span>
+					<div class="comment" class="adjacent">Worker IDs are not anonymous<br>
+                    Do not record Worker ID unless approved by your IRB</div>
 
 					<br>
 					<br>		

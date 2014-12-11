@@ -22,7 +22,7 @@ limitations under the License.
 
   // dynamically creates the text that warns workers about the policy of access
   // restriction
-  function createGroupText(preview, group, gateURL) {
+  function createGroupText(preview, group, gateURL, passWid) {
     var text =  "<p>This study is part of a group of studies called " + group + 
       ". If you have accepted any other studies in the group, you will not " 
       + "be able to access this study or complete this HIT. "
@@ -31,6 +31,10 @@ limitations under the License.
       text += "In this case, please don't accept the HIT, because you'll have to return it. ";
       text += "You can check your eligibility at the link below:<br />" +
                 "<a href='" + gateURL + "' target='_blank'>Check Eligibility</a>";
+    }
+
+    if (passWid) {
+        text += "<br><br>Note: This survey may record your Mechanical Turk Worker ID";
     }
       
     text += "</p>";
@@ -89,6 +93,8 @@ limitations under the License.
     var preview = (urlVars["assignmentId"] == undefined 
         || urlVars["assignmentId"] == "ASSIGNMENT_ID_NOT_AVAILABLE");
 
+    var passWid = (urlVars["workerId"] != undefined);
+
     surveyURL = surveyURL.replace('[[[Worker ID]]]', urlVars["workerId"]);
             
     var link = createSurveyAccessLink(urlVars, preview);
@@ -105,7 +111,7 @@ limitations under the License.
     	document.getElementById("acceptedText").style.display = "block";
     }
     
-    document.getElementById("groupText").innerHTML = createGroupText(preview, group, link);
+    document.getElementById("groupText").innerHTML = createGroupText(preview, group, link, passWid);
   }
 </script>
 
