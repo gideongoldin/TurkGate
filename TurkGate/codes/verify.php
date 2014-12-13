@@ -239,7 +239,7 @@ THE SOFTWARE.
   ?>
 
   	<p>
-	    Copy and paste or just drag and drop your batch results file from Mechanical Turk into the box below.
+	    Copy and paste or just drag and drop your <a href="http://docs.aws.amazon.com/AWSMechTurk/latest/RequesterUI/ReviewingResultsOutsideoftheRUI.html" target="_blank">results file from Mechanical Turk</a> into the box below.
 	  </p>
 	  <form method="post" action="verify.php">
 	    <div>
