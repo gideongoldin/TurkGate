@@ -20,11 +20,11 @@ header {
 
 nav > ul > li {
 	float:right;
-	font-weight: bold;
-	font-size: 1.125em;
+	letter-spacing:.1rem;
+	font-size: 11px;
 	padding-left: 0.75em;
 	padding-right: 0.75em;
-	border-right: 1px solid #cccccc;
+	/*border-right: 1px solid #cccccc;*/
 	margin:0;
 	padding-bottom:0.30em;
 }
