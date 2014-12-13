@@ -239,8 +239,7 @@ THE SOFTWARE.
   ?>
 
   	<p>
-	    Copy and paste the entire contents of your downloaded Mechanical Turk 
-	    batch results file into the text area below,<br> <span style="font-weight: bold;">or</span> drag and drop the file into the text area:
+	    Once you download your batch results file from Mechanical Turk, please drag and drop it into the box below. You can also copy and paste its contents, in plain text (not formatted test as you'd get from a spreadsheet application like Excel).
 	  </p>
 	  <form method="post" action="verify.php">
 	    <div>
