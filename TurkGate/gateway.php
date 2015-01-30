@@ -72,20 +72,8 @@ if ($isPreview) {
 	    $surveyURL = 'admin/testDestination.php';
 	}
 
-	// add the MTurk worker ID to the URL if the appropriate option is set.
-	if (defined('SEND_ID_TO_SURVEY') && constant('SEND_ID_TO_SURVEY')) {
-		// first character depends on whether there are other variables
-		$varsBegin = strrchr($surveyURL, '?');
-		if ($varsBegin) {
-			if (strlen($varsBegin) > 1) {
-				$surveyURL .= '&';
-			}
-		} else {
-			$surveyURL .= '?';
-		}
-		
-		$surveyURL .= "workerID=$workerId&assignmentID=$assignId";
-	}
+    // Pass assignment ID to survey
+    $surveyURL .= "assignmentId=$assignId";
 		
 	// This is the form for submitting the completion codes and comments for an
 	// external HIT.
