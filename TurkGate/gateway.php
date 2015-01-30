@@ -72,8 +72,17 @@ if ($isPreview) {
 	    $surveyURL = 'admin/testDestination.php';
 	}
 
-    // Pass assignment ID to survey
-    $surveyURL .= "assignmentId=$assignId";
+    // first character depends on whether there are other variables
+    $varsBegin = strrchr($surveyURL, '?');
+    if ($varsBegin) {
+        if (strlen($varsBegin) > 1) {
+            $surveyURL .= '&';
+        }
+    } else {
+        $surveyURL .= '?';
+    }
+    // Pass assignmentId to survey
+    $surveyURL .= "assignmentID=$assignId";
 		
 	// This is the form for submitting the completion codes and comments for an
 	// external HIT.
