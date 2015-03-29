@@ -88,7 +88,7 @@ if ($isPreview) {
     $surveyURL .= "assignmentID=$assignId";
 
     // Pass along workerId if necessary
-    if ($_GET['passId'] == true) {
+    if ($_GET['passId'] == "true") {
         $surveyURL .= "&workerID=$workerId";
     }
 		
