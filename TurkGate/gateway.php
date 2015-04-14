@@ -72,6 +72,9 @@ if ($isPreview) {
 	    $surveyURL = 'admin/testDestination.php';
 	}
 
+    // Save copy of URL for database
+    $surveyURLSave = $surveyURL;
+
     // first character depends on whether there are other variables
     $varsBegin = strrchr($surveyURL, '?');
     if ($varsBegin) {
@@ -83,6 +86,11 @@ if ($isPreview) {
     }
     // Pass assignmentId to survey
     $surveyURL .= "assignmentID=$assignId";
+
+    // Pass along workerId if necessary
+    if ($_GET['passId'] == "true") {
+        $surveyURL .= "&workerID=$workerId";
+    }
 		
 	// This is the form for submitting the completion codes and comments for an
 	// external HIT.
@@ -103,7 +111,7 @@ if ($isPreview) {
 
     //If access isn't granted, this worker has already done a survey in the group and will
     // be blocked from reaching the survey.
-    if ($accessController->checkAccess($workerId, $groupName, true, $surveyURL)) {        // ACCESS GRANTED
+    if ($accessController->checkAccess($workerId, $groupName, true, $surveyURLSave)) {        // ACCESS GRANTED
 	
 		$store = new tempStorage();
 		  

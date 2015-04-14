@@ -21,8 +21,8 @@
 
 	$template = file_get_contents('../resources/WebHIT/webTemplate.html');
 	
-	$searchValues = array('[[[Survey URL]]]', '[[[Group Name]]]', '[[[TurkGate URL]]]');
-	$replacements = array($_GET['survey'], $_GET['group'], constant('BASE_URL'));
+	$searchValues = array('[[[Survey URL]]]', '[[[Group Name]]]', '[[[TurkGate URL]]]', '[[[Pass ID]]]');
+	$replacements = array($_GET['survey'], $_GET['group'], constant('BASE_URL'), "true");
 	
 	echo str_replace($searchValues, $replacements, $template);
 ?>

@@ -237,16 +237,17 @@
 	}
 
 	function populateHITContent() {
-		var surveyURL = fix_http($('#externalSurveyURL').val())+"?";
+		var surveyURL = fix_http($('#externalSurveyURL').val());
 		var groupName = $('#groupName').val();
+        var passId = false;
 
 		if ($('#includeWID').is(":checked")) {
-			surveyURL += 'workerid=[[[Worker ID]]]';
+			passId = true;
 		}
 
     	switch ($("#HITType").val()) {
     		case "WebInterface":
-    			generateWebCode(surveyURL, groupName);
+    			generateWebCode(surveyURL, groupName, passId);
     			$("#WebHITContent").show();
     			break;
     		case "CLT":
@@ -313,13 +314,14 @@
 		});
 	}
 
-	function generateWebCode(surveyURL, groupName) {
+	function generateWebCode(surveyURL, groupName, passId) {
 		var copyright = "<!-- Copyright (c) 2012 Adam Darlow and Gideon Goldin. For more info, see http://gideongoldin.github.com/TurkGate/ -->\n"; 
 		
 		var htmlCode = <?php echo json_encode(file_get_contents('resources/WebHIT/webTemplate.html')); ?>;
 		htmlCode = htmlCode.replace('[[[Survey URL]]]', surveyURL);
 		htmlCode = htmlCode.replace('[[[Group Name]]]', groupName);
 		htmlCode = htmlCode.replace('[[[TurkGate URL]]]', "<?php echo constant('BASE_URL'); ?>");
+        htmlCode = htmlCode.replace('[[[Pass ID]]]', passId);
 		htmlCode = htmlCode.replace(/<!--[^>]*-->/, copyright);
 		
 		$('#generatedHTMLCode').val(htmlCode);
