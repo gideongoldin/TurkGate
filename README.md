@@ -52,3 +52,7 @@ completion codes, and verifying those completion codes.
 ## Dependencies
 
 TurkGate requires the [mcrypt library](http://php.net/manual/en/intro.mcrypt.php).
+
+## Get Started
+
+You can install TurkGate by following the [Wiki's Installation Instructions](https://github.com/gideongoldin/TurkGate/wiki/Installation).
