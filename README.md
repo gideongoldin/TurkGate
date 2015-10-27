@@ -1,4 +1,4 @@
-* Main Page: http://turkgate.net
+* Main Page: http://gideongoldin.github.io/TurkGate/
 * GitHub Page: https://github.com/gideongoldin/TurkGate
 * Wiki: https://github.com/gideongoldin/TurkGate/wiki
 * Google Group: https://groups.google.com/forum/?fromgroups#!forum/turkgate
